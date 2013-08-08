@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
+		<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.wrappers</artifactId>
+	<name>DKPro Keyphrases - Wrappers</name>
+	<description>Wrappers for all projects</description>
+	<dependencies>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
+			<artifactId>
+  			de.tudarmstadt.ukp.dkpro.keyphrases.core
+  		</artifactId>
+
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.lab.uima.engine.cpe</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>11.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>
+				de.tudarmstadt.ukp.dkpro.core.treetagger-model-en
+			</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>
+				de.tudarmstadt.ukp.dkpro.core.treetagger-bin
+			</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>
+				de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs
+			</groupId>
+			<artifactId>
+				de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs
+			</artifactId>
+			<version>1.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
+			<artifactId>
+				de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing
+			</artifactId>
+			<version>1.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.frequency-asl</artifactId>
+			<version>1.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
