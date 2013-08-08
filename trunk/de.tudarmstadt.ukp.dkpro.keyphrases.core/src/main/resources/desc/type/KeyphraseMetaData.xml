@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>KeyphraseMetaData</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <types>
+    <typeDescription>
+      <name>de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData</name>
+      <description/>
+      <supertypeName>uima.tcas.DocumentAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>goldstandardKeyphrases</name>
+          <description/>
+          <rangeTypeName>uima.cas.NonEmptyStringList</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>nrofKeyphrases</name>
+          <description/>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
+</typeSystemDescription>
