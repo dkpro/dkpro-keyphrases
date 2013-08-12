@@ -6,7 +6,7 @@
     <version>1.5.0-SNAPSHOT</version>
   </parent>
   <groupId>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs</groupId>
-  <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs</artifactId>
+  <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-asl</artifactId>
   <name>DKPro Keyphrases - Textgraphs</name>
   <description>Textgraphs for Kepyhrase Extraction</description>
 	<dependencies>
@@ -24,9 +24,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.keyphrases.core
-			</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>

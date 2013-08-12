@@ -6,7 +6,7 @@
 		<version>1.5.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core</artifactId>
+	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
 	<name>DKPro Keyphrase Extraction - Core</name>
 	<dependencies>
 		<dependency>

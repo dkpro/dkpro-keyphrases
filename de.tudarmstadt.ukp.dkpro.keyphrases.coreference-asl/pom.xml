@@ -6,15 +6,13 @@
     <version>1.5.0-SNAPSHOT</version>
   </parent>
   <groupId>de.tudarmstadt.ukp.dkpro.keyphrases.coreference</groupId>
-  <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.coreference</artifactId>
+  <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-asl</artifactId>
   <name>DKPro Keyphrases - Coreferences</name>
   <description>Coreferences for Keyphrase Extraction</description>
   <dependencies>
   	<dependency>
   		<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-  		<artifactId>
-  			de.tudarmstadt.ukp.dkpro.keyphrases.core
-  		</artifactId>
+  		<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
   	</dependency>
   	<dependency>
   		<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
