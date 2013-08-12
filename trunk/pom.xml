@@ -27,9 +27,7 @@
 			</dependency>
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-				<artifactId>
-					de.tudarmstadt.ukp.dkpro.keyphrases.core
-				</artifactId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
 				<version>1.5.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
@@ -54,13 +52,13 @@
 	<packaging>pom</packaging>
 	<version>1.5.0-SNAPSHOT</version>
 	<modules>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.core</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wrappers</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.lab</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.coreference</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wrappers-gpl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.lab-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-asl</module>
 	</modules>
 	<properties>
 		<dkpro.core.version>1.5.0-SNAPSHOT</dkpro.core.version>

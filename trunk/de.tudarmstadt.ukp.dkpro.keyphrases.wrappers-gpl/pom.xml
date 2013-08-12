@@ -7,16 +7,13 @@
 		<version>1.5.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.wrappers</artifactId>
+	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.wrappers-gpl</artifactId>
 	<name>DKPro Keyphrases - Wrappers</name>
 	<description>Wrappers for all projects</description>
 	<dependencies>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.keyphrases.core
-  		</artifactId>
-
+			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
@@ -67,6 +64,10 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
 		</dependency>
 	</dependencies>
 </project>

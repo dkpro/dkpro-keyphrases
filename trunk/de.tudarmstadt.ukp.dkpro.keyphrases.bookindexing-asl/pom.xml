@@ -6,7 +6,7 @@
 		<version>1.5.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing</artifactId>
+	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-asl</artifactId>
 	<name>DKPro Keyphrase Extraction - Back of the Book Indexing</name>
 	<dependencies>
 		<dependency>
@@ -48,9 +48,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.keyphrases.core
-			</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
