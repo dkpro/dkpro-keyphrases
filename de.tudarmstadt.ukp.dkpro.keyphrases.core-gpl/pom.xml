@@ -34,9 +34,9 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>no.uib.cipr.matrix</groupId>
-			<artifactId>matrix</artifactId>
-			<version>0.9.9</version>
+			<groupId>com.googlecode.matrix-toolkits-java</groupId>
+			<artifactId>mtj</artifactId>
+			<version>0.9.14</version>
 		</dependency>
 		<dependency>
 			<groupId>kea</groupId>
