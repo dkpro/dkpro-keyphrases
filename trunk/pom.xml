@@ -64,7 +64,6 @@
 		<dkpro.core.version>1.5.0-SNAPSHOT</dkpro.core.version>
 	</properties>
 	<dependencies>
-
 	<dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
@@ -72,4 +71,15 @@
 	</dependency>
 	</dependencies>
 	<url>https://code.google.com/p/dkpro-keyphrases/</url>
+	<repositories>
+		<repository>
+			<!-- For uimaFIT 2.0.0-SNAPSHOT -->
+			<id>apache.snapshots</id>
+			<name>Apache Snapshot Repository</name>
+			<url>http://repository.apache.org/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
 </project>
