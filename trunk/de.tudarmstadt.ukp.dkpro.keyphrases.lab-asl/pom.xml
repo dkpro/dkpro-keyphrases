@@ -117,12 +117,8 @@
 		  <version>20120709.0</version>
 		</dependency>
 		<dependency>
-			<groupId>
-				de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs
-			</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs
-			</artifactId>
+			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-asl</artifactId>
 			<version>1.5.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -132,7 +128,6 @@
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>3.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
