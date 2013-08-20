@@ -131,7 +131,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding-asl</artifactId>
 			<version>1.5.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
