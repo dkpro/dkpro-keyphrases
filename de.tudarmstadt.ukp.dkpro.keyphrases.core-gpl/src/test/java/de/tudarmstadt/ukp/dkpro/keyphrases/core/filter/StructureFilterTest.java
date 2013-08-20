@@ -23,6 +23,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.junit.Assume;
 import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
@@ -39,6 +40,7 @@ public class StructureFilterTest
     public void lengthFilterTestKeyphrase() throws Exception {
 
         // "a unusual long example sentence phrase structure" is too long and should not pass the filter
+    	checkModelsAndBinary("en");
         String testDocument = "This is a unusual long example sentence phrase structure. This is a short example.";
 
         Set<String> expectedResults = new HashSet<String>();
@@ -78,6 +80,7 @@ public class StructureFilterTest
     public void posStructureFilterTestKeyphrase() throws Exception {
 
         // "plug and play methodology" has structure V_C_V_N
+    	checkModelsAndBinary("en");
         String testDocument = "Mr Smith knows plug and play methodology.";
 
         Set<String> expectedResults = new HashSet<String>();
@@ -115,8 +118,9 @@ public class StructureFilterTest
 
     @Test
     public void lengthFilterTestCandidate() throws Exception {
-
+    	
         // "a unusual long example sentence phrase structure" is too long and should not pass the filter
+    	checkModelsAndBinary("en");
         String testDocument = "This is a unusual long example sentence phrase structure. This is a short example.";
 
         Set<String> expectedResults = new HashSet<String>();
@@ -157,6 +161,7 @@ public class StructureFilterTest
 
         // "plug and play methodology" has structure V_C_V_N
     	// this is not a valid pattern in our pos structure filter
+    	checkModelsAndBinary("en");
         String testDocument = "Mr Smith knows plug and play methodology.";
 
         Set<String> expectedResults = new HashSet<String>();
@@ -190,4 +195,13 @@ public class StructureFilterTest
         }
         assertEquals(0,i);
     }
+    
+    private void checkModelsAndBinary(String lang) {
+		Assume.assumeTrue(getClass().getResource(
+				"/de/tudarmstadt/ukp/dkpro/core/treetagger/lib/chunker-" + lang + "-little-endian.par") != null);
+
+		Assume.assumeTrue(getClass().getResource(
+				"/de/tudarmstadt/ukp/dkpro/core/treetagger/bin/LICENSE.txt") != null);
+    }
+    
 }
