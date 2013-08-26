@@ -154,14 +154,12 @@ public class LoglikelihoodAnnotatorTest
 
 		@Override
 		public long getFrequency(String phrase)
-			throws Exception
 		{
 			return 10;
 		}
 
 		@Override
 		public long getNrOfTokens()
-			throws Exception
 		{
 			return 1000;
 		}
