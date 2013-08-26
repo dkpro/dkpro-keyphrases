@@ -510,7 +510,7 @@ public class KeyphrasePerformanceCounter
                     add(filePerformance.calculateAveragePrecision());
         }
         meanAveragePrecision = meanAveragePrecision.divide(new
-                BigDecimal(String.valueOf(fileName2performanceMap.size())), 2, RoundingMode.UP) ;
+                BigDecimal(String.valueOf(fileName2performanceMap.size())), NBR_FLOATING_POINTS, RoundingMode.UP) ;
         return meanAveragePrecision.doubleValue();
     }
 
