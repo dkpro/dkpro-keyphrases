@@ -6,7 +6,7 @@
 		<version>1.0.23</version>
 	</parent>
 	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases</artifactId>
-	<name>DKPro-Keyphrases</name>
+	<name>DKPro Keyphrases</name>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

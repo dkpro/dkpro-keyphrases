@@ -24,7 +24,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-asl</artifactId>
-	<name>DKPro Keyphrase Extraction - Back of the Book Indexing</name>
+	<name>DKPro Keyphrases - Back of the Book Indexing</name>
 	<dependencies>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
