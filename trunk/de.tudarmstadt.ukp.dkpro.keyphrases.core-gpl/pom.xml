@@ -19,7 +19,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
-	<name>DKPro Keyphrase Extraction - Core</name>
+	<name>DKPro Keyphrases - Core</name>
 	<dependencies>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
