@@ -160,7 +160,6 @@ public class CoreferencedTfidfAnnotatorTest extends TfidfAnnotatorTest{
         expectedFrequencies.put("is", 1.0);
 
         for(Tfidf tfidf : JCasUtil.select(jcas, Tfidf.class)){
-            System.out.println(tfidf.getTerm());
             assertTrue(expectedFrequencies.containsKey(tfidf.getTerm()));
             assertEquals(expectedFrequencies.get(tfidf.getTerm()), tfidf.getTfidfValue(), EPSILON);
         }
