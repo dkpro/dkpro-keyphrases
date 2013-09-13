@@ -34,6 +34,7 @@ import de.tudarmstadt.ukp.dkpro.core.frequency.resources.Web1TFrequencyCountReso
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.coreference.ranking.CoreferencedTfidfAnnotator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfBackgroundIdfRanking;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfidfRanking;
 import de.tudarmstadt.ukp.dkpro.keyphrases.ranking.PageRankRanking;
@@ -68,6 +69,8 @@ extends UimaTaskBase
 	private String dfModelFile;
 	@Discriminator
 	private String nGramFolder;
+	@Discriminator
+    private boolean useCoreferenceCounts;
 
 
 	@Override
@@ -86,14 +89,26 @@ extends UimaTaskBase
 
 		AnalysisEngineDescription ranker;
 		if(rankerClass.equals(TfidfRanking.class)){
-
-			AnalysisEngineDescription tfidfAnnotator = createEngineDescription(
-					TfidfAnnotator.class,
-					TfidfAnnotator.PARAM_TFDF_PATH, dfModelFile,
-					TfidfAnnotator.PARAM_FEATURE_PATH, tfidfFeaturePath,
-					TfidfAnnotator.PARAM_TF_MODE, weightingModeTf.toString(),
-					TfidfAnnotator.PARAM_IDF_MODE, weightingModeIdf.toString(),
-					TfidfAnnotator.PARAM_LOWERCASE, shouldLowercaseCandidates);
+		    
+		    AnalysisEngineDescription tfidfAnnotator;
+		    if(useCoreferenceCounts){
+                tfidfAnnotator = createEngineDescription(
+                        CoreferencedTfidfAnnotator.class,
+                        TfidfAnnotator.PARAM_TFDF_PATH, dfModelFile,
+                        TfidfAnnotator.PARAM_FEATURE_PATH, tfidfFeaturePath,
+                        TfidfAnnotator.PARAM_TF_MODE, weightingModeTf.toString(),
+                        TfidfAnnotator.PARAM_IDF_MODE, weightingModeIdf.toString(),
+                        TfidfAnnotator.PARAM_LOWERCASE, shouldLowercaseCandidates);
+		    }
+		    else{
+		        tfidfAnnotator = createEngineDescription(
+	                    TfidfAnnotator.class,
+	                    TfidfAnnotator.PARAM_TFDF_PATH, dfModelFile,
+	                    TfidfAnnotator.PARAM_FEATURE_PATH, tfidfFeaturePath,
+	                    TfidfAnnotator.PARAM_TF_MODE, weightingModeTf.toString(),
+	                    TfidfAnnotator.PARAM_IDF_MODE, weightingModeIdf.toString(),
+	                    TfidfAnnotator.PARAM_LOWERCASE, shouldLowercaseCandidates);
+		    }
 
 			AnalysisEngineDescription tfidfRanker = createEngineDescription(
 					TfidfRanking.class,
