@@ -18,8 +18,7 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.lab.tasks;
 
 import static de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase.INCLUDE_PREFIX;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.bindResource;
 
 import java.io.File;
@@ -76,7 +75,7 @@ extends UimaTaskBase
 			throws ResourceInitializationException, IOException
 			{
 		File inputXmiRoot = aContext.getStorageLocation(KEY_INPUT_XMI, AccessMode.READONLY);
-		return createReader(XmiReader.class, XmiReader.PARAM_PATH, inputXmiRoot,
+		return createReader(XmiReader.class, XmiReader.PARAM_SOURCE_LOCATION, inputXmiRoot,
 				XmiReader.PARAM_PATTERNS, new String[] { INCLUDE_PREFIX + "**/*.xmi.gz" });
 			}
 
@@ -88,7 +87,7 @@ extends UimaTaskBase
 		AnalysisEngineDescription ranker;
 		if(rankerClass.equals(TfidfRanking.class)){
 
-			AnalysisEngineDescription tfidfAnnotator = createPrimitiveDescription(
+			AnalysisEngineDescription tfidfAnnotator = createEngineDescription(
 					TfidfAnnotator.class,
 					TfidfAnnotator.PARAM_TFDF_PATH, dfModelFile,
 					TfidfAnnotator.PARAM_FEATURE_PATH, tfidfFeaturePath,
@@ -96,20 +95,20 @@ extends UimaTaskBase
 					TfidfAnnotator.PARAM_IDF_MODE, weightingModeIdf.toString(),
 					TfidfAnnotator.PARAM_LOWERCASE, shouldLowercaseCandidates);
 
-			AnalysisEngineDescription tfidfRanker = createPrimitiveDescription(
+			AnalysisEngineDescription tfidfRanker = createEngineDescription(
 					TfidfRanking.class,
 					TfidfRanking.PARAM_AGGREGATE, tfidfAggregate.toString()
 					);
 
-			ranker = createAggregateDescription(tfidfAnnotator, tfidfRanker);
+			ranker = createEngineDescription(tfidfAnnotator, tfidfRanker);
 		}
 		else if(rankerClass.equals(PageRankRanking.class)){
-			ranker = createPrimitiveDescription(
+			ranker = createEngineDescription(
 					PageRankRanking.class,
 					PageRankRanking.PARAM_WEIGHTED, true);
 		}
 		else if(rankerClass.equals(TfBackgroundIdfRanking.class)){
-			ranker = createPrimitiveDescription(
+			ranker = createEngineDescription(
 					rankerClass);
 			try {
 				bindResource(
@@ -127,12 +126,12 @@ extends UimaTaskBase
 
 
 		else{
-			ranker = createPrimitiveDescription(
+			ranker = createEngineDescription(
 					rankerClass);
 		}
 
 		File xmiOutputPath = aContext.getStorageLocation(KEY_OUTPUT_XMI, AccessMode.ADD_ONLY);
-		AnalysisEngineDescription xmiWriter = createPrimitiveDescription(
+		AnalysisEngineDescription xmiWriter = createEngineDescription(
 				XmiWriter.class,
 				XmiWriter.PARAM_TARGET_LOCATION, xmiOutputPath,
 				XmiWriter.PARAM_COMPRESSION, "GZIP"
