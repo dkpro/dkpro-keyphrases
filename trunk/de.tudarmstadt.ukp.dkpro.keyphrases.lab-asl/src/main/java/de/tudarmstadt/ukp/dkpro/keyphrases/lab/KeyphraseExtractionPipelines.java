@@ -135,6 +135,8 @@ public class KeyphraseExtractionPipelines
 						WeightingModeIdf.CONSTANT_ONE,
 						WeightingModeIdf.LOG),
 				Dimension.create("tfidfAggregate", TfidfAggregate.max),
+				Dimension.create("useCoreferenceCounts", true, false),
+		                
 
 				// Evaluation
 				Dimension.create("evaluationMatchingType", MatchingType.Exact),
@@ -152,7 +154,8 @@ public class KeyphraseExtractionPipelines
 				if (parameter.get("rankerClass") != TfidfRanking.class) {
 					return parameter.get("tfidfAggregate") == TfidfAggregate.max
 							&& parameter.get("weightingModeTf") == WeightingModeTf.NORMAL
-							&& parameter.get("weightingModeIdf") == WeightingModeIdf.NORMAL;
+							&& parameter.get("weightingModeIdf") == WeightingModeIdf.NORMAL
+					        && parameter.get("useCoreferenceCounts") == "false";
 				}
 				return true;
 			}
