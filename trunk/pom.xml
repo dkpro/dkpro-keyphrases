@@ -59,7 +59,6 @@
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.lab-asl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding-asl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-asl</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter</module>
 	</modules>
 	<properties>
 		<dkpro.core.version>1.5.0</dkpro.core.version>
