@@ -603,8 +603,8 @@ public class KeyphrasePerformanceCounter
             BigDecimal[] precisions = new BigDecimal[nrOfKeyphrasesRetrieved];
             for (int i = 1; i <= nrOfKeyphrasesRetrieved; i++) {
                 BigDecimal numerator = new BigDecimal(String.valueOf(TPcounter.get(i)));
-                BigDecimal denominator = new BigDecimal(String.valueOf(TPcounter.get(i))
-                        + FPcounter.get(i));
+                BigDecimal denominator = new BigDecimal(
+                        String.valueOf(TPcounter.get(i) + FPcounter.get(i)));
                 if(denominator != null && denominator.floatValue() > 0){
                     precisions[i - 1] = numerator.divide(denominator, 10, RoundingMode.UP);
                 }
