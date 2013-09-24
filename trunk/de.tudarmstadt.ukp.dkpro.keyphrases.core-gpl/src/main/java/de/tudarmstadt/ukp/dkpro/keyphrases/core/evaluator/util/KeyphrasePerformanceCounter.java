@@ -605,7 +605,7 @@ public class KeyphrasePerformanceCounter
                 BigDecimal numerator = new BigDecimal(String.valueOf(TPcounter.get(i)));
                 BigDecimal denominator = new BigDecimal(String.valueOf(TPcounter.get(i))
                         + FPcounter.get(i));
-                if(denominator.floatValue() > 0){
+                if(denominator != null && denominator.floatValue() > 0){
                     precisions[i - 1] = numerator.divide(denominator, 10, RoundingMode.UP);
                 }
                 else{
