@@ -29,7 +29,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.Chunk;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingModeIdf;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingModeTf;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter;
-import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.KeyphraseEvaluator.EvaluatorType;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.KeyphraseEvaluator.MatchingType;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.PositionRanking;
@@ -71,6 +70,8 @@ public class KeyphraseExtractionPipelines
 			String msg = "DKPRO_HOME directory ( "+dkproHomeDir.getPath()+" ) does not exist.";
 			throw new IOException(msg);
 		}
+		
+		System.out.println("Trying to read data from: " + new File(dkproHome, "corpora/pythagoras/").getAbsolutePath());
 
 
 
@@ -79,10 +80,12 @@ public class KeyphraseExtractionPipelines
 		ParameterSpace params = new ParameterSpace(
 
 				//Input format
-				Dimension.create("datasetPath", new File(dkproHome, "corpora/PEDOCS_cleansets/dev_small/").getAbsolutePath()),
+				Dimension.create("datasetPath", new File(dkproHome, "corpora/pythagoras/").getAbsolutePath() + "/"),
 				Dimension.create("language", language),
-				Dimension.create("includePrefix", "*.txt"),
-				Dimension.create("goldSuffix", ".keys.lemmatized"),
+				Dimension.create("includePrefix", "*.summary.txt"),
+				Dimension.create("goldSuffix", 
+                        ".keys.intersection.lemmatized", ".keys.union.lemmatized",
+                        ".keys.intersection", ".keys.union"),
 
 				// Global
 				Dimension.createBundle("df",
@@ -91,22 +94,21 @@ public class KeyphraseExtractionPipelines
 						"dfModelFile",  "target/df/lemma.ser"}),
 
 				// Candidate selection
-				Dimension.create("candidateFeaturePath",  Token.class.getName(), Lemma.class.getName() + "/value"),
-//						Dimension.create("candidateFeaturePath", Lemma.class.getName() + "/value",
-//								Token.class.getName(), Chunk.class.getName(), NamedEntity.class.getName()),
+//				Dimension.create("candidateFeaturePath",  Token.class.getName(), Lemma.class.getName() + "/value"),
+				Dimension.create("candidateFeaturePath", Lemma.class.getName() + "/value",
+								Token.class.getName(), Chunk.class.getName(), NamedEntity.class.getName()),
 				Dimension.create("shouldResolveOverlaps", false),
 				Dimension.create("keyphraseMergerMaxTokens", 3),
 				Dimension.create("structureFilterMinTokens", 1),
 				Dimension.create("structureFilterMaxTokens", 3),
-				Dimension.create("structureFilterPosPatterns", false),
+				Dimension.create("structureFilterPosPatterns", false, true),
 				
 				//JWeb1T
 				Dimension.create("nGramFolder",new File(dkproHome, "corpora/web1t/" + language).getAbsolutePath()),
 				
 				//Other preprocessing
 				Dimension.create("segmenterClass",
-						StanfordSegmenter.class,
-						BreakIteratorSegmenter.class),
+						StanfordSegmenter.class),
 						
 						Dimension.create("usePosFilter",
 								true, false),
@@ -134,7 +136,7 @@ public class KeyphraseExtractionPipelines
 						WeightingModeIdf.NORMAL,
 						WeightingModeIdf.CONSTANT_ONE,
 						WeightingModeIdf.LOG),
-				Dimension.create("tfidfAggregate", TfidfAggregate.max),
+				Dimension.create("tfidfAggregate", TfidfAggregate.max, TfidfAggregate.avg),
 				Dimension.create("useCoreferenceCounts", true, false),
 		                
 
