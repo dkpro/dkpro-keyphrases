@@ -16,5 +16,10 @@
   			de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl
   		</artifactId>
   	</dependency>
+  	<dependency>
+  		<groupId>de.tudarmstadt.ukp.wikipedia</groupId>
+  		<artifactId>de.tudarmstadt.ukp.wikipedia.parser</artifactId>
+  		<version>0.9.2</version>
+  	</dependency>
   </dependencies>
 </project>
