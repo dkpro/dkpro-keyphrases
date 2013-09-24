@@ -177,7 +177,8 @@ public class KeyphrasePerformanceCounterTest
 
         Assert.assertThat(perfCounter.getMacroPrfOverview(), CoreMatchers.is(macroPrfOverview));
 
-        Assert.assertThat(perfCounter.getMeanAveragePrecision(), CoreMatchers.is(0.0964826841));
+        Assert.assertThat(perfCounter.getMeanAveragePrecision(), CoreMatchers.is(0.7606060607));
+        
 
     }
 }
