@@ -3,7 +3,6 @@ package de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter.filter;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
