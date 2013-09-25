@@ -44,7 +44,9 @@ public class KeyphraseEvaluatorLab
                 setMicroPrecision(getMicroPrecision()).
                 setMicroRecall(getMicroRecall()).
                 setRPrecisionAll(getRPrecisionAll()).
-                setMeanAveragePrecision(getMeanAveragePrecision());
+                setMeanAveragePrecision(getMeanAveragePrecision()).
+                setMaxMicroRecall(getMaxMicroRecall()).
+                setMaxMacroRecall(getMaxMacroRecall());
 
         taskContext.getStorageService().storeBinary(
                 taskContext.getId(), getClass().getSimpleName(), stream);

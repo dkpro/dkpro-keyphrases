@@ -44,6 +44,9 @@ public class EvaluationResultStream
     private double rPrecisionAll;
 
     private double meanAveragePrecision;
+    
+    private double maxMicroRecall;
+    private double maxMacroRecall;
 
 
     public EvaluationResultStream setMacroPrecision(double precision)
@@ -86,6 +89,19 @@ public class EvaluationResultStream
     }
 
 
+    public EvaluationResultStream setMaxMicroRecall(double maxMicroRecall)
+    {
+        this.maxMicroRecall = maxMicroRecall;
+        return this;
+    }
+
+    public EvaluationResultStream setMaxMacroRecall(double maxMacroRecall)
+    {
+        this.maxMacroRecall = maxMacroRecall;
+        return this;
+    }
+
+
     @Override
     public void read(InputStream inputStream)
         throws IOException
@@ -97,6 +113,8 @@ public class EvaluationResultStream
         microRecall = Double.parseDouble(reader.readLine());
         rPrecisionAll = Double.parseDouble(reader.readLine());
         meanAveragePrecision = Double.parseDouble(reader.readLine());
+        maxMicroRecall = Double.parseDouble(reader.readLine());
+        maxMacroRecall = Double.parseDouble(reader.readLine());
 
         Closeables.closeQuietly(reader);
         Closeables.closeQuietly(inputStream);
@@ -114,6 +132,8 @@ public class EvaluationResultStream
         printer.println(microRecall);
         printer.println(rPrecisionAll);
         printer.println(meanAveragePrecision);
+        printer.println(maxMicroRecall);
+        printer.println(maxMacroRecall);
 
         Closeables.closeQuietly(printer);
         Closeables.closeQuietly(outputStream);
@@ -129,6 +149,8 @@ public class EvaluationResultStream
         results.put("Micro Recall", microRecall);
         results.put("R-Precision (All)", rPrecisionAll);
         results.put("Mean Average Precision", meanAveragePrecision);
+        results.put("Max micro Recall", maxMicroRecall);
+        results.put("Max macro Recall", maxMacroRecall);
         return results;
     }
 

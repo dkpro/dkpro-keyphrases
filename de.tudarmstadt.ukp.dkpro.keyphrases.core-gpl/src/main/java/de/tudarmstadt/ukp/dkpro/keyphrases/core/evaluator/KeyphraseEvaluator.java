@@ -33,6 +33,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.util.EvaluatorUtils;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.util.KeyphrasePerformanceCounter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.util.Matchings;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.util.MaxKeyphraseRecallCounter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
@@ -118,7 +119,8 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
 	private double rPrecisionAll;
 	private double ratioFoundGoldKeyphrases;
 
-    private final KeyphrasePerformanceCounter performanceCounterAll = new KeyphrasePerformanceCounter();
+    private KeyphrasePerformanceCounter performanceCounterAll;
+    private MaxKeyphraseRecallCounter maxRecallCounter;
 
 
     @Override
@@ -132,6 +134,9 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         sb.append("MatchingType: "); sb.append(matchingType); sb.append(LF);
         sb.append(LF);
         getContext().getLogger().log(Level.INFO, sb.toString());
+        
+        performanceCounterAll = new KeyphrasePerformanceCounter();
+        maxRecallCounter = new MaxKeyphraseRecallCounter();
     }
 
     @Override
@@ -153,6 +158,8 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         if(removeKeyphrasesNotInText){
         	goldKeyphrases = removeGoldKeyphrasesNotInDocument(jcas.getDocumentText(), goldKeyphrases);
         }
+        
+        
 
         nrofGoldKeyphrases += goldKeyphrases.size();
         nrofDeletedGoldKeyphrases += originalGoldKeyphrasesSize - goldKeyphrases.size();
@@ -172,14 +179,44 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         }
 
         performanceCounterAll.registerFile(currentTitle, iterateTo);
+        maxRecallCounter.registerFile(currentTitle, keyphrases.size());
 
         // get performance results for each i up to n
         for (int i=1; i<=iterateTo; i++) {
             computeThresholdPerformanceResults(i, iterateTo, keyphrases, goldKeyphrases, currentTitle);
         }
         
+        computeMaxRecall(keyphrases, goldKeyphrases, currentTitle);
+        
+        
     }
 
+
+    private void computeMaxRecall(List<Keyphrase> keyphrases, Set<String> goldKeyphrases, String title) throws AnalysisEngineProcessException
+    {
+        int tp = 0;
+        int fp = 0;
+
+        List<String> keyphrasesToConsider = getKeyphrasesToConsider(keyphrases, keyphrases.size());
+
+        int nrOfGoldKeyphrases = goldKeyphrases.size();
+
+        // get the set of matching goldkeyphrases and equivalent extracted keyphrases
+        Matchings matchings = getMatchings(new HashSet<String>(goldKeyphrases), keyphrasesToConsider);
+
+        tp = matchings.getNumberOfMatchings();
+        fp = keyphrasesToConsider.size() - tp;
+
+        // sanity check
+        if (tp > nrOfGoldKeyphrases) {
+            throw new AnalysisEngineProcessException(new Throwable("More true positives than gold standard keyphrases."));
+        }
+
+        performanceCounterAll.setFileTPcount(title, keyphrasesToConsider.size(), tp);
+        performanceCounterAll.setFileFPcount(title, keyphrasesToConsider.size(), fp);
+        performanceCounterAll.setFileFNcount(title, keyphrasesToConsider.size(), nrOfGoldKeyphrases - tp);
+        
+    }
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
@@ -459,6 +496,16 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
 
     protected double getMeanAveragePrecision(){
         return performanceCounterAll.getMeanAveragePrecision();
+    }
+
+    protected double getMaxMicroRecall()
+    {
+        return maxRecallCounter.getMaxMicroRecall();
+    }
+
+    protected double getMaxMacroRecall()
+    {
+        return maxRecallCounter.getMaxMacroRecall();
     }
 
 
