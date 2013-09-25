@@ -154,7 +154,9 @@ public class FilePerformance
     {
         int maxN = 0;
         for(int n : TPcounter.keySet()){
-            maxN = maxN<n ? n : maxN;
+            if(n>maxN){
+                maxN = n;
+            }
         }
         return TPcounter.get(maxN);
     }

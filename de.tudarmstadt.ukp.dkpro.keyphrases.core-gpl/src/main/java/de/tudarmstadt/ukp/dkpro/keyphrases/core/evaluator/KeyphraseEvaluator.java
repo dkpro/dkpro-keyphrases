@@ -179,13 +179,12 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         }
 
         performanceCounterAll.registerFile(currentTitle, iterateTo);
-        maxRecallCounter.registerFile(currentTitle, keyphrases.size());
 
         // get performance results for each i up to n
         for (int i=1; i<=iterateTo; i++) {
             computeThresholdPerformanceResults(i, iterateTo, keyphrases, goldKeyphrases, currentTitle);
         }
-        
+        maxRecallCounter.registerFile(currentTitle, keyphrases.size());        
         computeMaxRecall(keyphrases, goldKeyphrases, currentTitle);
         
         
@@ -212,9 +211,9 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
             throw new AnalysisEngineProcessException(new Throwable("More true positives than gold standard keyphrases."));
         }
 
-        performanceCounterAll.setFileTPcount(title, keyphrasesToConsider.size(), tp);
-        performanceCounterAll.setFileFPcount(title, keyphrasesToConsider.size(), fp);
-        performanceCounterAll.setFileFNcount(title, keyphrasesToConsider.size(), nrOfGoldKeyphrases - tp);
+        maxRecallCounter.setFileTPcount(title, keyphrasesToConsider.size(), tp);
+        maxRecallCounter.setFileFPcount(title, keyphrasesToConsider.size(), fp);
+        maxRecallCounter.setFileFNcount(title, keyphrasesToConsider.size(), nrOfGoldKeyphrases - tp);
         
     }
 

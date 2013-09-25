@@ -1,7 +1,6 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.util;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class MaxKeyphraseRecallCounter extends AbstractKeyphraseCounter
 {
