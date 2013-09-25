@@ -8,7 +8,6 @@
   <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter-asl</artifactId>
   <name>DKPro Keyphrases - Wikipedia Filter</name>
   <description>Wikipedia Filter</description>
-  <groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
   <dependencies>
   	<dependency>
   		<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
