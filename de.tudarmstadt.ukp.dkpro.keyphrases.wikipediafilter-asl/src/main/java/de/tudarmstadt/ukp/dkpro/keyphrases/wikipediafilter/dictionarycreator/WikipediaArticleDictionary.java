@@ -23,10 +23,10 @@ public class WikipediaArticleDictionary {
         // configure the database connection parameters
         DatabaseConfiguration dbConfig = new DatabaseConfiguration();
         dbConfig.setHost("localhost");
-        dbConfig.setDatabase("wiki_en_20130403_rev");
+        dbConfig.setDatabase("wiki_en_20080103");
         dbConfig.setUser("root");
         dbConfig.setPassword("");
-        dbConfig.setLanguage(Language.german);
+        dbConfig.setLanguage(Language.english);
 
         // Create the Wikipedia object
         Wikipedia wiki = new Wikipedia(dbConfig);
@@ -34,7 +34,7 @@ public class WikipediaArticleDictionary {
         PageIterator pageIterator = new PageIterator(wiki, true, buffer);
 
         File file = new File("target/wikipedia/articles.txt");
-        file.mkdirs();
+        file.getParentFile().mkdirs();
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         while(pageIterator.hasNext()){
             writer.write(pageIterator.next().getTitle().getPlainTitle());
