@@ -60,6 +60,11 @@
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>kea</groupId>
+			<artifactId>kea</artifactId>
+			<version>5.0</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
