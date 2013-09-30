@@ -53,6 +53,8 @@ extends UimaTaskBase
 	private boolean removeKeyphrasesNotInText;
 	@Discriminator
 	private String goldSuffix;
+	@Discriminator
+	private boolean evaluatorLowercase;
 
 
 	@Override
@@ -77,7 +79,8 @@ extends UimaTaskBase
 				KeyphraseEvaluatorLab.PARAM_EVAL_TYPE, evaluatorType.toString(),
 				KeyphraseEvaluatorLab.PARAM_REMOVE_GOLD_AFTER_MATCH, evaluationRemoveGoldAfterMatch,
 				KeyphraseEvaluatorLab.PARAM_GOLD_SUFFIX, goldSuffix,
-				KeyphraseEvaluatorLab.PARAM_REMOVE_KEYPHRASES_NOT_IN_TEXT, removeKeyphrasesNotInText));
+				KeyphraseEvaluatorLab.PARAM_REMOVE_KEYPHRASES_NOT_IN_TEXT, removeKeyphrasesNotInText,
+				KeyphraseEvaluatorLab.PARAM_LOWERCASE, evaluatorLowercase));
 }
 
 }
