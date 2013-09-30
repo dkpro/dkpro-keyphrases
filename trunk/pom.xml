@@ -27,7 +27,7 @@
 			</dependency>
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
 				<version>1.5.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>

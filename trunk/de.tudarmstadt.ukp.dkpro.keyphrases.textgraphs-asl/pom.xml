@@ -40,7 +40,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.matrix-toolkits-java</groupId>
