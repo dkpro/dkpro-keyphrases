@@ -42,6 +42,11 @@
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-gpl</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.matrix-toolkits-java</groupId>
+			<artifactId>mtj</artifactId>
+			<version>0.9.14</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
