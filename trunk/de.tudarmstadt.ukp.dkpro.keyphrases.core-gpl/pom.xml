@@ -34,11 +34,6 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.googlecode.matrix-toolkits-java</groupId>
-			<artifactId>mtj</artifactId>
-			<version>0.9.14</version>
-		</dependency>
-		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.snowball-asl</artifactId>
 		</dependency>
