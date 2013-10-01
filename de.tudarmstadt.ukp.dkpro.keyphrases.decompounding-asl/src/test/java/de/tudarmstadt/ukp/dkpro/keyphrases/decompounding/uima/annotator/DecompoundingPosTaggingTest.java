@@ -43,10 +43,10 @@ import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.resource.SharedFinder;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.resource.SharedLinkingMorphemes;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.resource.SplitterResource;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.web1t.LuceneIndexer;
-import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
-import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter;
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
 
-public class DecompoundingPOSTaggingTest
+public class DecompoundingPosTaggingTest
 {
 
     static File source = new File("src/test/resources/ranking/n-grams");
@@ -74,7 +74,7 @@ public class DecompoundingPOSTaggingTest
                 + "Bier. Akademiker trinken gerne Rotwein und Lehrer trinken Schnaps.";
 
         AnalysisEngineDescription stanfordSegmenter = createPrimitiveDescription(
-                StanfordSegmenter.class);
+                OpenNlpSegmenter.class);
 
         AnalysisEngineDescription decompoudingAE = createPrimitiveDescription(
                 CompoundAnnotator.class,
@@ -98,7 +98,7 @@ public class DecompoundingPOSTaggingTest
                 CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, CompoundSplitLevel.LOWEST);
 
         AnalysisEngineDescription stanfordPosTagger = createPrimitiveDescription(
-                StanfordPosTagger.class);
+                OpenNlpPosTagger.class);
 
         AnalysisEngineDescription aeDescription = AnalysisEngineFactory.createAggregateDescription(
                 stanfordSegmenter, decompoudingAE, compoundPartTokenizer, stanfordPosTagger);
