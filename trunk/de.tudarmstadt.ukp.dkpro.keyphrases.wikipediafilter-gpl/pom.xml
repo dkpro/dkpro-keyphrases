@@ -8,6 +8,13 @@
   <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter-gpl</artifactId>
   <name>DKPro Keyphrases - Wikipedia Filter</name>
   <description>Wikipedia Filter</description>
+  <licenses>
+	  <license>
+	      <name>GNU General Public License 3.0</name>
+	      <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+	      <distribution>repo</distribution>
+	  </license>
+  </licenses>
   <dependencies>
   	<dependency>
   		<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
