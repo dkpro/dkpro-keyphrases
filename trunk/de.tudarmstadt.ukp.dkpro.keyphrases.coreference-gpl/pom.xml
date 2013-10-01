@@ -22,7 +22,7 @@
     <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases</artifactId>
     <version>1.5.0-SNAPSHOT</version>
   </parent>
-  <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-asl</artifactId>
+  <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-gpl</artifactId>
   <name>DKPro Keyphrases - Coreferences</name>
   <description>Coreferences for Keyphrase Extraction</description>
   <dependencies>

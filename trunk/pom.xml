@@ -58,7 +58,7 @@
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-asl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.lab-asl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding-asl</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-gpl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter-asl	</module>
 	</modules>
 	<properties>
