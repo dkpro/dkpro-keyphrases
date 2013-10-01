@@ -87,7 +87,7 @@ extends UimaTaskBase
 	public CollectionReaderDescription getCollectionReaderDescription(TaskContext aContext)
 			throws ResourceInitializationException, IOException
 			{
-		return createReader(TextReader.class, TextReader.PARAM_PATH, datasetPath,
+		return createReader(TextReader.class, TextReader.PARAM_SOURCE_LOCATION, datasetPath,
 				TextReader.PARAM_PATTERNS, new String[] { INCLUDE_PREFIX + includePrefix },
 				TextReader.PARAM_LANGUAGE, language);
 			}
@@ -101,7 +101,8 @@ extends UimaTaskBase
 
 		engines.add(createEngine(segmenterClass));
 
-		engines.add(createEngine(TreeTaggerPosLemmaTT4J.class));
+		engines.add(createEngine(TreeTaggerPosLemmaTT4J.class,
+		        TreeTaggerPosLemmaTT4J.PARAM_WRITE_LEMMA, false));
 
 		engines.add(createEngine(TreeTaggerChunkerTT4J.class));
 
@@ -166,19 +167,15 @@ extends UimaTaskBase
 
 		}
 
-
-		//        AnalysisEngineDescription parser = createPrimitiveDescription(StanfordParser.class,
-		//                StanfordParser.PARAM_WRITE_CONSTITUENT, true,
-		//                StanfordParser.PARAM_WRITE_DEPENDENCY, true,
-		//                StanfordParser.PARAM_WRITE_PENN_TREE,
-		//                true, StanfordParser.PARAM_WRITE_POS, true);
+	    engines.add(createEngine(TreeTaggerPosLemmaTT4J.class,
+	            TreeTaggerPosLemmaTT4J.PARAM_WRITE_POS, false));
 
 		engines.add(createEngine(NGramAnnotator.class,
 				NGramAnnotator.PARAM_N, 5));
 
 		engines.add(createEngine(TfidfConsumer.class,
 				TfidfConsumer.PARAM_FEATURE_PATH, tfidfFeaturePath, TfidfConsumer.PARAM_LOWERCASE,
-				shouldLowercaseCandidates, TfidfConsumer.PARAM_OUTPUT_PATH, dfModelFile));
+				shouldLowercaseCandidates, TfidfConsumer.PARAM_TARGET_LOCATION, dfModelFile));
 
 		File xmiOutputRoot = aContext.getStorageLocation(KEY_OUTPUT_XMI, AccessMode.ADD_ONLY);
 		engines.add(createEngine(XmiWriter.class,
