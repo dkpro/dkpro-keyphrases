@@ -40,10 +40,6 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.decompounding-asl</artifactId>
 		</dependency>
 		<dependency>
@@ -62,6 +58,12 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.decompounding-model-splitter-de-asv</artifactId>
 			<scope>test</scope>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>
+				de.tudarmstadt.ukp.dkpro.core.opennlp-asl
+			</artifactId>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
