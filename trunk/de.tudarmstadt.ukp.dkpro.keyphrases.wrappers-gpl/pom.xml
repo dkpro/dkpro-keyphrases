@@ -44,7 +44,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-asl</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-gpl</artifactId>
 			<version>1.5.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
