@@ -55,7 +55,7 @@
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-gpl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wrappers-gpl</module>
-	<module>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-gpl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.lab-gpl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding-asl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-gpl</module>
