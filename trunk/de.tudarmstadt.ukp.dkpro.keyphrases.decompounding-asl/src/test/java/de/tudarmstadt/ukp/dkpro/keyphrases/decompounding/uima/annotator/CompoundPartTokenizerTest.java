@@ -22,6 +22,8 @@ import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -31,8 +33,10 @@ import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.junit.Assert;
 import org.junit.Test;
 
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Compound;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Compound.CompoundSplitLevel;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Split;
@@ -41,11 +45,17 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 public class CompoundPartTokenizerTest
 {
 
-	private JCas getJCas(AnalysisEngine analysisEngine) throws ResourceInitializationException{
+    private static final String GETRANKAUTOMAT = "getränkautomat";
+    private static final String GETRANK = "getränk";
+    private static final Logger LOGGER = Logger.getLogger(CompoundPartTokenizerTest.class.getName());
+
+    private JCas getJCas(final AnalysisEngine analysisEngine)
+        throws ResourceInitializationException
+    {
         final JCas jcas = analysisEngine.newJCas();
         final JCasBuilder jcasBuilder = new JCasBuilder(jcas);
         final int beginPosition = jcasBuilder.getPosition();
-        final Split getrank = jcasBuilder.add("getränk", Split.class);
+        final Split getrank = jcasBuilder.add(GETRANK, Split.class);
         final int secondPosition = jcasBuilder.getPosition();
         final Split auto = jcasBuilder.add("auto", Split.class);
         final Split mat = jcasBuilder.add("mat", Split.class);
@@ -61,35 +71,43 @@ public class CompoundPartTokenizerTest
         splits.add(automat);
         compound.setSplits(FSCollectionFactory.createFSArray(jcas, splits));
         compound.addToIndexes();
+        final POS pos = new POS(jcas, beginPosition, jcasBuilder.getPosition());
+        pos.setPosValue("NN");
+        pos.addToIndexes();
+        final Token token = new Token(jcas, beginPosition, jcasBuilder.getPosition());
+        token.setPos(pos);
+        token.addToIndexes();
         jcasBuilder.close();
 
         return jcas;
 
-
-	}
+    }
 
     @Test
     public void testLowest()
         throws ResourceInitializationException, AnalysisEngineProcessException
     {
 
-        final AnalysisEngine analysisEngine = AnalysisEngineFactory
-                .createPrimitive(
-                		CompoundPartTokenizer.class,
-                		CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, CompoundSplitLevel.LOWEST);
+        final AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
+                CompoundPartTokenizer.class, CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL,
+                CompoundSplitLevel.LOWEST);
 
-        JCas jcas = getJCas(analysisEngine);
+        final JCas jcas = getJCas(analysisEngine);
 
         analysisEngine.process(jcas);
 
-        final String[] splitsList = new String[] { "getränk", "auto", "mat" };
-        final String[] tokensList = new String[3];
+        final String[] splitsList = new String[] { GETRANKAUTOMAT, GETRANK, "auto", "mat" };
+        final String[] tokensList = new String[4];
+        final String[] posList = new String[] { "NN", "NN", "NN", "NN" };
+        final String[] obtainedPosList = new String[4];
         int index = 0;
         for (Token token : JCasUtil.select(jcas, Token.class)) {
             tokensList[index] = token.getCoveredText();
+            obtainedPosList[index] = token.getPos().getPosValue();
             ++index;
         }
         assertThat(tokensList, is(splitsList));
+        assertThat(obtainedPosList, is(posList));
     }
 
     @Test
@@ -97,17 +115,16 @@ public class CompoundPartTokenizerTest
         throws ResourceInitializationException, AnalysisEngineProcessException
     {
 
-        final AnalysisEngine analysisEngine = AnalysisEngineFactory
-                .createPrimitive(
-                		CompoundPartTokenizer.class,
-                		CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, CompoundSplitLevel.NONE);
+        final AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
+                CompoundPartTokenizer.class, CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL,
+                CompoundSplitLevel.NONE);
 
-        JCas jcas = getJCas(analysisEngine);
+        final JCas jcas = getJCas(analysisEngine);
 
         analysisEngine.process(jcas);
 
-        final String[] splitsList = new String[] {  };
-        final String[] tokensList = new String[0];
+        final String[] splitsList = new String[] { GETRANKAUTOMAT };
+        final String[] tokensList = new String[1];
         int index = 0;
         for (Token token : JCasUtil.select(jcas, Token.class)) {
             tokensList[index] = token.getCoveredText();
@@ -121,23 +138,26 @@ public class CompoundPartTokenizerTest
         throws ResourceInitializationException, AnalysisEngineProcessException
     {
 
-        final AnalysisEngine analysisEngine = AnalysisEngineFactory
-                .createPrimitive(
-                		CompoundPartTokenizer.class,
-                		CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, CompoundSplitLevel.HIGHEST);
+        final AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
+                CompoundPartTokenizer.class, CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL,
+                CompoundSplitLevel.HIGHEST);
 
-        JCas jcas = getJCas(analysisEngine);
+        final JCas jcas = getJCas(analysisEngine);
 
         analysisEngine.process(jcas);
 
-        final String[] splitsList = new String[] { "getränk", "automat" };
-        final String[] tokensList = new String[2];
+        final String[] splitsList = new String[] { GETRANKAUTOMAT, GETRANK, "automat" };
+        final String[] tokensList = new String[3];
+        final String[] posList = new String[] { "NN", "NN", "NN" };
+        final String[] obtainedPosList = new String[3];
         int index = 0;
         for (Token token : JCasUtil.select(jcas, Token.class)) {
             tokensList[index] = token.getCoveredText();
+            obtainedPosList[index] = token.getPos().getPosValue();
             ++index;
         }
         assertThat(tokensList, is(splitsList));
+        assertThat(obtainedPosList, is(posList));
     }
 
     @Test
@@ -145,36 +165,44 @@ public class CompoundPartTokenizerTest
         throws ResourceInitializationException, AnalysisEngineProcessException
     {
 
-        final AnalysisEngine analysisEngine = AnalysisEngineFactory
-                .createPrimitive(
-                		CompoundPartTokenizer.class,
-                		CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, CompoundSplitLevel.ALL);
+        final AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
+                CompoundPartTokenizer.class, CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL,
+                CompoundSplitLevel.ALL);
 
-        JCas jcas = getJCas(analysisEngine);
+        final JCas jcas = getJCas(analysisEngine);
 
         analysisEngine.process(jcas);
 
-        final String[] splitsList = new String[] { "getränk", "automat", "auto", "mat" };
-        final String[] tokensList = new String[4];
+        final String[] splitsList = new String[] { GETRANKAUTOMAT, GETRANK, "automat", "auto",
+                "mat" };
+        final String[] tokensList = new String[5];
+        final String[] posList = new String[] { "NN", "NN", "NN", "NN", "NN" };
+        final String[] obtainedPosList = new String[5];
         int index = 0;
         for (Token token : JCasUtil.select(jcas, Token.class)) {
             tokensList[index] = token.getCoveredText();
+            obtainedPosList[index] = token.getPos().getPosValue();
             ++index;
         }
         assertThat(tokensList, is(splitsList));
+        assertThat(obtainedPosList, is(posList));
     }
 
-   @Test
+    @Test
     public void testParameters()
-            throws ResourceInitializationException, AnalysisEngineProcessException
-        {
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
-                		CompoundPartTokenizer.class,
-                		CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, CompoundSplitLevel.ALL);
-        analysisEngine.process(analysisEngine.newJCas());
+    {
 
-
+        try {
+            final AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
+                    CompoundPartTokenizer.class, CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL,
+                    CompoundSplitLevel.ALL);
+            analysisEngine.process(analysisEngine.newJCas());
+        }
+        catch (Exception exception) {
+            LOGGER.log(Level.SEVERE, exception.getMessage(), exception);
+            Assert.fail("No exception should be thrown");
         }
 
+    }
 
 }
