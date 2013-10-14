@@ -67,6 +67,9 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
     private static int sumNrofTokens;
     private static int sumLengthOfKeyphrases;
     private static List<Integer> tokensPerKeyphrase;
+    private static List<Integer> charactersPerKeyphrase;
+    private static List<Integer> tokensPerDocument;
+    private static List<Integer> keyphrasesPerDocument;
 
     private static List<Integer> tokenSizeList;
     private static List<Integer> goldSizeList;
@@ -80,6 +83,9 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         sumNrofTokens = 0;
         sumLengthOfKeyphrases = 0;
         tokensPerKeyphrase = new ArrayList<Integer>();
+        charactersPerKeyphrase = new ArrayList<Integer>();
+        tokensPerDocument = new ArrayList<Integer>();
+        keyphrasesPerDocument = new ArrayList<Integer>();
 
         tokenSizeList = new ArrayList<Integer>();
         goldSizeList  = new ArrayList<Integer>();
@@ -101,14 +107,18 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
 
         AnnotationIndex<Annotation> tokenIndex = jcas.getAnnotationIndex(Token.type);
         sumNrofTokens += tokenIndex.size();
+        tokensPerDocument.add(tokenIndex.size());
 
 
         for (String goldKeyphrase : goldKeyphrases) {
             sumLengthOfKeyphrases += goldKeyphrase.length();
             tokensPerKeyphrase.add(goldKeyphrase.split(" ").length);
+            charactersPerKeyphrase.add(goldKeyphrase.length());
 
             nrofKeyphrases++;
         }
+        
+        keyphrasesPerDocument.add(goldKeyphrases.size());
 
         tokenSizeList.add(tokenIndex.size());
         goldSizeList.add(goldKeyphrases.size());
@@ -119,10 +129,13 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
         double averageNrofTokens = (double) sumNrofTokens / nrofDocuments;
+        double stdDevAverageNrofTokens = stdDev(tokensPerDocument);
         double averageLengthOfKeyphrases = (double) sumLengthOfKeyphrases / nrofKeyphrases;
+        double stdDevAverageLengthOfKeyphrases = stdDev(charactersPerKeyphrase);
         double averageTokensPerKeyphrase = mean(tokensPerKeyphrase);
         double stdDevTokensPerKeyphrase = stdDev(tokensPerKeyphrase);
-        double keyphrasesPerDocument = (double) nrofKeyphrases / nrofDocuments;
+        double avgKeyphrasesPerDocument = (double) nrofKeyphrases / nrofDocuments;
+        double stdDevKeyphrasesPerDocument = stdDev(keyphrasesPerDocument);
 
         double[] tokenSizeArray = listToArray(tokenSizeList);
         double[] goldSizeArray  = listToArray(goldSizeList);
@@ -130,10 +143,10 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         StringBuilder sb = new StringBuilder();
         sb.append(LF);
         sb.append("# Documents:               "); sb.append(nrofDocuments); sb.append(LF);
-        sb.append("Tokens / Document:         "); sb.append(averageNrofTokens); sb.append(LF);
+        sb.append("Tokens / Document:         "); sb.append(averageNrofTokens); sb.append("(+/- "); sb.append(stdDevAverageNrofTokens); sb.append(")"); sb.append(LF);
         sb.append("# Keyphrases:              "); sb.append(nrofKeyphrases); sb.append(LF);
-        sb.append("Keyphrases / Document:     "); sb.append(keyphrasesPerDocument); sb.append(LF);
-        sb.append("Characters / Keyphrase:    "); sb.append(averageLengthOfKeyphrases); sb.append(LF);
+        sb.append("Keyphrases / Document:     "); sb.append(avgKeyphrasesPerDocument); sb.append("(+/- "); sb.append(stdDevKeyphrasesPerDocument); sb.append(")"); sb.append(LF);
+        sb.append("Characters / Keyphrase:    "); sb.append(averageLengthOfKeyphrases); sb.append("(+/- "); sb.append(stdDevAverageLengthOfKeyphrases); sb.append(")"); sb.append(LF);
         sb.append("Tokens / Keyphrase:        "); sb.append(averageTokensPerKeyphrase); sb.append("(+/- "); sb.append(stdDevTokensPerKeyphrase); sb.append(")"); sb.append(LF);
         sb.append(LF);
         sb.append("Pearson Correlation between document size and the number of gold keyphrases:"); sb.append(LF);
