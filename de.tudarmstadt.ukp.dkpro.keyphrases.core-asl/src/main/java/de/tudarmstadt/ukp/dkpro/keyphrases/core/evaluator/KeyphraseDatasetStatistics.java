@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.text.AnnotationIndex;
@@ -143,7 +144,7 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         StringBuilder sb = new StringBuilder();
         sb.append(LF);
         sb.append("# Documents:               "); sb.append(nrofDocuments); sb.append(LF);
-        sb.append("Tokens / Document:         "); sb.append(averageNrofTokens); sb.append("(+/- "); sb.append(stdDevAverageNrofTokens); sb.append(")"); sb.append(LF);
+        sb.append("Tokens / Document:         "); sb.append(averageNrofTokens); sb.append("(+/- "); sb.append(stdDevAverageNrofTokens); sb.append(") Median: ");  sb.append(median(tokensPerDocument)); sb.append(")"); sb.append(LF);
         sb.append("# Keyphrases:              "); sb.append(nrofKeyphrases); sb.append(LF);
         sb.append("Keyphrases / Document:     "); sb.append(avgKeyphrasesPerDocument); sb.append("(+/- "); sb.append(stdDevKeyphrasesPerDocument); sb.append(")"); sb.append(LF);
         sb.append("Characters / Keyphrase:    "); sb.append(averageLengthOfKeyphrases); sb.append("(+/- "); sb.append(stdDevAverageLengthOfKeyphrases); sb.append(")"); sb.append(LF);
@@ -197,6 +198,16 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
            mean = sum/values.size();
         }
         return mean;
+    }
+
+    public double median(List<Integer> values) {
+    	DescriptiveStatistics stats = new DescriptiveStatistics();
+    	for(Integer value : values){
+    		stats.addValue(value);
+    	}
+    	return stats.getPercentile(0.5);
+
+
     }
 
     public double stdDev(List<Integer> values) {
