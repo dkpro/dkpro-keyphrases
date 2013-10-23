@@ -70,20 +70,6 @@
 			<artifactId>commons-math</artifactId>
 		</dependency>
 	</dependencies>
-		<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-en</artifactId>
-				<version>20111109.0</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-bin</artifactId>
-				<version>20120425.0</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<profiles>
 		<profile>
 			<id>use-proprietary-resources</id>
