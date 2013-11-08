@@ -18,8 +18,6 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,9 +46,11 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.util.EvaluatorUtils;
  */
 public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
 
-    // In some cases the capitalization of the gold standard keyphrases does not reflect capitalization in the text
-    // As there are only rare cases where a keyphrase should be included in uppercase, but not in lowercase (e.g. apple vs. Apple) this seems acceptable.
-    // The behavior can be overwritten by a parameter.
+    // In some cases the capitalization of the gold standard keyphrases
+    // does not reflect capitalization in the text
+    // As there are only rare cases where a keyphrase should be
+    // included in uppercase, but not in lowercase (e.g. apple vs. Apple)
+    // this seems acceptable. The behavior can be overwritten by a parameter.
     public static final String PARAM_LOWERCASE   = "lowercase";
     @ConfigurationParameter(name=PARAM_LOWERCASE, mandatory=false, defaultValue="false")
     private boolean toLowercase;
@@ -61,65 +61,67 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
     @ConfigurationParameter(name=PARAM_GOLD_SUFFIX, mandatory=false, defaultValue=".key")
     private String goldSuffix;
 
-    private static final String LF = System.getProperty("line.separator");
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    private static final String MORE_LESS_LITERAL = "(+/- ";
+    private static final int MIN_STD_DEV_SIZE = 1;
 
     private static int nrofDocuments;
     private static int nrofKeyphrases;
     private static int sumNrofTokens;
-    private static int sumLengthOfKeyphrases;
-    private static List<Integer> tokensPerKeyphrase;
-    private static List<Integer> charactersPerKeyphrase;
+    private static int sumLgthKeyphrs;
+    private static List<Integer> tknsPerKeyphr;
+    private static List<Integer> charsPerKeyphr;
     private static List<Integer> tokensPerDocument;
-    private static List<Integer> keyphrasesPerDocument;
+    private static List<Integer> keyphrsPerDoc;
 
     private static List<Integer> tokenSizeList;
     private static List<Integer> goldSizeList;
 
     @Override
-    public void initialize(UimaContext context) throws ResourceInitializationException {
+    public void initialize(final UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
 
         nrofDocuments = 0;
         nrofKeyphrases = 0;
         sumNrofTokens = 0;
-        sumLengthOfKeyphrases = 0;
-        tokensPerKeyphrase = new ArrayList<Integer>();
-        charactersPerKeyphrase = new ArrayList<Integer>();
+        sumLgthKeyphrs = 0;
+        tknsPerKeyphr = new ArrayList<Integer>();
+        charsPerKeyphr = new ArrayList<Integer>();
         tokensPerDocument = new ArrayList<Integer>();
-        keyphrasesPerDocument = new ArrayList<Integer>();
+        keyphrsPerDoc = new ArrayList<Integer>();
 
         tokenSizeList = new ArrayList<Integer>();
         goldSizeList  = new ArrayList<Integer>();
     }
 
     @Override
-    public void process(JCas jcas) throws AnalysisEngineProcessException {
+    public void process(final JCas jcas) throws AnalysisEngineProcessException {
 
         nrofDocuments++;
 
-        DocumentMetaData docMetaData = DocumentMetaData.get(jcas);
-        String currentTitle = docMetaData.getDocumentTitle();
+        final DocumentMetaData docMetaData = DocumentMetaData.get(jcas);
+        final String currentTitle = docMetaData.getDocumentTitle();
         getContext().getLogger().log(Level.INFO, "Document title: " + currentTitle);
 
         // get the gold keyphrases from the file system
-        Set<String> goldKeyphrases = EvaluatorUtils.getGoldKeyphrases(
+        final Set<String> goldKeyphrases = EvaluatorUtils.getGoldKeyphrases(
                 docMetaData, goldSuffix, toLowercase
         );
 
-        AnnotationIndex<Annotation> tokenIndex = jcas.getAnnotationIndex(Token.type);
+        final AnnotationIndex<Annotation> tokenIndex = jcas.getAnnotationIndex(Token.type);
         sumNrofTokens += tokenIndex.size();
         tokensPerDocument.add(tokenIndex.size());
 
 
-        for (String goldKeyphrase : goldKeyphrases) {
-            sumLengthOfKeyphrases += goldKeyphrase.length();
-            tokensPerKeyphrase.add(goldKeyphrase.split(" ").length);
-            charactersPerKeyphrase.add(goldKeyphrase.length());
+        for (final String goldKeyphrase : goldKeyphrases) {
+            sumLgthKeyphrs += goldKeyphrase.length();
+            tknsPerKeyphr.add(goldKeyphrase.split("\\s+").length);
+            charsPerKeyphr.add(goldKeyphrase.length());
 
             nrofKeyphrases++;
         }
 
-        keyphrasesPerDocument.add(goldKeyphrases.size());
+        keyphrsPerDoc.add(goldKeyphrases.size());
 
         tokenSizeList.add(tokenIndex.size());
         goldSizeList.add(goldKeyphrases.size());
@@ -129,69 +131,72 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
 
     @Override
     public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        double averageNrofTokens = (double) sumNrofTokens / nrofDocuments;
-        double stdDevAverageNrofTokens = stdDev(tokensPerDocument);
-        double averageLengthOfKeyphrases = (double) sumLengthOfKeyphrases / nrofKeyphrases;
-        double stdDevAverageLengthOfKeyphrases = stdDev(charactersPerKeyphrase);
-        double averageTokensPerKeyphrase = mean(tokensPerKeyphrase);
-        double stdDevTokensPerKeyphrase = stdDev(tokensPerKeyphrase);
-        double avgKeyphrasesPerDocument = (double) nrofKeyphrases / nrofDocuments;
-        double stdDevKeyphrasesPerDocument = stdDev(keyphrasesPerDocument);
+        final double averageNrofTokens = (double) sumNrofTokens / nrofDocuments;
+        final double stdDevAvgNrTokens = stdDev(tokensPerDocument);
+        final double avgLngthKeyphrs = (double) sumLgthKeyphrs / nrofKeyphrases;
+        final double stdDevAvgLnthKphr = stdDev(charsPerKeyphr);
+        final double avgToksKeyphrs = mean(tknsPerKeyphr);
+        final double stdDevToksKeyphr = stdDev(tknsPerKeyphr);
+        final double avgKeyphrPerDoc = (double) nrofKeyphrases / nrofDocuments;
+        final double stdDevKeyphrDoc = stdDev(keyphrsPerDoc);
 
-        double[] tokenSizeArray = listToArray(tokenSizeList);
-        double[] goldSizeArray  = listToArray(goldSizeList);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(LF);
-        sb.append("# Documents:               "); sb.append(nrofDocuments); sb.append(LF);
-        sb.append("Tokens / Document:         "); sb.append(averageNrofTokens); sb.append("(+/- "); sb.append(stdDevAverageNrofTokens); sb.append(") Median: ");  sb.append(median(tokensPerDocument)); sb.append(")"); sb.append(LF);
-        sb.append("# Keyphrases:              "); sb.append(nrofKeyphrases); sb.append(LF);
-        sb.append("Keyphrases / Document:     "); sb.append(avgKeyphrasesPerDocument); sb.append("(+/- "); sb.append(stdDevKeyphrasesPerDocument); sb.append(")"); sb.append(LF);
-        sb.append("Characters / Keyphrase:    "); sb.append(averageLengthOfKeyphrases); sb.append("(+/- "); sb.append(stdDevAverageLengthOfKeyphrases); sb.append(")"); sb.append(LF);
-        sb.append("Tokens / Keyphrase:        "); sb.append(averageTokensPerKeyphrase); sb.append("(+/- "); sb.append(stdDevTokensPerKeyphrase); sb.append(")"); sb.append(LF);
-        sb.append(LF);
-        sb.append("Pearson Correlation between document size and the number of gold keyphrases:"); sb.append(LF);
-//        sb.append(new PearsonsCorrelation().correlation(tokenSizeArray, goldSizeArray)); sb.append(LF);
-        sb.append(LF);
-        sb.append(getNrOfTokensPerKeyphraseHistogramm()); sb.append(LF);
-        sb.append(LF);
+//        double[] tokenSizeArray = listToArray(tokenSizeList);
+//        double[] goldSizeArray  = listToArray(goldSizeList);
 
-        getContext().getLogger().log(Level.INFO, sb.toString());
+        final StringBuilder stringBuilder = new StringBuilder(272);
+        stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("# Documents:               "); stringBuilder.append(nrofDocuments); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("Tokens / Document:         "); stringBuilder.append(averageNrofTokens); stringBuilder.append(MORE_LESS_LITERAL); stringBuilder.append(stdDevAvgNrTokens); stringBuilder.append(") Median: ");  stringBuilder.append(median(tokensPerDocument)); stringBuilder.append(')'); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("# Keyphrases:              "); stringBuilder.append(nrofKeyphrases); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("Keyphrases / Document:     "); stringBuilder.append(avgKeyphrPerDoc); stringBuilder.append(MORE_LESS_LITERAL); stringBuilder.append(stdDevKeyphrDoc); stringBuilder.append(')'); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("Characters / Keyphrase:    "); stringBuilder.append(avgLngthKeyphrs); stringBuilder.append(MORE_LESS_LITERAL); stringBuilder.append(stdDevAvgLnthKphr); stringBuilder.append(')'); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("Tokens / Keyphrase:        "); stringBuilder.append(avgToksKeyphrs); stringBuilder.append(MORE_LESS_LITERAL); stringBuilder.append(stdDevToksKeyphr); stringBuilder.append(')'); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("Pearson Correlation between document size and the number of gold keyphrases:"); stringBuilder.append(LINE_SEPARATOR);
+//        sb.append(new PearsonsCorrelation().correlation(
+//        tokenSizeArray, goldSizeArray));
+//        sb.append(LF);
+        stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append(getNrOfTokensPerKeyphraseHistogramm()); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append(LINE_SEPARATOR);
+        getContext().getLogger().setOutputStream(System.out);
+        getContext().getLogger().log(Level.INFO, stringBuilder.toString());
     }
 
-    private double[] listToArray(List<Integer> list) {
-        double[] array = new double[list.size()];
-        int i = 0;
-        for (int value : list) {
-            array[i] = value;
-            i++;
-        }
-        return array;
-    }
+//    private double[] listToArray(List<Integer> list) {
+//        double[] array = new double[list.size()];
+//        int i = 0;
+//        for (int value : list) {
+//            array[i] = value;
+//            i++;
+//        }
+//        return array;
+//    }
 
     private String getNrOfTokensPerKeyphraseHistogramm() {
-        Map<Integer,Integer> tokensPerKeyphraseMap = new TreeMap<Integer,Integer>();
-        for (Integer nrOfTokens : tokensPerKeyphrase) {
-            if (tokensPerKeyphraseMap.containsKey(nrOfTokens)) {
-                tokensPerKeyphraseMap.put(nrOfTokens, tokensPerKeyphraseMap.get(nrOfTokens) + 1);
+        final Map<Integer,Integer> tksPerKeyphrMap = new TreeMap<Integer,Integer>();
+        for (final Integer nrOfTokens : tknsPerKeyphr) {
+            if (tksPerKeyphrMap.containsKey(nrOfTokens)) {
+                tksPerKeyphrMap.put(nrOfTokens, tksPerKeyphrMap.get(nrOfTokens) + 1);
             }
             else {
-                tokensPerKeyphraseMap.put(nrOfTokens, 1);
+                tksPerKeyphrMap.put(nrOfTokens, 1);
             }
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (Integer nrOfTokens : tokensPerKeyphraseMap.keySet() ) {
-            sb.append(nrOfTokens); sb.append(":"); sb.append(tokensPerKeyphraseMap.get(nrOfTokens)); sb.append(LF);
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (final Integer nrOfTokens : tksPerKeyphrMap.keySet() ) {
+            stringBuilder.append(nrOfTokens); stringBuilder.append(':'); stringBuilder.append(tksPerKeyphrMap.get(nrOfTokens)); stringBuilder.append(LINE_SEPARATOR);
         }
-        return sb.toString();
+        return stringBuilder.toString();
     }
 
-    public double mean(List<Integer> values) {
+    public double mean(final List<Integer> values) {
         double mean = 0.0;
-        if (values.size() > 0) {
+        if (!values.isEmpty()) {
             double sum = 0.0;
-            for (Integer value : values) {
+            for (final Integer value : values) {
                 sum += value;
             }
 
@@ -200,9 +205,9 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         return mean;
     }
 
-    public double median(List<Integer> values) {
-    	DescriptiveStatistics stats = new DescriptiveStatistics();
-    	for(Integer value : values){
+    public double median(final List<Integer> values) {
+    	final DescriptiveStatistics stats = new DescriptiveStatistics();
+    	for(final Integer value : values){
     		stats.addValue(value);
     	}
     	return stats.getPercentile(0.5);
@@ -210,15 +215,15 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
 
     }
 
-    public double stdDev(List<Integer> values) {
+    public double stdDev(final List<Integer> values) {
          double stdDev = 0.0;
 
-        if (values.size() > 1) {
-            double meanValue = mean(values);
+        if (values.size() > MIN_STD_DEV_SIZE) {
+            final double meanValue = mean(values);
             double sum = 0.0;
 
-            for (Integer value : values) {
-                double diff = value - meanValue;
+            for (final Integer value : values) {
+                final double diff = value - meanValue;
                 sum += diff*diff;
             }
             stdDev = Math.sqrt(sum/(values.size()));
