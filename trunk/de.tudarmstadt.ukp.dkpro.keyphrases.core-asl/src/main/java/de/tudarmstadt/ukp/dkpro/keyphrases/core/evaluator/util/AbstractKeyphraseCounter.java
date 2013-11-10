@@ -17,6 +17,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.util;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,9 +25,8 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 
 public abstract class AbstractKeyphraseCounter
 {
-    
-    protected Map<String, FilePerformance> fileName2performanceMap;
-    
+
+    protected Map<String, FilePerformance> fileName2performanceMap = new HashMap<String, FilePerformance>();
 
     public void registerFile(String filename, int nrOfKeyphrasesRetrieved)
         throws AnalysisEngineProcessException
@@ -60,5 +60,5 @@ public abstract class AbstractKeyphraseCounter
         FilePerformance filePerformance = fileName2performanceMap.get(fileName);
         filePerformance.setFNcounter(i, count);
     }
-    
+
 }
