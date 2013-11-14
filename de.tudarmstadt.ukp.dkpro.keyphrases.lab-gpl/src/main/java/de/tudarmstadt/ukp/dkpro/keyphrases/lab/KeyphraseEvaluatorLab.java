@@ -34,9 +34,21 @@ public class KeyphraseEvaluatorLab
 
         EvaluationResultStream stream = new EvaluationResultStream().
                 setMacroPrecision(getMacroPrecision()).
+                setMacroPrecisionAt5(getMacroPrecision(5)).
+                setMacroPrecisionAt10(getMacroPrecision(10)).
+                setMacroPrecisionAt15(getMacroPrecision(15)).
                 setMacroRecall(getMacroRecall()).
+                setMacroRecallAt5(getMacroRecall(5)).
+                setMacroRecallAt10(getMacroRecall(10)).
+                setMacroRecallAt15(getMacroRecall(15)).
                 setMicroPrecision(getMicroPrecision()).
+                setMicroPrecisionAt5(getMicroPrecision(5)).
+                setMicroPrecisionAt10(getMicroPrecision(10)).
+                setMicroPrecisionAt15(getMicroPrecision(15)).
                 setMicroRecall(getMicroRecall()).
+                setMicroRecallAt5(getMicroRecall(5)).
+                setMicroRecallAt10(getMicroRecall(10)).
+                setMicroRecallAt15(getMicroRecall(15)).
                 setRPrecisionAll(getRPrecisionAll()).
                 setMeanAveragePrecision(getMeanAveragePrecision()).
                 setMaxMicroRecall(getMaxMicroRecall()).

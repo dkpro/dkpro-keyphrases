@@ -30,15 +30,27 @@ public class EvaluationResultStream
     implements StreamReader, StreamWriter
 {
     private double macroPrecision;
+    private double macroPrecisionAt5;
+    private double macroPrecisionAt10;
+    private double macroPrecisionAt15;
     private double macroRecall;
+    private double macroRecallAt5;
+    private double macroRecallAt10;
+    private double macroRecallAt15;
 
     private double microPrecision;
+    private double microPrecisionAt5;
+    private double microPrecisionAt10;
+    private double microPrecisionAt15;
     private double microRecall;
+    private double microRecallAt5;
+    private double microRecallAt10;
+    private double microRecallAt15;
 
     private double rPrecisionAll;
 
     private double meanAveragePrecision;
-    
+
     private double maxMicroRecall;
     private double maxMacroRecall;
 
@@ -96,15 +108,183 @@ public class EvaluationResultStream
     }
 
 
+    public double getMacroPrecisionAt5()
+    {
+        return macroPrecisionAt5;
+    }
+
+
+    public EvaluationResultStream setMacroPrecisionAt5(double macroPrecisionAt5)
+    {
+        this.macroPrecisionAt5 = macroPrecisionAt5;
+        return this;
+    }
+
+
+    public double getMacroPrecisionAt10()
+    {
+        return macroPrecisionAt10;
+    }
+
+
+    public EvaluationResultStream setMacroPrecisionAt10(double macroPrecisionAt10)
+    {
+        this.macroPrecisionAt10 = macroPrecisionAt10;
+        return this;
+    }
+
+
+    public double getMacroPrecisionAt15()
+    {
+        return macroPrecisionAt15;
+    }
+
+
+    public EvaluationResultStream setMacroPrecisionAt15(double macroPrecisionAt15)
+    {
+        this.macroPrecisionAt15 = macroPrecisionAt15;
+        return this;
+    }
+
+
+    public double getMacroRecallAt5()
+    {
+        return macroRecallAt5;
+    }
+
+
+    public EvaluationResultStream setMacroRecallAt5(double macroRecallAt5)
+    {
+        this.macroRecallAt5 = macroRecallAt5;
+        return this;
+    }
+
+
+    public double getMacroRecallAt10()
+    {
+        return macroRecallAt10;
+    }
+
+
+    public EvaluationResultStream setMacroRecallAt10(double macroRecallAt10)
+    {
+        this.macroRecallAt10 = macroRecallAt10;
+        return this;
+    }
+
+
+    public double getMacroRecallAt15()
+    {
+        return macroRecallAt15;
+    }
+
+
+    public EvaluationResultStream setMacroRecallAt15(double macroRecallAt15)
+    {
+        this.macroRecallAt15 = macroRecallAt15;
+        return this;
+    }
+
+
+    public double getMicroPrecisionAt5()
+    {
+        return microPrecisionAt5;
+    }
+
+
+    public EvaluationResultStream setMicroPrecisionAt5(double microPrecisionAt5)
+    {
+        this.microPrecisionAt5 = microPrecisionAt5;
+        return this;
+    }
+
+
+    public double getMicroPrecisionAt10()
+    {
+        return microPrecisionAt10;
+    }
+
+
+    public EvaluationResultStream setMicroPrecisionAt10(double microPrecisionAt10)
+    {
+        this.microPrecisionAt10 = microPrecisionAt10;
+        return this;
+    }
+
+
+    public double getMicroPrecisionAt15()
+    {
+        return microPrecisionAt15;
+    }
+
+
+    public EvaluationResultStream setMicroPrecisionAt15(double microPrecisionAt15)
+    {
+        this.microPrecisionAt15 = microPrecisionAt15;
+        return this;
+    }
+
+
+    public double getMicroRecallAt5()
+    {
+        return microRecallAt5;
+    }
+
+
+    public EvaluationResultStream setMicroRecallAt5(double microRecallAt5)
+    {
+        this.microRecallAt5 = microRecallAt5;
+        return this;
+    }
+
+
+    public double getMicroRecallAt10()
+    {
+        return microRecallAt10;
+    }
+
+
+    public EvaluationResultStream setMicroRecallAt10(double microRecallAt10)
+    {
+        this.microRecallAt10 = microRecallAt10;
+        return this;
+    }
+
+
+    public double getMicroRecallAt15()
+    {
+        return microRecallAt15;
+    }
+
+
+    public EvaluationResultStream setMicroRecallAt15(double microRecallAt15)
+    {
+        this.microRecallAt15 = microRecallAt15;
+        return this;
+    }
+
+
     @Override
     public void read(InputStream inputStream)
         throws IOException
     {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         macroPrecision = Double.parseDouble(reader.readLine());
+        macroPrecisionAt5 = Double.parseDouble(reader.readLine());
+        macroPrecisionAt10 = Double.parseDouble(reader.readLine());
+        macroPrecisionAt15 = Double.parseDouble(reader.readLine());
         macroRecall = Double.parseDouble(reader.readLine());
+        macroRecallAt5 = Double.parseDouble(reader.readLine());
+        macroRecallAt10 = Double.parseDouble(reader.readLine());
+        macroRecallAt15 = Double.parseDouble(reader.readLine());
         microPrecision = Double.parseDouble(reader.readLine());
+        microPrecisionAt5 = Double.parseDouble(reader.readLine());
+        microPrecisionAt10 = Double.parseDouble(reader.readLine());
+        microPrecisionAt15 = Double.parseDouble(reader.readLine());
         microRecall = Double.parseDouble(reader.readLine());
+        microRecallAt5 = Double.parseDouble(reader.readLine());
+        microRecallAt10 = Double.parseDouble(reader.readLine());
+        microRecallAt15 = Double.parseDouble(reader.readLine());
         rPrecisionAll = Double.parseDouble(reader.readLine());
         meanAveragePrecision = Double.parseDouble(reader.readLine());
         maxMicroRecall = Double.parseDouble(reader.readLine());
@@ -121,9 +301,21 @@ public class EvaluationResultStream
     {
         PrintWriter printer = new PrintWriter(new OutputStreamWriter(outputStream, "UTF-8"));
         printer.println(macroPrecision);
+        printer.println(macroPrecisionAt5);
+        printer.println(macroPrecisionAt10);
+        printer.println(macroPrecisionAt15);
         printer.println(macroRecall);
+        printer.println(macroRecallAt5);
+        printer.println(macroRecallAt10);
+        printer.println(macroRecallAt15);
         printer.println(microPrecision);
+        printer.println(microPrecisionAt5);
+        printer.println(microPrecisionAt10);
+        printer.println(microPrecisionAt15);
         printer.println(microRecall);
+        printer.println(microRecallAt5);
+        printer.println(microRecallAt10);
+        printer.println(microRecallAt15);
         printer.println(rPrecisionAll);
         printer.println(meanAveragePrecision);
         printer.println(maxMicroRecall);
@@ -138,9 +330,21 @@ public class EvaluationResultStream
     {
         HashMap<String, Double> results = new HashMap<String, Double>();
         results.put("Macro Precison", macroPrecision);
+        results.put("Macro Precison at 5", macroPrecisionAt5);
+        results.put("Macro Precison at 10", macroPrecisionAt10);
+        results.put("Macro Precison at 15", macroPrecisionAt15);
         results.put("Macro Recall", macroRecall);
+        results.put("Macro Recall at 5", macroRecallAt5);
+        results.put("Macro Recall at 10", macroRecallAt10);
+        results.put("Macro Recall at 15", macroRecallAt15);
         results.put("Micro Precison", microPrecision);
+        results.put("Micro Precison at 5", microPrecisionAt5);
+        results.put("Micro Precison at 10", microPrecisionAt10);
+        results.put("Micro Precison at 15", microPrecisionAt15);
         results.put("Micro Recall", microRecall);
+        results.put("Micro Recall at 5", microRecallAt5);
+        results.put("Micro Recall at 10", microRecallAt10);
+        results.put("Micro Recall at 15", microRecallAt15);
         results.put("R-Precision (All)", rPrecisionAll);
         results.put("Mean Average Precision", meanAveragePrecision);
         results.put("Max micro Recall", maxMicroRecall);
