@@ -141,7 +141,7 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         sb.append("MatchingType: "); sb.append(matchingType); sb.append(LF);
         sb.append(LF);
         getContext().getLogger().log(Level.INFO, sb.toString());
-        
+
         performanceCounterAll = new KeyphrasePerformanceCounter();
         maxRecallCounter = new MaxKeyphraseRecallCounter();
     }
@@ -165,8 +165,8 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         if(removeKeyphrasesNotInText){
         	goldKeyphrases = removeGoldKeyphrasesNotInDocument(jcas.getDocumentText(), goldKeyphrases);
         }
-        
-        
+
+
 
         nrofGoldKeyphrases += goldKeyphrases.size();
         nrofDeletedGoldKeyphrases += originalGoldKeyphrasesSize - goldKeyphrases.size();
@@ -191,10 +191,10 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         for (int i=1; i<=iterateTo; i++) {
             computeThresholdPerformanceResults(i, iterateTo, keyphrases, goldKeyphrases, currentTitle);
         }
-        maxRecallCounter.registerFile(currentTitle, keyphrases.size());        
+        maxRecallCounter.registerFile(currentTitle, keyphrases.size());
         computeMaxRecall(keyphrases, goldKeyphrases, currentTitle);
-        
-        
+
+
     }
 
 
@@ -221,7 +221,7 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         maxRecallCounter.setFileTPcount(title, keyphrasesToConsider.size(), tp);
         maxRecallCounter.setFileFPcount(title, keyphrasesToConsider.size(), fp);
         maxRecallCounter.setFileFNcount(title, keyphrasesToConsider.size(), nrOfGoldKeyphrases - tp);
-        
+
     }
 
     @Override
@@ -232,7 +232,7 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
             performanceCounterAll.getFilePerformanceOverview(maxIterateTo)
         );
 
-        ratioFoundGoldKeyphrases = 1 - new Double(nrofDeletedGoldKeyphrases) / (nrofGoldKeyphrases + nrofDeletedGoldKeyphrases);
+        ratioFoundGoldKeyphrases = 1 - (new Double(nrofDeletedGoldKeyphrases) / (nrofGoldKeyphrases + nrofDeletedGoldKeyphrases));
         rPrecisionAll = performanceCounterAll.getAverageRPrecision();
 
         sb.append(LF);
@@ -284,7 +284,7 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         }
 
         // do not show more than the first 100 keyphrases candidates
-        if (i==n && i<100) {
+        if ((i==n) && (i<100)) {
             getContext().getLogger().log(Level.INFO, "KEYPHRASES:"+keyphrasesToConsider);
             getContext().getLogger().log(Level.INFO, matchings.toString());
         }
@@ -336,7 +336,7 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
     protected int getIterateTo(int size) {
     	// n==0 means => take all keyphrases
         int iterateTo = n;
-        if (n == 0 || size < n) {
+        if ((n == 0) || (size < n)) {
             iterateTo = size;  // if there are less than n keyphrases, limit iterating to keyphrases
         }
 
@@ -354,7 +354,7 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         List<String> keyphraseStrings = new ArrayList<String>();
 
         int i=0;
-        while (i<n && i<keyphrases.size()) {
+        while ((i<n) && (i<keyphrases.size())) {
             String keyphrase = lowercase ? keyphrases.get(i).getKeyphrase().toLowerCase() : keyphrases.get(i).getKeyphrase();
             keyphraseStrings.add(keyphrase);
             i++;
@@ -436,9 +436,9 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         }
 
         int start = s1.indexOf(s2);
-        int end = start + s2.length()-1;
+        int end = (start + s2.length())-1;
 
-        if ((start == 0 || start > 0 && s1.charAt(start-1) == ' ') && (end == s1.length()-1 || end < s1.length()-1 && s1.charAt(end+1) == ' ')) {
+        if (((start == 0) || ((start > 0) && (s1.charAt(start-1) == ' '))) && ((end == (s1.length()-1)) || ((end < (s1.length()-1)) && (s1.charAt(end+1) == ' ')))) {
             return true;
         }
 
@@ -485,7 +485,17 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         return performanceCounterAll.getMacroPrecision(n);
     }
 
+    protected double getMacroPrecision(int n)
+    {
+        return performanceCounterAll.getMacroPrecision(n);
+    }
+
     protected double getMacroRecall()
+    {
+        return performanceCounterAll.getMacroRecall(n);
+    }
+
+    protected double getMacroRecall(int n)
     {
         return performanceCounterAll.getMacroRecall(n);
     }
@@ -495,7 +505,17 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
         return performanceCounterAll.getMicroPrecision(n);
     }
 
+    protected double getMicroPrecision(int n)
+    {
+        return performanceCounterAll.getMicroPrecision(n);
+    }
+
     protected double getMicroRecall()
+    {
+        return performanceCounterAll.getMicroRecall(n);
+    }
+
+    protected double getMicroRecall(int n)
     {
         return performanceCounterAll.getMicroRecall(n);
     }
