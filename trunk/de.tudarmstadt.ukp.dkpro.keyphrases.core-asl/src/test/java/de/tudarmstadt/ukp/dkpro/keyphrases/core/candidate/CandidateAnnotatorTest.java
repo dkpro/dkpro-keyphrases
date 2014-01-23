@@ -50,7 +50,7 @@ public class CandidateAnnotatorTest
         expectedResults.add("funny");
         expectedResults.add("second");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, Token.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      false);
@@ -80,12 +80,12 @@ public class CandidateAnnotatorTest
         expectedResults.add("example");
         expectedResults.add("sentence");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, Token.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      true);
 
-        AnalysisEngine analysisEngine2 = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine2 = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, NGram.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      true);
@@ -116,12 +116,12 @@ public class CandidateAnnotatorTest
         expectedResults.add("funny");
         expectedResults.add("second");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, Token.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      false);
 
-        AnalysisEngine analysisEngine2 = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine2 = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, NC.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      false);
@@ -150,12 +150,12 @@ public class CandidateAnnotatorTest
         expectedResults.add("example sentence");
         expectedResults.add("sentence funny");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, NamedEntity.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      false);
 
-        AnalysisEngine analysisEngine2 = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine2 = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, NGram.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      false);
@@ -183,7 +183,7 @@ public class CandidateAnnotatorTest
         Set<String> expectedResults = new HashSet<String>();
         expectedResults.add("example sentence funny second example");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, NamedEntity.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      true);
@@ -211,7 +211,7 @@ public class CandidateAnnotatorTest
         expectedResults.add("example sentence funny");
         expectedResults.add("funny second example");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH, NamedEntity.class.getName(),
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS,      false);
