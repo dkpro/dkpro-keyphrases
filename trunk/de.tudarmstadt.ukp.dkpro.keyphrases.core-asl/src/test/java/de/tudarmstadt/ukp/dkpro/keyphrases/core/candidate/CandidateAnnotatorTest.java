@@ -20,7 +20,9 @@ package de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -30,11 +32,15 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.junit.Test;
 
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
 import de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.NGram;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.Chunk;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.NC;
+import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
+import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J;
+import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 
 public class CandidateAnnotatorTest
@@ -222,6 +228,93 @@ public class CandidateAnnotatorTest
 
         analysisEngine.process(jcas);
 
+        int i=0;
+        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+            System.out.println(kc);
+            assertTrue(expectedResults.contains(kc.getKeyphrase()));
+            i++;
+        }
+        assertEquals(2,i);
+    }
+    
+    @Test
+    public void KeyphraseCandidateTest7() throws Exception {
+
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(AnalysisEngineFactory.
+                createEngineDescription(
+                        AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
+                        AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                        CandidateAnnotatorFactory. getKeyphraseCandidateAnnotator_lemma(false)));
+
+        JCas jcas = engine.newJCas();
+        jcas.setDocumentLanguage("en");
+        jcas.setDocumentText("This is a sentence.");
+
+        engine.process(jcas);
+
+        List<String> expectedResults = new ArrayList<String>();
+        expectedResults.add("this");
+        expectedResults.add("be");
+        expectedResults.add("a");
+        expectedResults.add("sentence");
+        expectedResults.add(".");
+        
+        int i=0;
+        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+            System.out.println(kc);
+            assertTrue(expectedResults.contains(kc.getKeyphrase()));
+            i++;
+        }
+        assertEquals(5,i);
+    }
+    
+    @Test
+    public void KeyphraseCandidateTest8() throws Exception {
+
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(AnalysisEngineFactory.
+                createEngineDescription(
+                        AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
+                        AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                        AnalysisEngineFactory.createEngineDescription(TreeTaggerChunkerTT4J.class),
+                        CandidateAnnotatorFactory. getKeyphraseCandidateAnnotator_nc(false)));
+
+        JCas jcas = engine.newJCas();
+        jcas.setDocumentLanguage("en");
+        jcas.setDocumentText("A noun phrase.");
+
+        engine.process(jcas);
+
+        List<String> expectedResults = new ArrayList<String>();
+        expectedResults.add("A noun phrase");
+        
+        int i=0;
+        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+            System.out.println(kc);
+            assertTrue(expectedResults.contains(kc.getKeyphrase()));
+            i++;
+        }
+        assertEquals(1,i);
+    }
+    
+    @Test
+    public void KeyphraseCandidateTest9() throws Exception {
+
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(AnalysisEngineFactory.
+                createEngineDescription(
+                        AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
+                        AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                        CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator(N.class.getName(), false)));
+
+        JCas jcas = engine.newJCas();
+        jcas.setDocumentLanguage("en");
+        jcas.setDocumentText("A noun phrase.");
+
+        engine.process(jcas);
+
+        List<String> expectedResults = new ArrayList<String>();
+        expectedResults.add("noun");
+        expectedResults.add("phrase");
+        
         int i=0;
         for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
             System.out.println(kc);
