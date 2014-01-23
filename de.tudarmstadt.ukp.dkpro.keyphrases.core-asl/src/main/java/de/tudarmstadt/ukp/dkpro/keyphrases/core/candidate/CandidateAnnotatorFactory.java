@@ -17,7 +17,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -40,7 +40,7 @@ public class CandidateAnnotatorFactory
 			boolean resolve)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(CandidateAnnotator.class,
+		return createEngineDescription(CandidateAnnotator.class,
 				CandidateAnnotator.PARAM_FEATURE_PATH, Token.class.getName(),
 				CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, resolve);
 	}
@@ -49,7 +49,7 @@ public class CandidateAnnotatorFactory
 			boolean resolve)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(CandidateAnnotator.class,
+		return createEngineDescription(CandidateAnnotator.class,
 				CandidateAnnotator.PARAM_FEATURE_PATH, NGram.class.getName(),
 				CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, resolve);
 	}
@@ -58,7 +58,7 @@ public class CandidateAnnotatorFactory
 			boolean resolve)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(CandidateAnnotator.class,
+		return createEngineDescription(CandidateAnnotator.class,
 				CandidateAnnotator.PARAM_FEATURE_PATH,
 				Lemma.class.getName() + "/value",
 				CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, resolve);
@@ -68,7 +68,7 @@ public class CandidateAnnotatorFactory
 			boolean resolve)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(CandidateAnnotator.class,
+		return createEngineDescription(CandidateAnnotator.class,
 				CandidateAnnotator.PARAM_FEATURE_PATH, NC.class.getName(),
 				CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, resolve);
 	}
@@ -77,7 +77,7 @@ public class CandidateAnnotatorFactory
 			boolean resolve)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(CandidateAnnotator.class,
+		return createEngineDescription(CandidateAnnotator.class,
 				CandidateAnnotator.PARAM_FEATURE_PATH, NamedEntity.class.getName(),
 				CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, resolve);
 	}
@@ -86,7 +86,7 @@ public class CandidateAnnotatorFactory
 			String featurePath, boolean resolve)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(CandidateAnnotator.class,
+		return createEngineDescription(CandidateAnnotator.class,
 				CandidateAnnotator.PARAM_FEATURE_PATH, featurePath,
 				CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, resolve);
 	}
