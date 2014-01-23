@@ -18,6 +18,7 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class KeyphraseMergerTest {
 
     @Test
     public void MergerTest() throws Exception {
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 KeyphraseMerger.class);
 
         String testDocument = "example sentence funny. second example.";
@@ -62,7 +63,7 @@ public class KeyphraseMergerTest {
 
     @Test
     public void MergerTest2() throws Exception {
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 KeyphraseMerger.class,
                 KeyphraseMerger.PARAM_MAX_LENGTH, 2);
 
