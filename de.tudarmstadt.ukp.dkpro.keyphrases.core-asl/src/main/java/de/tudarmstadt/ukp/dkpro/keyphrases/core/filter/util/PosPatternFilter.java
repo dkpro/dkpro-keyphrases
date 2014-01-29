@@ -77,7 +77,6 @@ public class PosPatternFilter {
     };
 
     public PosPatternFilter(int lower_length_threshold, int upper_length_threshold) {
-        super();
         this.lower_length_threshold = lower_length_threshold;
         this.upper_length_threshold = upper_length_threshold;
     }

@@ -18,6 +18,7 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class StopwordFilterTest{
     @Test
     public void FilterTestKeyphrases() throws Exception {
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 StopwordFilter.class,
                 StopwordFilter.PARAM_STOPWORD_LIST, "classpath:/stopwords/english_stopwords.txt");
 
@@ -86,7 +87,7 @@ public class StopwordFilterTest{
 
     @Test
     public void FilterTestCandidates() throws Exception {
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 StopwordFilter.class,
                 StopwordFilter.PARAM_STOPWORD_LIST, "classpath:/stopwords/english_stopwords.txt");
 

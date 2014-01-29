@@ -26,7 +26,6 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Type;
-import org.apache.uima.cas.text.AnnotationIndex;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
@@ -38,7 +37,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.MappingProvider;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.util.PosPatternFilter;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 
 /**
@@ -76,13 +74,6 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
     @ConfigurationParameter(name=PARAM_POS_PATTERNS, mandatory=true, defaultValue="false")
     private boolean usePosPatterns;
 
-    // the mode is automatically determined from the indexes present in the CAS
-    private enum Mode {
-        Candidates,
-        Keyphrases
-    }
-    private Mode mode;
-
     private PosPatternFilter posPatternFilter;
 
 	private MappingProvider taggerMappingProvider;
@@ -97,7 +88,7 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
 
 		taggerMappingProvider = new MappingProvider();
 		taggerMappingProvider.setDefault(MappingProvider.LOCATION, "classpath:/de/tudarmstadt/ukp/dkpro/" +
-				"core/api/lexmorph/tagset/${language}-${tagger.tagset}-tagger.map");
+				"core/api/lexmorph/tagset/${language}-${tagger.tagset}-pos.map");
 		taggerMappingProvider.setDefault(MappingProvider.BASE_TYPE, POS.class.getName());
 		taggerMappingProvider.setDefault("tagger.tagset", "default");
 		taggerMappingProvider.setOverride(MappingProvider.LOCATION, taggerMappingLocation);
@@ -112,34 +103,20 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
 
         taggerMappingProvider.configure(jcas.getCas());
 
-        AnnotationIndex<Annotation> keyphraseIndex = jcas.getAnnotationIndex(Keyphrase.type);
-        if (keyphraseIndex.size() > 0) {
-            mode = Mode.Keyphrases;
-        }
-        else {
-            mode = Mode.Candidates;
-        }
-
-        FSIterator<Annotation> annotationIter = null;
-        if (mode.equals(Mode.Candidates)) {
-            annotationIter = jcas.getAnnotationIndex(KeyphraseCandidate.type).iterator();
-        }
-        else if (mode.equals(Mode.Keyphrases)) {
-            annotationIter = jcas.getAnnotationIndex(Keyphrase.type).iterator();
-        }
+        FSIterator<Annotation> annotationIter = jcas.getAnnotationIndex(KeyphraseCandidate.type).iterator();
 
         List<Annotation> toRemove = new ArrayList<Annotation>();
         while (annotationIter.hasNext()) {
             Annotation a = annotationIter.next();
 
-            List<POS> annotations = selectCovered(jcas, POS.class, a);
-
-            if (annotations.size() == 0) {
-                getContext().getLogger().log(Level.FINE, "Could not get annotations: " + a + ". Skipping!");
-                continue;
-            }
-
             if (usePosPatterns) {
+                
+                List<POS> annotations = selectCovered(jcas, POS.class, a);
+
+                if (annotations.size() == 0) {
+                    throw new AnalysisEngineProcessException(new Throwable("Could not get annotations: " + a + 
+                            ". A POS Tagger should be run in the preprocessing phase."));
+                }
                 List<String> posList = new ArrayList<String>();
                 for (POS pos : annotations) {
                 	Type posType = taggerMappingProvider.getTagType(pos.getPosValue());
@@ -160,23 +137,15 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
 //                if (annotations.size() < minTokens || annotations.size() > maxTokens) {
 //                    toRemove.add(a);
 //                }
-                String termString = "";
-                if (mode.equals(Mode.Candidates)) {
-                    KeyphraseCandidate c = (KeyphraseCandidate) a;
-                    termString = c.getKeyphrase();
-                }
-                else if (mode.equals(Mode.Keyphrases)) {
-                    Keyphrase k = (Keyphrase) a;
-                    termString = k.getKeyphrase();
-                }
+
+                KeyphraseCandidate c = (KeyphraseCandidate) a;
+                String termString = c.getKeyphrase();
 
                 if (termString == null) {
                     throw new AnalysisEngineProcessException(new Throwable("Unexpected null value."));
                 }
 
-                termString = termString.trim();
-                termString = termString.replaceAll("\\s{2,}"," ");
-                String[] parts = termString.split(" ");
+                String[] parts = termString.trim().split("\\s+");
                 if (parts.length < minTokens || parts.length > maxTokens) {
                     toRemove.add(a);
                 }
