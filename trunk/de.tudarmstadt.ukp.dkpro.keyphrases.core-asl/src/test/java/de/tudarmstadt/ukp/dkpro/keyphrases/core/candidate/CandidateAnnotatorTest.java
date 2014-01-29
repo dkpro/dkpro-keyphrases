@@ -269,34 +269,6 @@ public class CandidateAnnotatorTest
     }
     
     @Test
-    public void KeyphraseCandidateTest8() throws Exception {
-
-        AnalysisEngine engine = AnalysisEngineFactory.createEngine(AnalysisEngineFactory.
-                createEngineDescription(
-                        AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
-                        AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
-                        AnalysisEngineFactory.createEngineDescription(TreeTaggerChunkerTT4J.class),
-                        CandidateAnnotatorFactory. getKeyphraseCandidateAnnotator_nc(false)));
-
-        JCas jcas = engine.newJCas();
-        jcas.setDocumentLanguage("en");
-        jcas.setDocumentText("A noun phrase.");
-
-        engine.process(jcas);
-
-        List<String> expectedResults = new ArrayList<String>();
-        expectedResults.add("A noun phrase");
-        
-        int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
-            System.out.println(kc);
-            assertTrue(expectedResults.contains(kc.getKeyphrase()));
-            i++;
-        }
-        assertEquals(1,i);
-    }
-    
-    @Test
     public void KeyphraseCandidateTest9() throws Exception {
 
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(AnalysisEngineFactory.
