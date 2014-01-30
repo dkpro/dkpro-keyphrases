@@ -41,7 +41,7 @@ public class TfRankingTest
 
         String testDocument = "example sentence funny. second example.";
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(TfRanking.class);
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(TfRanking.class);
 
         JCas jcas = setup(testDocument, analysisEngine);
         analysisEngine.process(jcas);
