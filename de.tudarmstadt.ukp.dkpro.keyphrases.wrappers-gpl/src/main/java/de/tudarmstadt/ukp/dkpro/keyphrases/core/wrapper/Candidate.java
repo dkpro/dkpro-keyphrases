@@ -10,8 +10,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -115,7 +114,7 @@ public class Candidate implements KeyphraseConstants {
 		}
 		aes.add(createCandidateAnnotator());
 		
-		return createAggregateDescription(aes.toArray(new AnalysisEngineDescription[aes.size()]));
+		return createEngineDescription(aes.toArray(new AnalysisEngineDescription[aes.size()]));
 
 	}
 
@@ -145,7 +144,7 @@ public class Candidate implements KeyphraseConstants {
 				break;
 		}
 
-		return createPrimitiveDescription(
+		return createEngineDescription(
 				CandidateAnnotator.class,
                 CandidateAnnotator.PARAM_FEATURE_PATH,     featurePath,
                 CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, resolveOverlaps
@@ -154,7 +153,7 @@ public class Candidate implements KeyphraseConstants {
 
 	private AnalysisEngineDescription createPosFilter() throws ResourceInitializationException {
 
-        return createPrimitiveDescription(
+        return createEngineDescription(
                 PosFilter.class,
                 PosFilter.PARAM_TYPE_TO_REMOVE, Token.class.getName(),
                 PosFilter.PARAM_ADJ,  posToKeep.contains(PosType.ADJ),
