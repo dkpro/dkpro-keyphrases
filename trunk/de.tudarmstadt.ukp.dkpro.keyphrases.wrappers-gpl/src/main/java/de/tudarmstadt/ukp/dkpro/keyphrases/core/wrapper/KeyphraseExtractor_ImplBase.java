@@ -10,8 +10,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.util.JCasUtil.select;
 
 import java.io.IOException;
@@ -110,7 +109,7 @@ public abstract class KeyphraseExtractor_ImplBase
         List<AnalysisEngineDescription> list = new ArrayList<AnalysisEngineDescription>();
 
         // add general components
-        list.add(createPrimitiveDescription(BreakIteratorSegmenter.class));
+        list.add(createEngineDescription(BreakIteratorSegmenter.class));
 
         list.add(
                 createTagger(language)  // we always need lemmatization for filtering stopwords
@@ -122,7 +121,7 @@ public abstract class KeyphraseExtractor_ImplBase
         switch (type) {
             case Stem :
                 list.add(
-                        createPrimitiveDescription(
+                        createEngineDescription(
                                 SnowballStemmer.class,
                                 SnowballStemmer.PARAM_LANGUAGE, language
                         )
@@ -130,7 +129,7 @@ public abstract class KeyphraseExtractor_ImplBase
                 break;
             case NamedEntity :
                 list.add(
-                        createPrimitiveDescription(
+                        createEngineDescription(
                                 StanfordNamedEntityRecognizer.class,
                                 StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, "resource/StanfordNLP/ner-eng-ie.crf-3-all2008.ser.gz"
                         )
@@ -141,7 +140,7 @@ public abstract class KeyphraseExtractor_ImplBase
                 break;
             case NGram :
                 list.add(
-                        createPrimitiveDescription(
+                        createEngineDescription(
                             NGramAnnotator.class,
                             NGramAnnotator.PARAM_N, 5
                         )
@@ -157,7 +156,7 @@ public abstract class KeyphraseExtractor_ImplBase
         );
 
 
-        return createAggregateDescription(
+        return createEngineDescription(
                 list.toArray(new AnalysisEngineDescription[list.size()])
         );
     }
@@ -167,7 +166,7 @@ public abstract class KeyphraseExtractor_ImplBase
         List<AnalysisEngineDescription> list = new ArrayList<AnalysisEngineDescription>();
 
         list.add(
-            createPrimitiveDescription(
+            createEngineDescription(
                     KeyphraseMerger.class,
                     KeyphraseMerger.PARAM_MAX_LENGTH, getMaxKeyphraseLength()
             )
@@ -176,7 +175,7 @@ public abstract class KeyphraseExtractor_ImplBase
         list.add( createStopwordFilter(getLanguage()) );
 
         list.add(
-            createPrimitiveDescription(
+            createEngineDescription(
                     StructureFilter.class,
                     StructureFilter.PARAM_MIN_TOKENS, getMinKeyphraseLength(),
                     StructureFilter.PARAM_MAX_TOKENS, getMaxKeyphraseLength(),
@@ -184,7 +183,7 @@ public abstract class KeyphraseExtractor_ImplBase
             )
         );
 
-        return createAggregateDescription(
+        return createEngineDescription(
                 list.toArray(new AnalysisEngineDescription[list.size()])
         );
     }
@@ -192,7 +191,7 @@ public abstract class KeyphraseExtractor_ImplBase
     // TODO TreeTagger is now available for more languages
     private AnalysisEngineDescription createTagger(String language) throws ResourceInitializationException {
         if (language.equals("en") || language.equals("de") || language.equals("ru")) {
-            return createPrimitiveDescription(
+            return createEngineDescription(
                     TreeTaggerPosLemmaTT4J.class,
                     TreeTaggerTT4JBase.PARAM_LANGUAGE, getLanguage()
             );
@@ -204,7 +203,7 @@ public abstract class KeyphraseExtractor_ImplBase
 
     private AnalysisEngineDescription createChunker(String language) throws ResourceInitializationException {
         if (language.equals("en") || language.equals("de") || language.equals("ru")) {
-            return createPrimitiveDescription(
+            return createEngineDescription(
                     TreeTaggerChunkerTT4J.class,
                     TreeTaggerChunkerTT4J.PARAM_LANGUAGE, getLanguage()
             );
@@ -216,13 +215,13 @@ public abstract class KeyphraseExtractor_ImplBase
 
     private AnalysisEngineDescription createStopwordFilter(String language) throws ResourceInitializationException {
         if (language.equals("en")) {
-            return createPrimitiveDescription(
+            return createEngineDescription(
                     StopwordFilter.class,
                     StopwordFilter.PARAM_STOPWORD_LIST, "classpath:/stopwords/english_stopwords.txt"
             );
         }
         else if (language.equals("de")) {
-            return createPrimitiveDescription(
+            return createEngineDescription(
                     StopwordFilter.class,
                     StopwordFilter.PARAM_STOPWORD_LIST, "classpath:/stopwords/german_stopwords.txt"
             );
@@ -247,7 +246,7 @@ public abstract class KeyphraseExtractor_ImplBase
     {
         if (keyphraseEngine == null) {
             try {
-                keyphraseEngine = AnalysisEngineFactory.createAggregate(createKeyphraseExtractorAggregate());
+                keyphraseEngine = AnalysisEngineFactory.createEngine(createKeyphraseExtractorAggregate());
             }
             catch (ResourceInitializationException e) {
                 throw new IOException(e);
