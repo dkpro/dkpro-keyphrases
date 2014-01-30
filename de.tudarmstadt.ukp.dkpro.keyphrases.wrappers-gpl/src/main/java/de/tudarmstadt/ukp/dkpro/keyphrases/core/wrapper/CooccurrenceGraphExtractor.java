@@ -10,15 +10,14 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate.CandidateType;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate.PosType;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 import de.tudarmstadt.ukp.dkpro.keyphrases.ranking.NodeDegreeRankingFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.ranking.PageRankRankingFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.CooccurrenceGraph;
@@ -46,11 +45,11 @@ public class CooccurrenceGraphExtractor extends KeyphraseExtractor_ImplBase {
     @Override
     protected AnalysisEngineDescription createKeyphraseExtractorAggregate() throws ResourceInitializationException {
 
-        return createAggregateDescription(
+        return createEngineDescription(
 
                 createPreprocessingComponents(getCandidate().getType()),
 
-                createPrimitiveDescription(
+                createEngineDescription(
                         CooccurrenceGraph.class,
                         CooccurrenceGraph.PARAM_FEATURE_PATH, KeyphraseCandidate.class.getName(),
                         CooccurrenceGraph.PARAM_WINDOW_SIZE, windowSize
