@@ -11,9 +11,8 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.ranking;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
-import static org.apache.uima.fit.factory.CollectionReaderFactory.createDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
+import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.bindResource;
 import static org.junit.Assert.assertEquals;
 
@@ -70,13 +69,13 @@ public class LoglikelihoodAnnotatorTest
 	{
 
 		// setup
-		AnalysisEngineDescription breakIteratorSegmenter = createPrimitiveDescription(BreakIteratorSegmenter.class);
+		AnalysisEngineDescription breakIteratorSegmenter = createEngineDescription(BreakIteratorSegmenter.class);
 
-		AnalysisEngineDescription logLikelihoodAnnotator = createPrimitiveDescription(
+		AnalysisEngineDescription logLikelihoodAnnotator = createEngineDescription(
 				LoglikelihoodAnnotator_Testable.class,
 				LoglikelihoodAnnotator.PARAM_FEATURE_PATH, Token.class.getName());
 
-		AnalysisEngineDescription aed = createAggregateDescription(
+		AnalysisEngineDescription aed = createEngineDescription(
 				breakIteratorSegmenter, logLikelihoodAnnotator);
 
 		bindResource(aed, LoglikelihoodAnnotator.FREQUENCY_COUNT_PROVIDER_KEY,
@@ -131,8 +130,8 @@ public class LoglikelihoodAnnotatorTest
 	public CollectionReaderDescription createReader()
 		throws ResourceInitializationException
 	{
-		return createDescription(TextReader.class,
-				ResourceCollectionReaderBase.PARAM_PATH, new File(COLLECTION_PATH)
+		return createReaderDescription(TextReader.class,
+				ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, new File(COLLECTION_PATH)
 						.getAbsolutePath(), ResourceCollectionReaderBase.PARAM_PATTERNS,
 				new String[] { ResourceCollectionReaderBase.INCLUDE_PREFIX
 						+ COLLECTION_SUFFIX });

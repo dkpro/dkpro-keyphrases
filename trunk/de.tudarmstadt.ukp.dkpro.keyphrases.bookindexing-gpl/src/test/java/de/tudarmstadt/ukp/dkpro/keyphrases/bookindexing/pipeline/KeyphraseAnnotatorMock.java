@@ -18,7 +18,6 @@ import org.apache.uima.jcas.JCas;
 
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.Segment;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 
 /**
  * For all {@link KeyphraseCandidate}s in the covering {@link Segment} a
@@ -38,8 +37,7 @@ public class KeyphraseAnnotatorMock
 		throws AnalysisEngineProcessException
 	{
 
-		for (KeyphraseCandidate kc : JCasUtil
-				.select(jcas, KeyphraseCandidate.class)) {
+		for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
 			Keyphrase keyphrase = new Keyphrase(jcas);
 			keyphrase.setBegin(kc.getBegin());
 			keyphrase.setEnd(kc.getEnd());

@@ -11,7 +11,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.pipeline;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -25,7 +25,6 @@ import org.junit.Test;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.AbstractBookIndexingTest;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 
 /**
  * Unit test of {@link SegmentProcessingPipeline}.
@@ -68,7 +67,7 @@ public class SegmentProcessingPipelineTest
 	private void setup(JCas jcas)
 	{
 		for (int i = 0; i < text.length(); i++) {
-			KeyphraseCandidate kc = new KeyphraseCandidate(jcas);
+			Keyphrase kc = new Keyphrase(jcas);
 			kc.setBegin(i);
 			kc.setEnd(i + 1);
 			kc.addToIndexes();
@@ -83,11 +82,11 @@ public class SegmentProcessingPipelineTest
 	private AnalysisEngine createSegmentProcessingAE()
 		throws ResourceInitializationException
 	{
-		return AnalysisEngineFactory.createAggregate(SegmentProcessingPipeline
+		return AnalysisEngineFactory.createEngine(SegmentProcessingPipeline
 				.createSegmentProcessingAggregate(
-						createPrimitiveDescription(SegmenterMock.class),
-						createPrimitiveDescription(KeyphraseAnnotatorMock.class),
-						createPrimitiveDescription(AggregatorMock.class)));
+						createEngineDescription(SegmenterMock.class),
+						createEngineDescription(KeyphraseAnnotatorMock.class),
+						createEngineDescription(AggregatorMock.class)));
 	}
 
 }
