@@ -10,8 +10,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,15 +25,13 @@ import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingMod
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingModeTf;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfConsumer;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.Candidate2KeyphraseConverter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfidfRanking;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfidfRanking.TfidfAggregate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 import de.tudarmstadt.ukp.dkpro.lab.Lab;
 import de.tudarmstadt.ukp.dkpro.lab.engine.TaskContext;
 import de.tudarmstadt.ukp.dkpro.lab.task.Task;
 import de.tudarmstadt.ukp.dkpro.lab.uima.task.impl.UimaTaskBase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 
 /**
  * A keyphrase extractor whose ranking is based on the tf.idf values of the keyphrase terms.
@@ -74,17 +71,16 @@ public class TfidfExtractor extends KeyphraseExtractor_ImplBase {
     @Override
     protected AnalysisEngineDescription createKeyphraseExtractorAggregate() throws ResourceInitializationException {
 
-        return createAggregateDescription(
+        return createEngineDescription(
                 createPreprocessingComponents(getCandidate().getType()),
-                createPrimitiveDescription(Candidate2KeyphraseConverter.class),
-                createPrimitiveDescription(
+                createEngineDescription(
                         TfidfAnnotator.class,
                         TfidfAnnotator.PARAM_FEATURE_PATH, Keyphrase.class.getName(),
                         TfidfAnnotator.PARAM_TFDF_PATH, getTfidfModelFile().getAbsolutePath(),
                         TfidfAnnotator.PARAM_LOWERCASE, isConvertToLowercase(),
                         TfidfAnnotator.PARAM_TF_MODE, getTfWeightingMode().name(),
                         TfidfAnnotator.PARAM_IDF_MODE, getIdfWeightingMode().name()),
-                createPrimitiveDescription(
+                createEngineDescription(
                         TfidfRanking.class,
                         TfidfRanking.PARAM_AGGREGATE, TfidfRanking.TfidfAggregate.max.name()),
                 createPostprocessingComponents()
@@ -132,7 +128,7 @@ public class TfidfExtractor extends KeyphraseExtractor_ImplBase {
             {
                 return createReader(
                         TextReader.class,
-                        TextReader.PARAM_PATH, inputDir.getAbsolutePath(),
+                        TextReader.PARAM_SOURCE_LOCATION, inputDir.getAbsolutePath(),
                         TextReader.PARAM_PATTERNS, new String[] {
                                 ResourceCollectionReaderBase.INCLUDE_PREFIX + "*." + suffix
                         }
@@ -143,14 +139,14 @@ public class TfidfExtractor extends KeyphraseExtractor_ImplBase {
             public AnalysisEngineDescription getAnalysisEngineDescription(TaskContext arg0)
                 throws ResourceInitializationException, IOException
             {
-                return createAggregateDescription(
+                return createEngineDescription(
                         createPreprocessingComponents(getCandidate().getType()),
 
-                        createPrimitiveDescription(
+                        createEngineDescription(
                                 TfidfConsumer.class,
-                                TfidfConsumer.PARAM_FEATURE_PATH, KeyphraseCandidate.class.getName(),
+                                TfidfConsumer.PARAM_FEATURE_PATH, Keyphrase.class.getName(),
                                 TfidfConsumer.PARAM_LOWERCASE, isConvertToLowercase(),
-                                TfidfConsumer.PARAM_OUTPUT_PATH, getTfidfModelFile().getAbsolutePath()
+                                TfidfConsumer.PARAM_TARGET_LOCATION, getTfidfModelFile().getAbsolutePath()
                         )
                 );
             }

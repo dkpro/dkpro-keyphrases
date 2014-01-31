@@ -10,8 +10,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +21,6 @@ import org.apache.uima.resource.ResourceInitializationException;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingModeIdf;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingModeTf;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.Candidate2KeyphraseConverter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfidfRanking;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfidfRanking.TfidfAggregate;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
@@ -134,18 +132,17 @@ public class TfidfExtractor
 	protected AnalysisEngineDescription createRanker()
 		throws ResourceInitializationException
 	{
-		return createAggregateDescription(
-				createPrimitiveDescription(Candidate2KeyphraseConverter.class),
-				createPrimitiveDescription(
-        TfidfAnnotator.class,
-        TfidfAnnotator.PARAM_FEATURE_PATH, Keyphrase.class.getName(),
-        TfidfAnnotator.PARAM_TFDF_PATH, getTfidfModelFile().getAbsolutePath(),
-        TfidfAnnotator.PARAM_LOWERCASE, isConvertToLowercase(),
-        TfidfAnnotator.PARAM_TF_MODE, getTfWeightingMode().name(),
-        TfidfAnnotator.PARAM_IDF_MODE, getIdfWeightingMode().name()),
-        createPrimitiveDescription(
-		    TfidfRanking.class,
-		    TfidfRanking.PARAM_AGGREGATE,TfidfRanking.TfidfAggregate.max.name()));
+		return createEngineDescription(
+				createEngineDescription(
+                    TfidfAnnotator.class,
+                    TfidfAnnotator.PARAM_FEATURE_PATH, Keyphrase.class.getName(),
+                    TfidfAnnotator.PARAM_TFDF_PATH, getTfidfModelFile().getAbsolutePath(),
+                    TfidfAnnotator.PARAM_LOWERCASE, isConvertToLowercase(),
+                    TfidfAnnotator.PARAM_TF_MODE, getTfWeightingMode().name(),
+                    TfidfAnnotator.PARAM_IDF_MODE, getIdfWeightingMode().name()),
+                createEngineDescription(
+        		    TfidfRanking.class,
+        		    TfidfRanking.PARAM_AGGREGATE,TfidfRanking.TfidfAggregate.max.name()));
 	}
 
 }

@@ -15,7 +15,7 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate.CandidateType;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate.PosType;
 import de.tudarmstadt.ukp.dkpro.keyphrases.ranking.NodeDegreeRankingFactory;
@@ -51,7 +51,7 @@ public class CooccurrenceGraphExtractor extends KeyphraseExtractor_ImplBase {
 
                 createEngineDescription(
                         CooccurrenceGraph.class,
-                        CooccurrenceGraph.PARAM_FEATURE_PATH, KeyphraseCandidate.class.getName(),
+                        CooccurrenceGraph.PARAM_FEATURE_PATH, Keyphrase.class.getName(),
                         CooccurrenceGraph.PARAM_WINDOW_SIZE, windowSize
                 ),
 

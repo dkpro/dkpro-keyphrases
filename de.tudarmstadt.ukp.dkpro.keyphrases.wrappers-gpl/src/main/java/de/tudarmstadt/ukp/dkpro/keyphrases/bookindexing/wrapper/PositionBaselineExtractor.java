@@ -10,13 +10,11 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.Candidate2KeyphraseConverter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.PositionRanking;
 
 /**
@@ -34,9 +32,7 @@ public class PositionBaselineExtractor
 	protected AnalysisEngineDescription createRanker()
 		throws ResourceInitializationException
 	{
-		return createAggregateDescription(
-						createPrimitiveDescription(Candidate2KeyphraseConverter.class),
-						createPrimitiveDescription(PositionRanking.class));
+		return createEngineDescription(PositionRanking.class);
 	}
 
 }
