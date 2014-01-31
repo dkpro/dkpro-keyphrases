@@ -65,7 +65,7 @@ public class CorpusFilter
     }
 
     @Override
-    protected List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
+    public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
     {
         List<Keyphrase> candidatesToBeRemoved = new LinkedList<Keyphrase>();
         for (Keyphrase keyphraseCandidate : keyphrases) {
