@@ -1,8 +1,5 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
@@ -12,9 +9,12 @@ import org.apache.uima.jcas.JCas;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public abstract class AbstractCandidateFilter
-    extends JCasAnnotator_ImplBase
+    extends JCasAnnotator_ImplBase implements CandidateFilter
 {
 
+    /* (non-Javadoc)
+     * @see de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.CandidateFilter#process(org.apache.uima.jcas.JCas)
+     */
     @Override
     public void process(JCas aJCas)
         throws AnalysisEngineProcessException
@@ -28,8 +28,4 @@ public abstract class AbstractCandidateFilter
             throw new AnalysisEngineProcessException(e);
         }
     }
-
-    protected abstract List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
-        throws CASException, AnalysisEngineProcessException;
-
 }
