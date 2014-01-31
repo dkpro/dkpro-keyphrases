@@ -95,7 +95,7 @@ public class StructureFilter extends AbstractCandidateFilter {
     }
 
 	@Override
-    protected List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases) throws AnalysisEngineProcessException{
+    public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases) throws AnalysisEngineProcessException{
         getContext().getLogger().log(Level.CONFIG, "Entering " + this.getClass().getSimpleName());
 
         taggerMappingProvider.configure(keyphrases.iterator().next().getView());
