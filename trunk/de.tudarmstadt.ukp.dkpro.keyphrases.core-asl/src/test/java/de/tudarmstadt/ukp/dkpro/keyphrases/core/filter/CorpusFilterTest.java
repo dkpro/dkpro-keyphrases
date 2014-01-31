@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotatorFactory;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.factory.CorpusFilterFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class CorpusFilterTest
