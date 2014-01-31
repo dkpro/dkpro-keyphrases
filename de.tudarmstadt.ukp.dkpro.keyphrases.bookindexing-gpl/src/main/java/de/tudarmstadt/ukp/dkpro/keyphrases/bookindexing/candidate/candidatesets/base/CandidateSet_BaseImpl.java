@@ -11,7 +11,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.candidate.candidatesets.base;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -23,7 +23,6 @@ import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerTT4JBase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotator;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 
 /**
  * Provides base implementation for all {@link CandidateSet}s.
@@ -50,7 +49,7 @@ public abstract class CandidateSet_BaseImpl
 	protected AnalysisEngineDescription getTokenizer(String language)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(BreakIteratorSegmenter.class);
+		return createEngineDescription(BreakIteratorSegmenter.class);
 	}
 
 	/**
@@ -65,7 +64,7 @@ public abstract class CandidateSet_BaseImpl
 		throws ResourceInitializationException
 	{
 		if (language.equals("en") || language.equals("de") || language.equals("ru")) {
-			return createPrimitiveDescription(
+			return createEngineDescription(
 					TreeTaggerPosLemmaTT4J.class,
 					TreeTaggerTT4JBase.PARAM_LANGUAGE, language);
 		}
@@ -83,7 +82,7 @@ public abstract class CandidateSet_BaseImpl
 	protected AnalysisEngineDescription getStemmer(String language)
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(SnowballStemmer.class,
+		return createEngineDescription(SnowballStemmer.class,
 				SnowballStemmer.PARAM_LANGUAGE, language);
 	}
 
@@ -98,7 +97,7 @@ public abstract class CandidateSet_BaseImpl
 		throws ResourceInitializationException
 	{
 		if (language.equals("en") || language.equals("de") || language.equals("ru")) {
-			return createPrimitiveDescription(TreeTaggerChunkerTT4J.class, TreeTaggerChunkerTT4J.PARAM_LANGUAGE,
+			return createEngineDescription(TreeTaggerChunkerTT4J.class, TreeTaggerChunkerTT4J.PARAM_LANGUAGE,
 					language);
 		}
 		else {
@@ -115,7 +114,7 @@ public abstract class CandidateSet_BaseImpl
 	protected AnalysisEngineDescription getCandidateAnnotator()
 		throws ResourceInitializationException
 	{
-		return createPrimitiveDescription(CandidateAnnotator.class,
+		return createEngineDescription(CandidateAnnotator.class,
 				CandidateAnnotator.PARAM_FEATURE_PATH, getFeaturePath(),
 				CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, false);
 	}
