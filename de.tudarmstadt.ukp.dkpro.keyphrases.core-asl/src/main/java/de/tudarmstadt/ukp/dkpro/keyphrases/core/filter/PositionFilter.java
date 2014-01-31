@@ -1,18 +1,15 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.fit.util.JCasUtil;
-import org.apache.uima.jcas.JCas;
 
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class PositionFilter
-    extends JCasAnnotator_ImplBase
+    extends AbstractCandidateFilter
 {
 
     public static final String BEGIN_INDEX = "beginIndex";
@@ -24,20 +21,17 @@ public class PositionFilter
     private int endIndex;
 
     @Override
-    public void process(JCas aJCas)
-        throws AnalysisEngineProcessException
+    public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
     {
         List<Keyphrase> candidatesToBeRemoved = new LinkedList<Keyphrase>();
-        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
+        for (Keyphrase kc : keyphrases) {
             if ((kc.getBegin() >= beginIndex && kc.getBegin() <= endIndex) || 
                 (kc.getEnd() >= beginIndex && kc.getEnd() <= endIndex)) {
                 continue;
             }
             candidatesToBeRemoved.add(kc);
         }
-        for (Keyphrase kc : candidatesToBeRemoved) {
-            kc.removeFromIndexes(aJCas);
-        }
+        return candidatesToBeRemoved;
     }
 
 }

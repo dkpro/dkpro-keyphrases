@@ -20,16 +20,13 @@ package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Type;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Level;
 
@@ -49,7 +46,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
  * @author zesch
  *
  */
-public class StructureFilter extends JCasAnnotator_ImplBase {
+public class StructureFilter extends AbstractCandidateFilter {
 	public static final String PARAM_LANGUAGE = ComponentParameters.PARAM_LANGUAGE;
 	@ConfigurationParameter(name = PARAM_LANGUAGE, mandatory = false)
 	protected String language;
@@ -98,24 +95,21 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
     }
 
 	@Override
-	public void process(JCas jcas) throws AnalysisEngineProcessException {
+    protected List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases) throws AnalysisEngineProcessException{
         getContext().getLogger().log(Level.CONFIG, "Entering " + this.getClass().getSimpleName());
 
-        taggerMappingProvider.configure(jcas.getCas());
+        taggerMappingProvider.configure(keyphrases.iterator().next().getView());
 
-        FSIterator<Annotation> annotationIter = jcas.getAnnotationIndex(Keyphrase.type).iterator();
-
-        List<Annotation> toRemove = new ArrayList<Annotation>();
-        while (annotationIter.hasNext()) {
-            Annotation a = annotationIter.next();
+        List<Keyphrase> toRemove = new ArrayList<Keyphrase>();
+        for(Keyphrase keyphrase : keyphrases){
 
             if (usePosPatterns) {
                 
-                List<POS> annotations = selectCovered(jcas, POS.class, a);
+                List<POS> annotations = selectCovered(POS.class, keyphrase);
 
                 if (annotations.size() == 0) {
-                    throw new AnalysisEngineProcessException(new Throwable("Could not get annotations: " + a + 
-                            ". A POS Tagger should be run in the preprocessing phase."));
+                    throw new AnalysisEngineProcessException(new Throwable("Could not get annotations: " + 
+                            keyphrase +  ". A POS Tagger should be run in the preprocessing phase."));
                 }
                 List<String> posList = new ArrayList<String>();
                 for (POS pos : annotations) {
@@ -129,7 +123,7 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
                 }
 
                 if (!posPatternFilter.isValidPosPattern(posList)) {
-                    toRemove.add(a);
+                    toRemove.add(keyphrase);
                 }
             }
             else {
@@ -138,8 +132,7 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
 //                    toRemove.add(a);
 //                }
 
-                Keyphrase c = (Keyphrase) a;
-                String termString = c.getKeyphrase();
+                String termString = keyphrase.getKeyphrase();
 
                 if (termString == null) {
                     throw new AnalysisEngineProcessException(new Throwable("Unexpected null value."));
@@ -147,14 +140,13 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
 
                 String[] parts = termString.trim().split("\\s+");
                 if (parts.length < minTokens || parts.length > maxTokens) {
-                    toRemove.add(a);
+                    toRemove.add(keyphrase);
                 }
             }
         }
-
-        // remove candidates
-        for (Annotation a : toRemove) {
-            a.removeFromIndexes();
-        }
+        
+        return toRemove;
+        
 	}
+
 }

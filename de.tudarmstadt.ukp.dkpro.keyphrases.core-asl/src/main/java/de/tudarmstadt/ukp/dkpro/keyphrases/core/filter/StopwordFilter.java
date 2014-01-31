@@ -25,19 +25,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.FSIterator;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
+import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Level;
@@ -57,7 +56,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
  * @author zesch
  *
  */
-public class StopwordFilter extends JCasAnnotator_ImplBase {
+public class StopwordFilter extends AbstractCandidateFilter{
 
     public static final String PARAM_STOPWORD_LIST = "StopwordList";
     @ConfigurationParameter(name=PARAM_STOPWORD_LIST, mandatory=true)
@@ -81,31 +80,28 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
         }
     }
 
-	@Override
-	public void process(JCas jcas) throws AnalysisEngineProcessException {
+    @Override
+    protected List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases) throws CASException{
         getContext().getLogger().log(Level.CONFIG, "Entering " + this.getClass().getSimpleName());
 
-        FSIterator<Annotation> annotationIter = jcas.getAnnotationIndex(Keyphrase.type).iterator();
-
         // annotation that should be fully removed
-        List<Annotation> toRemove = new ArrayList<Annotation>();
+        List<Keyphrase> toRemove = new LinkedList<Keyphrase>();
 
         // annotation that should be replaced by a version with deleted trailing stopwords
         Map<Annotation,Annotation> toReplace = new HashMap<Annotation,Annotation>();
 
-        while (annotationIter.hasNext()) {
-            Annotation a = annotationIter.next();
+        for(Keyphrase keyphrase : keyphrases){
 
             // if the candidate was reduced to length 0, add it to the removal candidates
-            if (a.getBegin() == a.getEnd()) {
-                toRemove.add(a);
+            if (keyphrase.getBegin() == keyphrase.getEnd()) {
+                toRemove.add(keyphrase);
                 continue;
             }
 
-            List<Lemma> lemmas  = selectCovered(jcas, Lemma.class, a);
+            List<Lemma> lemmas  = selectCovered(Lemma.class, keyphrase);
 
             if (lemmas.size() == 0) {
-                getContext().getLogger().log(Level.CONFIG, "Could not get annotations for annotation: " + a.toString() + ". Skipping!");
+                getContext().getLogger().log(Level.CONFIG, "Could not get annotations for annotation: " + keyphrase.toString() + ". Skipping!");
                 continue;
             }
 
@@ -136,25 +132,24 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
 
             // test whether a candidate contains only stopwords => if yes, add to remove
             if (allStopwords(stopwordsFound)) {
-                toRemove.add(a);
+                toRemove.add(keyphrase);
                 continue;
             }
 
             if (hasTrailingStopword(stopwordsFound)) {
-                toReplace.put(a, getReplaceCandidate(jcas, a, items, offsets, stopwordsFound));
+                toRemove.add(keyphrase);
+                toReplace.put(keyphrase, getReplaceCandidate(keyphrase, items, offsets, stopwordsFound));
             }
         }
 
-        // remove candidates
-        for (Annotation a : toRemove) {
-            a.removeFromIndexes();
-        }
 
         // replace candidates
         for (Annotation a : toReplace.keySet()) {
-            a.removeFromIndexes();
             toReplace.get(a).addToIndexes();
         }
+        
+        return toRemove;
+        
 	}
 
 	/**
@@ -220,10 +215,11 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
      * @param offsets A list of the term offsets in this annotation.
      * @param stopwordsFound A list of boolean values indidcating whether the term in this position is a stopword or not.
      * @return An annotation with removed trailing stopwords.
+     * @throws CASException 
      */
-    private Annotation getReplaceCandidate(JCas jcas, Annotation a, List<String> items, List<Integer[]> offsets, List<Boolean> stopwordsFound) {
+    private Annotation getReplaceCandidate(Keyphrase keyphrase, List<String> items, List<Integer[]> offsets, List<Boolean> stopwordsFound) throws CASException {
 
-        Annotation replaceAnnotation = new Keyphrase(jcas);
+        Keyphrase replaceKeyphrase = new Keyphrase(keyphrase.getView().getJCas());
 
         // skip stopwords starting from the beginning
         int i = 0;
@@ -247,15 +243,15 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
 
         if (startOffset < endOffset) {
             String replaceKeyphraseString = StringUtils.join(items.subList(i, j+1), " ");
-            replaceAnnotation.setBegin(startOffset);
-            replaceAnnotation.setEnd(endOffset);
-            ((Keyphrase) replaceAnnotation).setKeyphrase(replaceKeyphraseString);
-            ((Keyphrase) replaceAnnotation).setScore(((Keyphrase) a).getScore());
-            return replaceAnnotation;
+            replaceKeyphrase.setBegin(startOffset);
+            replaceKeyphrase.setEnd(endOffset);
+            replaceKeyphrase.setKeyphrase(replaceKeyphraseString);
+            replaceKeyphrase.setScore(keyphrase.getScore());
+            return replaceKeyphrase;
         }
         else {
             getContext().getLogger().log(Level.FINE, "No more terms left, when pruning trailing stopwords.");
-            return a;
+            return keyphrase;
         }
     }
 
@@ -276,4 +272,5 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
 
         return stopwords;
     }
+
 }
