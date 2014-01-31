@@ -10,13 +10,12 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.ranking.NodeDegreeRankingFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.ranking.PageRankRankingFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.CooccurrenceGraph;
@@ -43,9 +42,9 @@ public class CooccurrenceGraphExtractor
 	protected AnalysisEngineDescription createRanker()
 		throws ResourceInitializationException
 	{
-		return createAggregateDescription(createPrimitiveDescription(
+		return createEngineDescription(createEngineDescription(
 				CooccurrenceGraph.class,
-				CooccurrenceGraph.PARAM_FEATURE_PATH, KeyphraseCandidate.class.getName(),
+				CooccurrenceGraph.PARAM_FEATURE_PATH, Keyphrase.class.getName(),
 				CooccurrenceGraph.PARAM_WINDOW_SIZE, windowSize),
 
 		createCooccurrenceRanker(getRankingMode()));

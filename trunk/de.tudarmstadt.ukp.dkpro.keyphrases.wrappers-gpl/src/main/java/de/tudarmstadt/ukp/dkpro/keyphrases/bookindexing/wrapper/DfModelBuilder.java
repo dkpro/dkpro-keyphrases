@@ -10,9 +10,8 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
-import static org.apache.uima.fit.factory.CollectionReaderFactory.createDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
+import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +30,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.candidate.candidatesets.
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.candidate.candidatesets.StemCandidateSet;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.candidate.candidatesets.TokenCandidateSet;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.candidate.candidatesets.base.CandidateSet;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
  * Creates document frequency models used by the {@link TfidfAnnotator}.
@@ -121,7 +120,7 @@ public class DfModelBuilder
 	public void buildKeyphraseCandidateModel(CandidateSet candidateSet,
 			File outputFile)
 	{
-		buildModel(candidateSet, KeyphraseCandidate.class.getName(), outputFile);
+		buildModel(candidateSet, Keyphrase.class.getName(), outputFile);
 	}
 
 	/**
@@ -150,20 +149,20 @@ public class DfModelBuilder
 
 		CollectionReaderDescription reader;
 		try {
-			reader = createDescription(
-					TextReader.class, TextReader.PARAM_PATH,
+			reader = createReaderDescription(
+					TextReader.class, TextReader.PARAM_SOURCE_LOCATION,
 					inputDir.getAbsolutePath(),
 					TextReader.PARAM_PATTERNS,
 					new String[] { ResourceCollectionReaderBase.INCLUDE_PREFIX + "*."
 							+ suffix });
 
-		AnalysisEngineDescription ae = createAggregateDescription(
+		AnalysisEngineDescription ae = createEngineDescription(
 				candidateSet.createPreprocessingComponents(language),
-				createPrimitiveDescription(
+				createEngineDescription(
 						TfidfConsumer.class,
 						TfidfConsumer.PARAM_FEATURE_PATH, candidateSet.getFeaturePath(),
 						TfidfConsumer.PARAM_LOWERCASE, true,
-						TfidfConsumer.PARAM_OUTPUT_PATH, outputFile.getAbsolutePath()));
+						TfidfConsumer.PARAM_TARGET_LOCATION, outputFile.getAbsolutePath()));
 
 		SimplePipeline.runPipeline(reader, ae);
 		}

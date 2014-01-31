@@ -10,9 +10,8 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper;
 
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.junit.Assert.assertEquals;
-
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
 
 import java.io.File;
 import java.util.List;
@@ -25,8 +24,6 @@ import org.junit.Test;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.AbstractBookIndexingTestBase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.candidate.candidatesets.TokenCandidateSet;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.segmentation.OneSegmentAnnotator;
-import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper.BookIndexPhraseExtractor_BaseImpl;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.Candidate2KeyphraseConverter;
 
 public class BookIndexPhraseExtractor_BaseImplTest
 	extends AbstractBookIndexingTestBase
@@ -61,14 +58,14 @@ public class BookIndexPhraseExtractor_BaseImplTest
 		protected AnalysisEngineDescription createSegmenter()
 			throws ResourceInitializationException
 		{
-			return createPrimitiveDescription(OneSegmentAnnotator.class);
+			return createEngineDescription(OneSegmentAnnotator.class);
 		}
 
 		@Override
 		protected AnalysisEngineDescription createRanker()
 			throws ResourceInitializationException
 		{
-			return createPrimitiveDescription(Candidate2KeyphraseConverter.class);
+			return createEngineDescription();
 		}
 
 	}
