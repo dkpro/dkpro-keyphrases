@@ -38,7 +38,7 @@ public class PositionRankingTest
 
         String testDocument = "example sentence funny. second example.";
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 PositionRanking.class);
 
         JCas jcas = setup(testDocument, analysisEngine);

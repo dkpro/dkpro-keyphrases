@@ -11,7 +11,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class FrequencyFilter
     extends JCasAnnotator_ImplBase
@@ -26,9 +26,9 @@ public class FrequencyFilter
         throws AnalysisEngineProcessException
     {
 
-        List<KeyphraseCandidate> keyphrasesToBeRemoved = new LinkedList<KeyphraseCandidate>();
+        List<Keyphrase> keyphrasesToBeRemoved = new LinkedList<Keyphrase>();
         Map<String, Long> keyphrasesFrequency = new HashMap<String, Long>();
-        for (KeyphraseCandidate kc : JCasUtil.select(aJCas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
             String coveredText = kc.getCoveredText().toLowerCase();
             if (keyphrasesFrequency.containsKey(coveredText)) {
                 long value = keyphrasesFrequency.get(coveredText);
@@ -38,12 +38,12 @@ public class FrequencyFilter
                 keyphrasesFrequency.put(coveredText, new Long(1));
             }
         }
-        for (KeyphraseCandidate kc : JCasUtil.select(aJCas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
             if (keyphrasesFrequency.get(kc.getCoveredText().toLowerCase()) < frequency) {
                 keyphrasesToBeRemoved.add(kc);
             }
         }
-        for (KeyphraseCandidate kc : keyphrasesToBeRemoved) {
+        for (Keyphrase kc : keyphrasesToBeRemoved) {
             kc.removeFromIndexes(aJCas);
         }
 

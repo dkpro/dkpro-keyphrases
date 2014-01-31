@@ -40,7 +40,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.Chunk;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.NC;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class CandidateAnnotatorTest
 {
@@ -66,7 +66,7 @@ public class CandidateAnnotatorTest
         analysisEngine.process(jcas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -103,7 +103,7 @@ public class CandidateAnnotatorTest
         analysisEngine2.process(jcas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -139,7 +139,7 @@ public class CandidateAnnotatorTest
         analysisEngine2.process(jcas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -173,7 +173,7 @@ public class CandidateAnnotatorTest
         analysisEngine2.process(jcas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -200,7 +200,7 @@ public class CandidateAnnotatorTest
         analysisEngine.process(jcas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -228,7 +228,7 @@ public class CandidateAnnotatorTest
         analysisEngine.process(jcas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -259,7 +259,7 @@ public class CandidateAnnotatorTest
         expectedResults.add(".");
         
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -287,7 +287,7 @@ public class CandidateAnnotatorTest
         expectedResults.add("phrase");
         
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;

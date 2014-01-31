@@ -1,3 +1,2 @@
 classpath*:desc/type/Keyphrase.xml
-classpath*:desc/type/KeyphraseCandidate.xml
 classpath*:desc/type/KeyphraseMetaData.xml

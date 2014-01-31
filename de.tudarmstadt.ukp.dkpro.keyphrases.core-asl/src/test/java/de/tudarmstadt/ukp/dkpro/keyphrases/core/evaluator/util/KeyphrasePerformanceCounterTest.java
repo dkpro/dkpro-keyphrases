@@ -28,38 +28,40 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * 
  * Unit test for KeyphrasePerformanceCounter class.
- *
+ * 
  * */
 public class KeyphrasePerformanceCounterTest
 {
 
+    private static final String LF = System.getProperty("line.separator");
+
     /**
-     *
+     * 
      * This instance from KeyphrasePerformanceCounter is used by the unit tests.
-     *
+     * 
      * */
     private final KeyphrasePerformanceCounter perfCounter = new KeyphrasePerformanceCounter();
     /**
-     *
+     * 
      * Dummy file name.
-     *
+     * 
      * */
     private static final String FILE1_NAME = "file1";
     /**
-     *
+     * 
      * Dummy file name.
-     *
+     * 
      * */
     private static final String FILE2_NAME = "file2";
 
     /**
-     *
+     * 
      * This method initialize the dummy instances for the unit tests.
-     *
+     * 
      * @throws AnalysisEngineProcessException
-     *
+     * 
      * */
     @Before
     public final void setUp()
@@ -152,40 +154,39 @@ public class KeyphrasePerformanceCounterTest
 
         final DecimalFormat decimalFormat = new DecimalFormat("0.000");
 
-        final String microPerfOverview = "Micro Performance Overview\nn\tP\tR\tF\t\n1\t"
-                + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0) + "\t"
-                + decimalFormat.format(1.0) + "\t\n";
+        final String microPerfOverview = "Micro Performance Overview" + LF + "n\tP\tR\tF\t" + LF
+                + "1\t" + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0) + "\t"
+                + decimalFormat.format(1.0) + "\t" + LF;
 
         Assert.assertThat(perfCounter.getMicroPerformanceOverview(1),
                 CoreMatchers.is(microPerfOverview));
 
-        final String macroPerfOverview = "Macro Performance Overview\nn\tP\tR\tF\t\n1\t"
-                + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0) + "\t"
-                + decimalFormat.format(1.0) + "\t\n";
+        final String macroPerfOverview = "Macro Performance Overview" + LF + "n\tP\tR\tF\t" + LF
+                + "1\t" + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0) + "\t"
+                + decimalFormat.format(1.0) + "\t" + LF;
 
         Assert.assertThat(perfCounter.getMacroPerformanceOverview(1),
                 CoreMatchers.is(macroPerfOverview));
 
-        final String filePerfOverview = "File Performance Overview\nFile\tP\tR\tF\tR-P\t\nfile1\t"
-                + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0) + "\t"
-                + decimalFormat.format(1.0) + "\t" + decimalFormat.format(0.6) + "\t\nfile2\t"
-                + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0) + "\t"
-                + decimalFormat.format(1.0) + "\t" + decimalFormat.format(0.667) + "\t\n";
+        final String filePerfOverview = "File Performance Overview" + LF + "File\tP\tR\tF\tR-P\t"
+                + LF + "file1\t" + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0)
+                + "\t" + decimalFormat.format(1.0) + "\t" + decimalFormat.format(0.6) + "\t" + LF
+                + "file2\t" + decimalFormat.format(1.0) + "\t" + decimalFormat.format(1.0) + "\t"
+                + decimalFormat.format(1.0) + "\t" + decimalFormat.format(0.667) + "\t" + LF;
 
         Assert.assertThat(perfCounter.getFilePerformanceOverview(1),
                 CoreMatchers.is(filePerfOverview));
 
-        final String macroPrfOverview = "Macro P/R/F Overview\nk\tP\tR\tF\t\n5\t"
+        final String macroPrfOverview = "Macro P/R/F Overview" + LF + "k\tP\tR\tF\t" + LF + "5\t"
                 + decimalFormat.format(0.633) + "\t" + decimalFormat.format(0.633) + "\t"
-                + decimalFormat.format(0.633) + "\t\n10\t" + decimalFormat.format(0.633) + "\t"
-                + decimalFormat.format(0.633) + "\t" + decimalFormat.format(0.633) + "\t\n15\t"
-                + decimalFormat.format(0.633) + "\t" + decimalFormat.format(0.633) + "\t"
-                + decimalFormat.format(0.633) + "\t\n\n";
+                + decimalFormat.format(0.633) + "\t" + LF + "10\t" + decimalFormat.format(0.633)
+                + "\t" + decimalFormat.format(0.633) + "\t" + decimalFormat.format(0.633) + "\t"
+                + LF + "15\t" + decimalFormat.format(0.633) + "\t" + decimalFormat.format(0.633)
+                + "\t" + decimalFormat.format(0.633) + "\t" + LF + LF;
 
         Assert.assertThat(perfCounter.getMacroPrfOverview(), CoreMatchers.is(macroPrfOverview));
 
         Assert.assertThat(perfCounter.getMeanAveragePrecision(), CoreMatchers.is(0.7606060607));
-        
 
     }
 }
