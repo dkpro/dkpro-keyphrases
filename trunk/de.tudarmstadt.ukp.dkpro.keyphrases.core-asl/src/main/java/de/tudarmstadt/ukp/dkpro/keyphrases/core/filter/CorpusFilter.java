@@ -3,6 +3,7 @@ package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,17 +12,13 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.fit.util.JCasUtil;
-import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class CorpusFilter
-    extends JCasAnnotator_ImplBase
+    extends AbstractCandidateFilter
 {
 
     public static final String CORPUS_FOLDER = "corpusFolder";
@@ -68,18 +65,15 @@ public class CorpusFilter
     }
 
     @Override
-    public void process(JCas aJCas)
-        throws AnalysisEngineProcessException
+    protected List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
     {
         List<Keyphrase> candidatesToBeRemoved = new LinkedList<Keyphrase>();
-        for (Keyphrase keyphraseCandidate : JCasUtil.select(aJCas, Keyphrase.class)) {
+        for (Keyphrase keyphraseCandidate : keyphrases) {
             if (!tokensSet.contains(keyphraseCandidate.getCoveredText().toLowerCase())) {
                 candidatesToBeRemoved.add(keyphraseCandidate);
             }
         }
-        for (Keyphrase keyphraseCandidate : candidatesToBeRemoved) {
-            keyphraseCandidate.removeFromIndexes(aJCas);
-        }
+        return candidatesToBeRemoved;
     }
 
 }
