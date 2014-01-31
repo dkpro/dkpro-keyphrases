@@ -14,6 +14,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
+import de.tudarmstadt.ukp.dkpro.core.toolbox.tools.TreeTaggerLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.KeyphraseDatasetStatistics;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.KeyphraseGoldStandardFilter;
 
@@ -38,11 +40,14 @@ public class GoldStandardFilterPipeline
                     new String[] { INCLUDE_PREFIX +  text},
                 TextReader.PARAM_LANGUAGE, "de");
         
+        AnalysisEngine segmenter = createEngine(BreakIteratorSegmenter.class);
+        AnalysisEngine tagger = createEngine(TreeTaggerPosLemmaTT4J.class);
+        
         AnalysisEngine analyzer = createEngine(
                 KeyphraseGoldStandardFilter.class,
                 KeyphraseGoldStandardFilter.PARAM_GOLD_SUFFIX, gold);
         
-        SimplePipeline.runPipeline(reader, analyzer);
+        SimplePipeline.runPipeline(reader, segmenter, tagger, analyzer);
     }
     
 
