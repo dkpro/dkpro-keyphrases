@@ -37,7 +37,7 @@ import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerTT4JBase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotatorFactory;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class StructureFilterTest
 {
@@ -72,7 +72,7 @@ public class StructureFilterTest
         engine.process(aJCas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(aJCas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(kc.getKeyphrase(), expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -111,7 +111,7 @@ public class StructureFilterTest
         engine.process(aJCas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(aJCas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(kc.getKeyphrase(), expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -150,7 +150,7 @@ public class StructureFilterTest
         engine.process(aJCas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(aJCas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(kc.getKeyphrase(), expectedResults.contains(kc.getKeyphrase()));
             i++;
@@ -189,7 +189,7 @@ public class StructureFilterTest
         engine.process(aJCas);
 
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(aJCas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(kc.getKeyphrase(), expectedResults.contains(kc.getKeyphrase()));
             i++;

@@ -32,7 +32,7 @@ import org.apache.uima.util.Level;
 
 import de.tudarmstadt.ukp.dkpro.core.api.featurepath.FeaturePathException;
 import de.tudarmstadt.ukp.dkpro.core.api.featurepath.FeaturePathFactory;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
  * This annotator takes a fully qualified type name and a method name that returns a string representation of the type as parameters.
@@ -46,7 +46,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
  * b)
  * xxxx yyyy
  *      yyyy zzzz
- * We add a merged candiate (xxxx yyyy zzzz).
+ * We add a merged candidate (xxxx yyyy zzzz).
  *
  * @author zesch
  */
@@ -82,16 +82,16 @@ public class CandidateAnnotator extends JCasAnnotator_ImplBase {
             resolvedCandidates = candidates;
         }
 
-        AnnotationIndex<Annotation> candidateIndex = jcas.getAnnotationIndex(KeyphraseCandidate.type);
+        AnnotationIndex<Annotation> candidateIndex = jcas.getAnnotationIndex(Keyphrase.type);
         for (Candidate candidate : resolvedCandidates) {
-            KeyphraseCandidate kc = new KeyphraseCandidate(jcas);
-            kc.setKeyphrase(candidate.term);
-            kc.setBegin(candidate.begin);
-            kc.setEnd(candidate.end);
+            Keyphrase keyphrase = new Keyphrase(jcas);
+            keyphrase.setKeyphrase(candidate.term);
+            keyphrase.setBegin(candidate.begin);
+            keyphrase.setEnd(candidate.end);
 
             // do not allow duplicates
-            if (!candidateIndex.contains(kc)) {
-                kc.addToIndexes(jcas);
+            if (!candidateIndex.contains(keyphrase)) {
+                keyphrase.addToIndexes(jcas);
             }
         }
     }

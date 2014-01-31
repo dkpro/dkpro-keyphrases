@@ -1,6 +1,7 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotatorFactory;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class FrequencyFilterTest
 {
@@ -38,7 +39,7 @@ public class FrequencyFilterTest
         expectedResults.add("a");
         
         int i=0;
-        for (KeyphraseCandidate kc : JCasUtil.select(jcas, KeyphraseCandidate.class)) {
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;

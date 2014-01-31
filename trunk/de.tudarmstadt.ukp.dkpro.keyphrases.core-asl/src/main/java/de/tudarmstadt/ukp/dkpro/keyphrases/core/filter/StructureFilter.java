@@ -37,7 +37,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.MappingProvider;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.util.PosPatternFilter;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
  * Removes all annotations that:
@@ -103,7 +103,7 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
 
         taggerMappingProvider.configure(jcas.getCas());
 
-        FSIterator<Annotation> annotationIter = jcas.getAnnotationIndex(KeyphraseCandidate.type).iterator();
+        FSIterator<Annotation> annotationIter = jcas.getAnnotationIndex(Keyphrase.type).iterator();
 
         List<Annotation> toRemove = new ArrayList<Annotation>();
         while (annotationIter.hasNext()) {
@@ -138,7 +138,7 @@ public class StructureFilter extends JCasAnnotator_ImplBase {
 //                    toRemove.add(a);
 //                }
 
-                KeyphraseCandidate c = (KeyphraseCandidate) a;
+                Keyphrase c = (Keyphrase) a;
                 String termString = c.getKeyphrase();
 
                 if (termString == null) {

@@ -37,7 +37,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -46,7 +45,6 @@ import org.apache.uima.util.Level;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
 
 /**
  * Removes all candidate or keyphrase annotations that contain only stopwords.
@@ -67,28 +65,19 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
 
     private Set<String> stopwords;
 
-    // the mode is automatically determined from the indexes present in the CAS
-    private enum Mode {
-        Candidates,
-        Keyphrases
-    }
-    private Mode mode;
-
     @Override
 	public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        try {
-        	InputStream is = null;
-        	try {
-        		is = ResourceUtils.resolveLocation(stopwordList, this, getContext()).openStream();
-                stopwords = loadStopwords(is);
-        	}
-        	finally {
-        		closeQuietly(is);
-        	}
+    	InputStream is = null;
+    	try {
+    		is = ResourceUtils.resolveLocation(stopwordList, this, getContext()).openStream();
+            stopwords = loadStopwords(is);
 		}
         catch (IOException e) {
         	throw new ResourceInitializationException(e);
+        }
+        finally {
+            closeQuietly(is);
         }
     }
 
@@ -96,20 +85,7 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
         getContext().getLogger().log(Level.CONFIG, "Entering " + this.getClass().getSimpleName());
 
-        if (JCasUtil.select(jcas, Keyphrase.class).size() > 0) {
-            mode = Mode.Keyphrases;
-        }
-        else {
-            mode = Mode.Candidates;
-        }
-
-        FSIterator<Annotation> annotationIter = null;
-        if (mode.equals(Mode.Candidates)) {
-            annotationIter = jcas.getAnnotationIndex(KeyphraseCandidate.type).iterator();
-        }
-        else if (mode.equals(Mode.Keyphrases)) {
-            annotationIter = jcas.getAnnotationIndex(Keyphrase.type).iterator();
-        }
+        FSIterator<Annotation> annotationIter = jcas.getAnnotationIndex(Keyphrase.type).iterator();
 
         // annotation that should be fully removed
         List<Annotation> toRemove = new ArrayList<Annotation>();
@@ -239,7 +215,7 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
 
     /**
      * @param jcas The jcas.
-     * @param a  Either a candidate or a keyphrase annotation, depending on the mode variable.
+     * @param a keyphrase annotation.
      * @param items A list of the terms in this annotation.
      * @param offsets A list of the term offsets in this annotation.
      * @param stopwordsFound A list of boolean values indidcating whether the term in this position is a stopword or not.
@@ -247,13 +223,7 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
      */
     private Annotation getReplaceCandidate(JCas jcas, Annotation a, List<String> items, List<Integer[]> offsets, List<Boolean> stopwordsFound) {
 
-        Annotation replaceAnnotation = null;
-        if (mode.equals(Mode.Candidates)) {
-            replaceAnnotation = new KeyphraseCandidate(jcas);
-        }
-        else if (mode.equals(Mode.Keyphrases)) {
-            replaceAnnotation = new Keyphrase(jcas);
-        }
+        Annotation replaceAnnotation = new Keyphrase(jcas);
 
         // skip stopwords starting from the beginning
         int i = 0;
@@ -279,14 +249,8 @@ public class StopwordFilter extends JCasAnnotator_ImplBase {
             String replaceKeyphraseString = StringUtils.join(items.subList(i, j+1), " ");
             replaceAnnotation.setBegin(startOffset);
             replaceAnnotation.setEnd(endOffset);
-            if (mode.equals(Mode.Candidates)) {
-                ((KeyphraseCandidate) replaceAnnotation).setKeyphrase(replaceKeyphraseString);
-            }
-            else if (mode.equals(Mode.Keyphrases)) {
-                ((Keyphrase) replaceAnnotation).setKeyphrase(replaceKeyphraseString);
-                ((Keyphrase) replaceAnnotation).setScore(((Keyphrase) a).getScore());
-            }
-
+            ((Keyphrase) replaceAnnotation).setKeyphrase(replaceKeyphraseString);
+            ((Keyphrase) replaceAnnotation).setScore(((Keyphrase) a).getScore());
             return replaceAnnotation;
         }
         else {

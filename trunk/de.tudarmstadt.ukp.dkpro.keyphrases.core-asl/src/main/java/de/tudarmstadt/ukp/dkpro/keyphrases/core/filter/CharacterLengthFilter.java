@@ -9,7 +9,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class CharacterLengthFilter
     extends JCasAnnotator_ImplBase
@@ -24,13 +24,13 @@ public class CharacterLengthFilter
         throws AnalysisEngineProcessException
     {
 
-        List<KeyphraseCandidate> candidatesToBeRemoved = new LinkedList<KeyphraseCandidate>();
-        for (KeyphraseCandidate kc : JCasUtil.select(aJCas, KeyphraseCandidate.class)) {
+        List<Keyphrase> candidatesToBeRemoved = new LinkedList<Keyphrase>();
+        for (Keyphrase kc : JCasUtil.select(aJCas, Keyphrase.class)) {
             if (kc.getCoveredText().length() < length) {
                 candidatesToBeRemoved.add(kc);
             }
         }
-        for (KeyphraseCandidate kc : candidatesToBeRemoved) {
+        for (Keyphrase kc : candidatesToBeRemoved) {
             kc.removeFromIndexes(aJCas);
         }
 

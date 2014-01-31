@@ -18,7 +18,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseCandidate;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class CorpusFilter
     extends JCasAnnotator_ImplBase
@@ -71,14 +71,13 @@ public class CorpusFilter
     public void process(JCas aJCas)
         throws AnalysisEngineProcessException
     {
-        List<KeyphraseCandidate> candidatesToBeRemoved = new LinkedList<KeyphraseCandidate>();
-        for (KeyphraseCandidate keyphraseCandidate : JCasUtil.select(aJCas,
-                KeyphraseCandidate.class)) {
+        List<Keyphrase> candidatesToBeRemoved = new LinkedList<Keyphrase>();
+        for (Keyphrase keyphraseCandidate : JCasUtil.select(aJCas, Keyphrase.class)) {
             if (!tokensSet.contains(keyphraseCandidate.getCoveredText().toLowerCase())) {
                 candidatesToBeRemoved.add(keyphraseCandidate);
             }
         }
-        for (KeyphraseCandidate keyphraseCandidate : candidatesToBeRemoved) {
+        for (Keyphrase keyphraseCandidate : candidatesToBeRemoved) {
             keyphraseCandidate.removeFromIndexes(aJCas);
         }
     }
