@@ -81,7 +81,7 @@ public class StopwordFilter extends AbstractCandidateFilter{
     }
 
     @Override
-    public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases) throws CASException{
+    protected Collection<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases) throws CASException{
         getContext().getLogger().log(Level.CONFIG, "Entering " + this.getClass().getSimpleName());
 
         // annotation that should be fully removed
