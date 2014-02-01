@@ -1,5 +1,7 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
+import java.util.Collection;
+
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
@@ -28,4 +30,6 @@ public abstract class AbstractCandidateFilter
             throw new AnalysisEngineProcessException(e);
         }
     }
+
+    protected abstract Collection<Keyphrase> filterCandidates(Collection<Keyphrase> select) throws CASException, AnalysisEngineProcessException;
 }
