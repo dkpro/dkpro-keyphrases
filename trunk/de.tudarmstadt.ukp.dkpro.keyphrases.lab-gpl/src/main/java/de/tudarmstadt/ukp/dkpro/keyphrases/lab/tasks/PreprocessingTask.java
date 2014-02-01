@@ -36,6 +36,7 @@ import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.resource.SharedLinkingMo
 import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.resource.SplitterResource;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.web1t.LuceneIndexer;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfConsumer;
+import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.ngrams.NGramAnnotator;
@@ -55,8 +56,7 @@ import de.tudarmstadt.ukp.dkpro.lab.uima.task.impl.UimaTaskBase;
 public class PreprocessingTask
 extends UimaTaskBase
 {
-	public static final String KEY_INPUT_TXT_DOC = "TXT_DOC";
-	public static final String KEY_OUTPUT_XMI = "XMI";
+	public static final String KEY_OUTPUT_BIN = "BIN";
 
 	@Discriminator
 	private String includePrefix;
@@ -177,10 +177,10 @@ extends UimaTaskBase
 				TfidfConsumer.PARAM_FEATURE_PATH, tfidfFeaturePath, TfidfConsumer.PARAM_LOWERCASE,
 				shouldLowercaseCandidates, TfidfConsumer.PARAM_TARGET_LOCATION, dfModelFile));
 
-		File xmiOutputRoot = aContext.getStorageLocation(KEY_OUTPUT_XMI, AccessMode.ADD_ONLY);
-		engines.add(createEngine(XmiWriter.class,
-				XmiWriter.PARAM_TARGET_LOCATION, xmiOutputRoot,
-				XmiWriter.PARAM_COMPRESSION, "GZIP"));
+		File outputRoot = aContext.getStorageLocation(KEY_OUTPUT_BIN, AccessMode.ADD_ONLY);
+		engines.add(createEngine(BinaryCasWriter.class,
+		        BinaryCasWriter.PARAM_TARGET_LOCATION, outputRoot,
+		        BinaryCasWriter.PARAM_FORMAT, "4"));
 
 		return createEngine(engines);
 
