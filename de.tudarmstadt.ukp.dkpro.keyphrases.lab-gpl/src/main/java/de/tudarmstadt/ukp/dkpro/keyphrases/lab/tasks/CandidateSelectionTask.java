@@ -21,8 +21,8 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
+import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.KeyphraseMerger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StructureFilter;
@@ -35,8 +35,8 @@ import de.tudarmstadt.ukp.dkpro.lab.uima.task.impl.UimaTaskBase;
 public class CandidateSelectionTask
     extends UimaTaskBase
 {
-    public static final String KEY_INPUT_XMI = "INPUT_XMI";
-    public static final String KEY_OUTPUT_XMI = "OUTPUT_XMI";
+    public static final String KEY_INPUT_BIN = "BIN";
+    public static final String KEY_OUTPUT_BIN = "BIN";
 
 
     @Discriminator
@@ -61,10 +61,10 @@ public class CandidateSelectionTask
     public CollectionReaderDescription getCollectionReaderDescription(TaskContext aContext)
         throws ResourceInitializationException, IOException
     {
-        File inputXmiRoot = aContext.getStorageLocation(KEY_INPUT_XMI, AccessMode.READONLY);
-        return createReader(XmiReader.class,
-                XmiReader.PARAM_SOURCE_LOCATION, inputXmiRoot,
-                XmiReader.PARAM_PATTERNS, new String[] { INCLUDE_PREFIX + "**/*.xmi.gz" });
+        File inputRoot = aContext.getStorageLocation(KEY_INPUT_BIN, AccessMode.READONLY);
+        return createReader(BinaryCasReader.class,
+                BinaryCasReader.PARAM_SOURCE_LOCATION, inputRoot,
+                BinaryCasReader.PARAM_PATTERNS, new String[] { INCLUDE_PREFIX + "**/*.bin" });
     }
 
     @Override
@@ -92,19 +92,18 @@ public class CandidateSelectionTask
 				CooccurrenceGraph.PARAM_FEATURE_PATH, cooccurrenceGraphFeaturePath,
 				CooccurrenceGraph.PARAM_WINDOW_SIZE, cooccurrenceGraphWindowSize);
 
-        File outputXmiRoot = aContext.getStorageLocation(KEY_OUTPUT_XMI, AccessMode.ADD_ONLY);
-        AnalysisEngineDescription xmiWriter = createEngineDescription(
-                XmiWriter.class,
-                XmiWriter.PARAM_TARGET_LOCATION, outputXmiRoot,
-                XmiWriter.PARAM_COMPRESSION, "GZIP"
-                );
+        File outputRoot = aContext.getStorageLocation(KEY_OUTPUT_BIN, AccessMode.ADD_ONLY);
+        AnalysisEngineDescription writer = createEngineDescription(
+                BinaryCasWriter.class,
+                BinaryCasWriter.PARAM_TARGET_LOCATION, outputRoot,
+                BinaryCasWriter.PARAM_FORMAT, "4");
 
         return createEngine(
                 candidateAnnotator,
                 merger,
                 structureFilter,
                 cooccurrenceGraph,
-                xmiWriter);
+                writer);
     }
 
 

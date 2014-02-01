@@ -26,11 +26,13 @@ import org.apache.uima.util.InvalidXMLException;
 
 import de.tudarmstadt.ukp.dkpro.core.frequency.resources.Web1TFrequencyCountResource;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator;
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.coreference.ranking.CoreferencedTfidfAnnotator;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.KeyphraseEvaluator;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator.KeyphraseEvaluator.EvaluatorType;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfBackgroundIdfRanking;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfidfRanking;
+import de.tudarmstadt.ukp.dkpro.keyphrases.lab.KeyphraseEvaluatorLab;
 import de.tudarmstadt.ukp.dkpro.keyphrases.ranking.PageRankRanking;
 import de.tudarmstadt.ukp.dkpro.lab.engine.TaskContext;
 import de.tudarmstadt.ukp.dkpro.lab.storage.StorageService.AccessMode;
@@ -40,8 +42,7 @@ import de.tudarmstadt.ukp.dkpro.lab.uima.task.impl.UimaTaskBase;
 public class KeyphraseRankingTask
 extends UimaTaskBase
 {
-	public static final String KEY_INPUT_XMI = "INPUT_XMI";
-	public static final String KEY_OUTPUT_XMI = "OUTPUT_XMI";
+	public static final String KEY_INPUT_BIN = "INPUT_BIN";
 
 	@Discriminator
 	private Class<? extends AnalysisComponent> rankerClass;
@@ -65,15 +66,30 @@ extends UimaTaskBase
 	private String nGramFolder;
 	@Discriminator
     private boolean useCoreferenceCounts;
+    @Discriminator
+    private KeyphraseEvaluator.MatchingType evaluationMatchingType;
+    @Discriminator
+    private int evaluationN;
+    @Discriminator
+    private EvaluatorType evaluatorType;
+    @Discriminator
+    private boolean evaluationRemoveGoldAfterMatch;
+    @Discriminator
+    private boolean removeKeyphrasesNotInText;
+    @Discriminator
+    private String goldSuffix;
+    @Discriminator
+    private boolean evaluatorLowercase;
 
 
 	@Override
 	public CollectionReaderDescription getCollectionReaderDescription(TaskContext aContext)
 			throws ResourceInitializationException, IOException
 			{
-		File inputXmiRoot = aContext.getStorageLocation(KEY_INPUT_XMI, AccessMode.READONLY);
-		return createReader(XmiReader.class, XmiReader.PARAM_SOURCE_LOCATION, inputXmiRoot,
-				XmiReader.PARAM_PATTERNS, new String[] { INCLUDE_PREFIX + "**/*.xmi.gz" });
+		File inputRoot = aContext.getStorageLocation(KEY_INPUT_BIN, AccessMode.READONLY);
+        return createReader(BinaryCasReader.class,
+                BinaryCasReader.PARAM_SOURCE_LOCATION, inputRoot,
+                BinaryCasReader.PARAM_PATTERNS, new String[] { INCLUDE_PREFIX + "**/*.bin" });
 			}
 
 	@Override
@@ -138,17 +154,20 @@ extends UimaTaskBase
 			ranker = createEngineDescription(
 					rankerClass);
 		}
-
-		File xmiOutputPath = aContext.getStorageLocation(KEY_OUTPUT_XMI, AccessMode.ADD_ONLY);
-		AnalysisEngineDescription xmiWriter = createEngineDescription(
-				XmiWriter.class,
-				XmiWriter.PARAM_TARGET_LOCATION, xmiOutputPath,
-				XmiWriter.PARAM_COMPRESSION, "GZIP"
-				);
+		
+		AnalysisEngineDescription evaluator = createEngineDescription(
+                KeyphraseEvaluatorLab.class,
+                KeyphraseEvaluatorLab.PARAM_MATCHING_TYPE, evaluationMatchingType.toString(),
+                KeyphraseEvaluatorLab.PARAM_N, evaluationN,
+                KeyphraseEvaluatorLab.PARAM_EVAL_TYPE, evaluatorType.toString(),
+                KeyphraseEvaluatorLab.PARAM_REMOVE_GOLD_AFTER_MATCH, evaluationRemoveGoldAfterMatch,
+                KeyphraseEvaluatorLab.PARAM_GOLD_SUFFIX, goldSuffix,
+                KeyphraseEvaluatorLab.PARAM_REMOVE_KEYPHRASES_NOT_IN_TEXT, removeKeyphrasesNotInText,
+                KeyphraseEvaluatorLab.PARAM_LOWERCASE, evaluatorLowercase);
 
 		return createEngine(
 				ranker,
-				xmiWriter
+				evaluator
 				);
 			}
 
