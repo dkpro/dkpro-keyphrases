@@ -17,8 +17,12 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.bindResource;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -33,63 +37,101 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.frequency.resources.Web1TFrequencyCountResource;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class TfBackgroundIdfRankingTest
 {
 
-    final private static String EXAMPLE_STRING = "example";
-    final private static String SECOND_STRING = "second";
+    // assertEquals on doubles needs an epsilon
+    protected static final double EPSILON = 0.000001;
 
     @Test
     public void test()
-        throws InvalidXMLException, ResourceInitializationException, AnalysisEngineProcessException
+        throws InvalidXMLException, ResourceInitializationException, AnalysisEngineProcessException, IOException
     {
+        
+        String testDocument = "example sentence funny. second example. hdjdl";
 
-        final AnalysisEngineDescription ranker = createPrimitiveDescription(TfBackgroundIdfRanking.class);
-        bindResource(ranker, TfBackgroundIdfRanking.FREQUENCY_COUNT_RESOURCE,
+
+        final AnalysisEngineDescription ranker = createEngineDescription(TfBackgroundIdfRanking.class,
+                TfBackgroundIdfRanking.PARAM_FEATURE_PATH, Token.class.getName(),
+                TfRanking.PARAM_TFDF_PATH, "src/test/resources/tf-df.model"
+                );
+        bindResource(ranker, 
+                TfBackgroundIdfRanking.FREQUENCY_COUNT_RESOURCE,
                 Web1TFrequencyCountResource.class,
                 Web1TFrequencyCountResource.PARAM_MIN_NGRAM_LEVEL, "1",
                 Web1TFrequencyCountResource.PARAM_MAX_NGRAM_LEVEL, "3",
                 Web1TFrequencyCountResource.PARAM_INDEX_PATH, "src/test/resources/jweb1t");
 
-        final AnalysisEngine rankerAE = AnalysisEngineFactory.createAggregate(ranker);
+        final AnalysisEngine rankerAE = AnalysisEngineFactory.createEngine(ranker);
 
-        final JCas jcas = rankerAE.newJCas();
-        final JCasBuilder jcasBuilder = new JCasBuilder(jcas);
-
-        final Keyphrase keyphrase1 = jcasBuilder.add(EXAMPLE_STRING, Keyphrase.class);
-        keyphrase1.setKeyphrase(EXAMPLE_STRING);
-        jcasBuilder.add(" sentence funny. ");
-
-        final Keyphrase keyphrase2 = jcasBuilder.add(SECOND_STRING, Keyphrase.class);
-        keyphrase2.setKeyphrase(SECOND_STRING);
-
-        jcasBuilder.add(" example.");
-
-        final Keyphrase keyphrase3 = jcasBuilder.add("iaejgi", Keyphrase.class);
-
-        jcasBuilder.close();
-
-        Assert.assertThat(keyphrase1.getCoveredText(), CoreMatchers.is(EXAMPLE_STRING));
-        Assert.assertThat(keyphrase2.getCoveredText(), CoreMatchers.is(SECOND_STRING));
-        Assert.assertThat(keyphrase3.getCoveredText(), CoreMatchers.is("iaejgi"));
-
+        JCas jcas = setup(testDocument, rankerAE);
         rankerAE.process(jcas);
 
+        
+        int n=0;
+        boolean exampleContained = false;
+        boolean secondContained = false;
+        boolean hdjdlContained = false;
         for (Keyphrase keyphrase : JCasUtil.select(jcas, Keyphrase.class)) {
-            if (keyphrase.getCoveredText().equals(EXAMPLE_STRING)) {
-                Assert.assertThat(keyphrase.getScore(), CoreMatchers.is(2.0 / Math.log(2.0)));
+            n++;
+            if (keyphrase.getCoveredText().equals("example")) {
+                assertEquals(2.0 / Math.log(2.0), keyphrase.getScore(), EPSILON);
+                exampleContained = true;
             }
-            else if (keyphrase.getCoveredText().equals(SECOND_STRING)) {
-                Assert.assertThat(keyphrase.getScore(), CoreMatchers.is(1.0 / Math.log(4.0)));
+            else if (keyphrase.getCoveredText().equals("second")) {
+                assertEquals(1.0 / Math.log(4.0), keyphrase.getScore(), EPSILON);
+                secondContained = true;
             }
-            else if (keyphrase.getCoveredText().equals("iaejgi")) {
-                Assert.assertThat(keyphrase.getScore(), CoreMatchers.is(0.0));
+            else if (keyphrase.getCoveredText().equals("hdjdl")) {
+                assertEquals(0.0, keyphrase.getScore(), EPSILON);
+                hdjdlContained = true;
             }
         }
+        assertEquals(3, n);
+        assertTrue(exampleContained);
+        assertTrue(secondContained);
+        assertTrue(hdjdlContained);
 
+    }
+
+    private JCas setup(String testDocument, AnalysisEngine analysisEngine) throws IOException, InvalidXMLException, ResourceInitializationException {
+        JCas jcas;
+
+        jcas = analysisEngine.newJCas();
+        jcas.setDocumentText(testDocument);
+
+        Token t1a = new Token(jcas, 0, 7);
+        t1a.addToIndexes();
+        assertEquals("example", t1a.getCoveredText());
+
+        Token t1b = new Token(jcas, 31, 38);
+        t1b.addToIndexes();
+        assertEquals("example", t1b.getCoveredText());
+
+        Token t2 = new Token(jcas, 24, 30);
+        t2.addToIndexes();
+        assertEquals("second", t2.getCoveredText());
+
+        Keyphrase k1 = new Keyphrase(jcas, 0, 7);
+        k1.setKeyphrase("example");
+        k1.addToIndexes();
+        assertEquals("example", k1.getCoveredText());
+
+        Keyphrase k2 = new Keyphrase(jcas, 24, 30);
+        k2.setKeyphrase("second");
+        k2.addToIndexes();
+        assertEquals("second", k2.getCoveredText());
+
+        Keyphrase k3 = new Keyphrase(jcas, 40, 45);
+        k3.setKeyphrase("hdjdl");
+        k3.addToIndexes();
+        assertEquals("hdjdl", k3.getCoveredText());
+
+        return jcas;
     }
 
 }
