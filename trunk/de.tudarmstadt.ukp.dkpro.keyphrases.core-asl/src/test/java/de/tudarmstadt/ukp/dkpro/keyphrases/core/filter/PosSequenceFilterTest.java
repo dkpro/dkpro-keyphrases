@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -17,6 +16,8 @@ import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.CONJ;
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.NN;
+import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.NP;
 import de.tudarmstadt.ukp.dkpro.core.ngrams.NGramAnnotator;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
@@ -34,8 +35,9 @@ public class PosSequenceFilterTest
         throws ResourceInitializationException, AnalysisEngineProcessException
     {
 
-        String firstSequence = PosSequenceFilter.createSequence(N.class.getSimpleName(), CONJ.class.getSimpleName(), N.class.getSimpleName());
-        String secondSequence = PosSequenceFilter.createSequence(N.class.getSimpleName(),N.class.getSimpleName());
+        String firstSequence = PosSequenceFilter.createSequence(NN.class.getSimpleName(), CONJ.class.getSimpleName(), NN.class.getSimpleName());
+        String secondSequence = PosSequenceFilter.createSequence(NP.class.getSimpleName(),NP.class.getSimpleName());
+        String thirdSequence = PosSequenceFilter.createSequence(NN.class.getSimpleName(),NN.class.getSimpleName());
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(
                 AnalysisEngineFactory.createEngineDescription(
                     AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
@@ -43,7 +45,7 @@ public class PosSequenceFilterTest
                     AnalysisEngineFactory.createEngineDescription(NGramAnnotator.class,
                             NGramAnnotator.PARAM_N, 3),
                     CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_ngram(false),
-                    PosSequenceFilterFactory.createPosSequenceFilter(firstSequence, secondSequence)));
+                    PosSequenceFilterFactory.createPosSequenceFilter(firstSequence, secondSequence, thirdSequence)));
         JCas jcas = engine.newJCas();
         jcas.setDocumentLanguage("en");
         jcas.setDocumentText(testDocument);

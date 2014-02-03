@@ -30,7 +30,7 @@ extends AbstractCandidateFilter
         super.initialize(context);
 
         allowedPosSequences = Arrays.asList(posPatterns);
-        System.out.println(allowedPosSequences);
+//        System.out.println(allowedPosSequences);
     }
 
     @Override
@@ -40,8 +40,10 @@ extends AbstractCandidateFilter
         List<Keyphrase> keyphrasesToBeRemoved = new LinkedList<Keyphrase>();
         for (Keyphrase keyphrase : keyphrases) {
             String posSequence = getPosSequence(JCasUtil.selectCovered(Token.class, keyphrase));
-            System.out.println(posSequence);
+            
             if (!allowedPosSequences.contains(posSequence)) {
+//                System.out.println(keyphrase.getKeyphrase());
+//                System.out.println(posSequence);
                 keyphrasesToBeRemoved.add(keyphrase);
             }
         }
@@ -52,8 +54,7 @@ extends AbstractCandidateFilter
     {
         List<String> posSequence = new LinkedList<String>();
         for (Token token : tokens) {
-            //TODO: This must be mapped to the simple name... 
-            posSequence.add(token.getPos().getPosValue());
+            posSequence.add(token.getPos().getClass().getSimpleName());
         }
         return createSequence(posSequence);
     }
