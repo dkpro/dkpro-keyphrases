@@ -17,16 +17,14 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ExternalResource;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.provider.FrequencyCountProvider;
+import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator;
+import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.util.FreqDist;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
@@ -39,22 +37,20 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
  * @author erbs
  *
  */
-public class TfBackgroundIdfRanking extends JCasAnnotator_ImplBase {
+public class TfBackgroundIdfRanking extends TfidfAnnotator {
 
 	public static final String FREQUENCY_COUNT_RESOURCE = "FrequencyProvider";
 	@ExternalResource(key = FREQUENCY_COUNT_RESOURCE)
 	private FrequencyCountProvider frequencyProvider;
-
-	@Override
-	public void initialize(final UimaContext context) throws ResourceInitializationException {
-		super.initialize(context);
-	}
-
+	
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
 
+        FreqDist<String> termFrequencies = getTermFrequencies(jcas);
+
+	    
 	    for (Keyphrase k : JCasUtil.select(jcas, Keyphrase.class)) {
-            double tfScore = StringUtils.countMatches(jcas.getDocumentText(), k.getKeyphrase());
+            double tfScore = termFrequencies.getCount(k.getKeyphrase());
             try {
                 final Long frequency = frequencyProvider.getFrequency(k.getKeyphrase());
                 if(frequency <= 0) {

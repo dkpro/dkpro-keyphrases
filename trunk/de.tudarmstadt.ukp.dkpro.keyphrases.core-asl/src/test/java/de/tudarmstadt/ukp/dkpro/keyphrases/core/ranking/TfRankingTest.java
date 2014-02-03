@@ -29,6 +29,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.InvalidXMLException;
 import org.junit.Test;
 
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class TfRankingTest
@@ -40,8 +41,14 @@ public class TfRankingTest
     public void TfKeyphraseTest() throws Exception {
 
         String testDocument = "example sentence funny. second example.";
+        
+        
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(TfRanking.class);
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
+                TfRanking.class,
+                TfRanking.PARAM_FEATURE_PATH, Token.class.getName(),
+                TfRanking.PARAM_TFDF_PATH, "src/test/resources/tf-df.model"
+                );
 
         JCas jcas = setup(testDocument, analysisEngine);
         analysisEngine.process(jcas);
@@ -67,6 +74,18 @@ public class TfRankingTest
 
         jcas = analysisEngine.newJCas();
         jcas.setDocumentText(testDocument);
+
+        Token t1a = new Token(jcas, 0, 7);
+        t1a.addToIndexes();
+        assertEquals("example", t1a.getCoveredText());
+
+        Token t1b = new Token(jcas, 31, 38);
+        t1b.addToIndexes();
+        assertEquals("example", t1b.getCoveredText());
+
+        Token t2 = new Token(jcas, 24, 30);
+        t2.addToIndexes();
+        assertEquals("second", t2.getCoveredText());
 
         Keyphrase k1 = new Keyphrase(jcas, 0, 7);
         k1.setKeyphrase("example");

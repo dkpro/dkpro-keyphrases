@@ -17,12 +17,12 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
+import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator;
+import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.util.FreqDist;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
@@ -35,14 +35,20 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
  * @author zesch
  *
  */
-public class TfRanking extends JCasAnnotator_ImplBase {
-
+public class TfRanking extends TfidfAnnotator{
+    
+    /**
+     * This annotator is type agnostic, so it is mandatory to specify the type of the working
+     * annotation and how to obtain the string representation with the feature path.
+     */
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
+	    
+        FreqDist<String> termFrequencies = getTermFrequencies(jcas);
+
 
 	    for (Keyphrase k : JCasUtil.select(jcas, Keyphrase.class)) {
-            double tfScore = StringUtils.countMatches(jcas.getDocumentText(), k.getKeyphrase());
-            k.setScore(tfScore);
+	        k.setScore(termFrequencies.getCount(k.getKeyphrase()));
         }
 
 	}
