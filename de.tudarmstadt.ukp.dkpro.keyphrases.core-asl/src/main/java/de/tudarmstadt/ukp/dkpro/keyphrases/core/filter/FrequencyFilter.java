@@ -2,45 +2,47 @@ package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class FrequencyFilter
-    extends AbstractCandidateFilter
+extends AbstractFrequencyFilter
 {
 
-    public static final String FREQUENCY = "frequency";
-    @ConfigurationParameter(name = FREQUENCY)
-    private int frequency;
+    private Map<String, Long> keyphraseFrequencies;
 
     @Override
-    public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
+    public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases) throws AnalysisEngineProcessException
     {
-
-        List<Keyphrase> keyphrasesToBeRemoved = new LinkedList<Keyphrase>();
-        Map<String, Long> keyphrasesFrequency = new HashMap<String, Long>();
-        for (Keyphrase kc : keyphrases) {
-            String coveredText = kc.getCoveredText().toLowerCase();
-            if (keyphrasesFrequency.containsKey(coveredText)) {
-                long value = keyphrasesFrequency.get(coveredText);
-                keyphrasesFrequency.put(coveredText, ++value);
+        keyphraseFrequencies = getKeyphraseFrequencies(keyphrases);
+        
+        return super.filterCandidates(keyphrases);
+    }
+    
+    private Map<String, Long> getKeyphraseFrequencies(Collection<Keyphrase> keyphrases)
+    {
+        Map<String, Long> keyphraseFrequencies = new HashMap<String, Long>();
+        String keyphraseText;
+        for (Keyphrase keyphrase : keyphrases) {
+            keyphraseText = keyphrase.getKeyphrase();
+            if(!keyphraseFrequencies.containsKey(keyphraseText)){
+                keyphraseFrequencies.put(keyphraseText, 0l);
             }
-            else {
-                keyphrasesFrequency.put(coveredText, new Long(1));
-            }
+            keyphraseFrequencies.put(keyphraseText, keyphraseFrequencies.get(keyphraseText) + 1);
         }
-        for (Keyphrase kc : keyphrases) {
-            if (keyphrasesFrequency.get(kc.getCoveredText().toLowerCase()) < frequency) {
-                keyphrasesToBeRemoved.add(kc);
-            }
-        }
-        return keyphrasesToBeRemoved;
+        return keyphraseFrequencies;
+    }
 
+    @Override
+    protected long getFrequency(String keyphrase){
+        if(!keyphraseFrequencies.containsKey(keyphrase)){
+            return 0l;
+        }
+        return keyphraseFrequencies.get(keyphrase);
     }
 
 }

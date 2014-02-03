@@ -9,11 +9,12 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.FrequencyFilter;
 public class FrequencyFilterFactory
 {
 
-    public static AnalysisEngineDescription getFrequencyFilter(int n)
+    public static AnalysisEngineDescription getFrequencyFilter(int min, int max)
         throws ResourceInitializationException
     {
         return AnalysisEngineFactory.createEngineDescription(FrequencyFilter.class,
-                FrequencyFilter.FREQUENCY, n);
+                FrequencyFilter.MIN_FREQUENCY, min,
+                FrequencyFilter.MAX_FREQUENCY, max);
 
     }
 
