@@ -1,9 +1,11 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -14,80 +16,56 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class PosSequenceFilter
-    extends AbstractCandidateFilter
+extends AbstractCandidateFilter
 {
 
     public static final String PARAM_POS_PATTERNS = "posPatterns";
     @ConfigurationParameter(name = PARAM_POS_PATTERNS, mandatory = true)
-    private List<String[]> posPatterns;
-    private String[][] splitPosPatterns;
+    private String[] posPatterns;
+    
+    private List<String> allowedPosSequences;
 
     @Override
-    public void initialize(UimaContext context)
-        throws ResourceInitializationException
-    {
+    public void initialize(final UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-        splitPosPatterns = new String[posPatterns.size()][];
-        for (int i =0; i<posPatterns.size(); i++) {
-            splitPosPatterns[i] = posPatterns.get(i)[0].split(",");
-        }
+
+        allowedPosSequences = Arrays.asList(posPatterns);
+        System.out.println(allowedPosSequences);
     }
 
     @Override
     public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
-        throws AnalysisEngineProcessException
-    {
+            throws AnalysisEngineProcessException
+            {
         List<Keyphrase> keyphrasesToBeRemoved = new LinkedList<Keyphrase>();
         for (Keyphrase keyphrase : keyphrases) {
-            Collection<Token> tokens = JCasUtil.selectCovered(Token.class, keyphrase);
-            String[] posTags = new String[tokens.size()];
-            collectPosTags(tokens, posTags);
-            try {
-                if (!keyphraseMatchPattern(posTags)) {
-                    keyphrasesToBeRemoved.add(keyphrase);
-                }
-            }
-            catch (ClassNotFoundException e) {
-                throw new AnalysisEngineProcessException(e);
+            String posSequence = getPosSequence(JCasUtil.selectCovered(Token.class, keyphrase));
+            System.out.println(posSequence);
+            if (!allowedPosSequences.contains(posSequence)) {
+                keyphrasesToBeRemoved.add(keyphrase);
             }
         }
         return keyphrasesToBeRemoved;
-    }
+            }
 
-    private void collectPosTags(Collection<Token> tokens, String[] posTags)
+    private String getPosSequence(Collection<Token> tokens)
     {
-        int i = 0;
+        List<String> posSequence = new LinkedList<String>();
         for (Token token : tokens) {
-            posTags[i] = token.getPos().getClass().getCanonicalName();
-            ++i;
+            //TODO: This must be mapped to the simple name... 
+            posSequence.add(token.getPos().getPosValue());
         }
+        return createSequence(posSequence);
     }
 
-    private boolean keyphraseMatchPattern(String[] posTags)
-        throws ClassNotFoundException
+    public static String createSequence(String... posTags)
     {
-        for (String[] posPattern : splitPosPatterns) {
-            if (matchPatterns(posTags, posPattern)) {
-                return true;
-            }
-        }
-        return false;
+        return StringUtils.join(posTags,"-");
     }
 
-    private boolean matchPatterns(String[] posTags, String[] posPattern)
-        throws ClassNotFoundException
+    public static String createSequence(List<String> posTags)
     {
-        if (posTags.length != posPattern.length) {
-            return false;
-        }
-        for (int i = 0; i < posTags.length; ++i) {
-            Class<?> tagClass = Class.forName(posTags[i]);
-            Class<?> patternClass = Class.forName(posPattern[i]);
-            if (!posTags[i].equals(posPattern[i]) && !patternClass.isAssignableFrom(tagClass)) {
-                return false;
-            }
-        }
-        return true;
+        return StringUtils.join(posTags,"-");
     }
 
 }

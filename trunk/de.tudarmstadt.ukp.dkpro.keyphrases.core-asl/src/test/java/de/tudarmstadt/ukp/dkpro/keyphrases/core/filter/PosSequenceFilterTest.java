@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -33,16 +34,8 @@ public class PosSequenceFilterTest
         throws ResourceInitializationException, AnalysisEngineProcessException
     {
 
-        List<String[]> posSequences = new ArrayList<String[]>();
-        String[] firstSequence = new String[3];
-        firstSequence[0] = N.class.getCanonicalName();
-        firstSequence[1] = CONJ.class.getCanonicalName();
-        firstSequence[2] = N.class.getCanonicalName();
-        String[] secondSequence = new String[2];
-        secondSequence[0] = N.class.getCanonicalName();
-        secondSequence[1] = N.class.getCanonicalName();
-        posSequences.add(firstSequence);
-        posSequences.add(secondSequence);
+        String firstSequence = PosSequenceFilter.createSequence(N.class.getSimpleName(), CONJ.class.getSimpleName(), N.class.getSimpleName());
+        String secondSequence = PosSequenceFilter.createSequence(N.class.getSimpleName(),N.class.getSimpleName());
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(
                 AnalysisEngineFactory.createEngineDescription(
                     AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
@@ -50,7 +43,7 @@ public class PosSequenceFilterTest
                     AnalysisEngineFactory.createEngineDescription(NGramAnnotator.class,
                             NGramAnnotator.PARAM_N, 3),
                     CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_ngram(false),
-                    PosSequenceFilterFactory.createPosSequenceFilter(posSequences)));
+                    PosSequenceFilterFactory.createPosSequenceFilter(firstSequence, secondSequence)));
         JCas jcas = engine.newJCas();
         jcas.setDocumentLanguage("en");
         jcas.setDocumentText(testDocument);
