@@ -30,7 +30,7 @@ public class FrequencyFilterTest
                 AnalysisEngineFactory.createEngineDescription(
                         AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
                         CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_token(false),
-                        FrequencyFilterFactory.getFrequencyFilter(2)));
+                        FrequencyFilterFactory.getFrequencyFilter(2, 4)));
 
         JCas jcas = engine.newJCas();
         jcas.setDocumentLanguage("en");
@@ -40,11 +40,16 @@ public class FrequencyFilterTest
         expectedResults.add("a");
         
         int i=0;
+        boolean aContained = false;
         for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
             System.out.println(kc);
             assertTrue(expectedResults.contains(kc.getKeyphrase()));
             i++;
+            if(kc.getKeyphrase().equals("a")){
+                aContained = true;
+            }
         }
+        assertTrue(aContained);
         assertEquals(2,i);
         
     }
