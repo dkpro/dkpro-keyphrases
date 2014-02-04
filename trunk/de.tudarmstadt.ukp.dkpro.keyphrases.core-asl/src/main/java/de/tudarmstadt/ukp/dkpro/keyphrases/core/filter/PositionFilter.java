@@ -9,7 +9,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class PositionFilter
-    extends AbstractCandidateFilter
+    extends AbstractKeyphraseFilter
 {
 
     public static final String BEGIN_INDEX = "beginIndex";

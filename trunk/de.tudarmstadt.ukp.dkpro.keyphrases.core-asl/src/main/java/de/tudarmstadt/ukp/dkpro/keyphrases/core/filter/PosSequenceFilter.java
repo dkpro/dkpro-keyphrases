@@ -16,7 +16,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class PosSequenceFilter
-extends AbstractCandidateFilter
+extends AbstractKeyphraseFilter
 {
 
     public static final String PARAM_POS_PATTERNS = "posPatterns";

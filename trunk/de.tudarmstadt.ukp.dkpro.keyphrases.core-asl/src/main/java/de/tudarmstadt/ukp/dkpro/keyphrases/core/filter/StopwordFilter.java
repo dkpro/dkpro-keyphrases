@@ -56,7 +56,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
  * @author zesch
  *
  */
-public class StopwordFilter extends AbstractCandidateFilter{
+public class StopwordFilter extends AbstractKeyphraseFilter{
 
     public static final String PARAM_STOPWORD_LIST = "StopwordList";
     @ConfigurationParameter(name=PARAM_STOPWORD_LIST, mandatory=true)
