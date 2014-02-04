@@ -22,7 +22,8 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StopwordFilter;
+import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class StopwordFilterFactory {
 
@@ -30,7 +31,16 @@ public class StopwordFilterFactory {
     throws ResourceInitializationException
     {
         return createEngineDescription(
-                StopwordFilter.class,
-                StopwordFilter.PARAM_STOPWORD_LIST, "classpath:/stopwords/english_stopwords.txt");
+                StopWordRemover.class,
+                StopWordRemover.PARAM_STOP_WORD_LIST_FILE_NAMES, "[en]classpath:/stopwords/english_stopwords.txt",
+                StopWordRemover.PARAM_PATHS, Keyphrase.class.getName()+"/keyphrase");
+    }
+    public static AnalysisEngineDescription getStopwordFilter(String... wordLists)
+    throws ResourceInitializationException
+    {
+        return createEngineDescription(
+                StopWordRemover.class,
+                StopWordRemover.PARAM_STOP_WORD_LIST_FILE_NAMES, wordLists,
+                StopWordRemover.PARAM_PATHS, Keyphrase.class.getName()+"/keyphrase");
     }
 }
