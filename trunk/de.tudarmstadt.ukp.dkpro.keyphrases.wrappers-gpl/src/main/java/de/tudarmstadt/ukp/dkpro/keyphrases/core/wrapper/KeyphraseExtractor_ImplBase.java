@@ -32,9 +32,9 @@ import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerTT4JBase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.KeyphraseMerger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StopwordFilter;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StructureFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.length.TokenLengthFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.postprocessing.KeyphraseMerger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.util.KeyphraseScoreComparator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate.CandidateType;
@@ -176,10 +176,9 @@ public abstract class KeyphraseExtractor_ImplBase
 
         list.add(
             createEngineDescription(
-                    StructureFilter.class,
-                    StructureFilter.PARAM_MIN_TOKENS, getMinKeyphraseLength(),
-                    StructureFilter.PARAM_MAX_TOKENS, getMaxKeyphraseLength(),
-                    StructureFilter.PARAM_POS_PATTERNS, false
+                    TokenLengthFilter.class,
+                    TokenLengthFilter.MIN_KEYPHRASE_LENGTH, getMinKeyphraseLength(),
+                    TokenLengthFilter.MIN_KEYPHRASE_LENGTH, getMaxKeyphraseLength()
             )
         );
 

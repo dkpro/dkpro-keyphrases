@@ -24,8 +24,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotator;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.KeyphraseMerger;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StructureFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.postprocessing.KeyphraseMerger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.CooccurrenceGraph;
 import de.tudarmstadt.ukp.dkpro.lab.engine.TaskContext;
 import de.tudarmstadt.ukp.dkpro.lab.storage.StorageService.AccessMode;
@@ -81,12 +80,6 @@ public class CandidateSelectionTask
                 KeyphraseMerger.class,
                 KeyphraseMerger.PARAM_MAX_LENGTH, keyphraseMergerMaxTokens);
 
-        AnalysisEngineDescription structureFilter = createEngineDescription(
-                StructureFilter.class,
-                StructureFilter.PARAM_MIN_TOKENS, structureFilterMinTokens,
-                StructureFilter.PARAM_MAX_TOKENS, structureFilterMaxTokens,
-                StructureFilter.PARAM_POS_PATTERNS, structureFilterPosPatterns);
-
         AnalysisEngineDescription cooccurrenceGraph = createEngineDescription(
 				CooccurrenceGraph.class,
 				CooccurrenceGraph.PARAM_FEATURE_PATH, cooccurrenceGraphFeaturePath,
@@ -101,7 +94,6 @@ public class CandidateSelectionTask
         return createEngine(
                 candidateAnnotator,
                 merger,
-                structureFilter,
                 cooccurrenceGraph,
                 writer);
     }

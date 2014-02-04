@@ -11,6 +11,7 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.bindResource;
 
@@ -43,9 +44,9 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.pipeline.SegmentProcessi
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.segmentation.PseudoSentenceSegmentAnnotator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.segmentation.SymmetricSegmentAnnotator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.BookIndexPhrase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.KeyphraseMerger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StopwordFilter;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StructureFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.length.TokenLengthFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.postprocessing.KeyphraseMerger;
 
 /**
  * Base implementation for book index phrase extraction.
@@ -165,10 +166,11 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 					KeyphraseMerger.PARAM_MAX_LENGTH, maxPhraseLength));
 		}
 		b.add(createStopwordFilter(getLanguage()));
-		b.add(createPrimitiveDescription(StructureFilter.class,
-				StructureFilter.PARAM_MIN_TOKENS, minPhraseLength,
-				StructureFilter.PARAM_MAX_TOKENS, maxPhraseLength,
-				StructureFilter.PARAM_POS_PATTERNS, false));
+		b.add(createEngineDescription(
+                TokenLengthFilter.class,
+                TokenLengthFilter.MIN_KEYPHRASE_LENGTH, minPhraseLength,
+                TokenLengthFilter.MIN_KEYPHRASE_LENGTH, maxPhraseLength));
+
 
 		return b.createAggregateDescription();
 	}
