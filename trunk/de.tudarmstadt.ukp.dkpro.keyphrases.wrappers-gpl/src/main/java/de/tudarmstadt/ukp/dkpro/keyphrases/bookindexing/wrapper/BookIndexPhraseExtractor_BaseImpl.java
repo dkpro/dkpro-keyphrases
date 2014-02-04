@@ -44,7 +44,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.pipeline.SegmentProcessi
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.segmentation.PseudoSentenceSegmentAnnotator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.segmentation.SymmetricSegmentAnnotator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.BookIndexPhrase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StopwordFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.factory.StopwordFilterFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.length.TokenLengthFilter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.postprocessing.KeyphraseMerger;
 
@@ -165,7 +165,9 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 			b.add(createPrimitiveDescription(KeyphraseMerger.class,
 					KeyphraseMerger.PARAM_MAX_LENGTH, maxPhraseLength));
 		}
-		b.add(createStopwordFilter(getLanguage()));
+		b.add(StopwordFilterFactory.getStopwordFilter(
+		        "[en]classpath:/stopwords/english_stopwords.txt",
+		        "[de]classpath:/stopwords/german_stopwords.txt"));
 		b.add(createEngineDescription(
                 TokenLengthFilter.class,
                 TokenLengthFilter.MIN_KEYPHRASE_LENGTH, minPhraseLength,
@@ -173,31 +175,6 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 
 
 		return b.createAggregateDescription();
-	}
-
-	/**
-	 * @param language
-	 *          default implementation recognizes: en, de
-	 * @return a stopword filter
-	 * @throws ResourceInitializationException
-	 */
-	protected AnalysisEngineDescription createStopwordFilter(String language)
-		throws ResourceInitializationException
-	{
-		if (language.equals("en")) {
-			return createPrimitiveDescription(StopwordFilter.class,
-					StopwordFilter.PARAM_STOPWORD_LIST,
-					"classpath:/stopwords/english_stopwords.txt");
-		}
-		else if (language.equals("de")) {
-			return createPrimitiveDescription(StopwordFilter.class,
-					StopwordFilter.PARAM_STOPWORD_LIST,
-					"classpath:/stopwords/german_stopwords.txt");
-		}
-		else {
-			throw new ResourceInitializationException(new Throwable(
-					"No stopwordlist available for language: " + language));
-		}
 	}
 
 	protected AnalysisEngineDescription createAggregator()

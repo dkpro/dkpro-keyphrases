@@ -56,7 +56,7 @@ public class CooccurrenceGraphExtractorTest
           );
 
         assertEquals(
-        		"variable temporal rates,temporal rates,temporal rate," +
+        		"variable temporal rates,temporal rates,different temporal rates," +
         		"video object-based rate allocation,multiple video objects",
 				textrankKeyphrases);
 
