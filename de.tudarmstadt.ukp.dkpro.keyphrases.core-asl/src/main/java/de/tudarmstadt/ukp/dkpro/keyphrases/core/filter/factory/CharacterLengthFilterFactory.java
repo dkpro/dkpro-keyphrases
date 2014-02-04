@@ -13,8 +13,8 @@ public class CharacterLengthFilterFactory
         throws ResourceInitializationException
     {
         return AnalysisEngineFactory.createEngineDescription(CharacterLengthFilter.class,
-                CharacterLengthFilter.MIN_CANDIDATE_LENGTH, minLength,
-                CharacterLengthFilter.MAX_CANDIDATE_LENGTH, maxLength);
+                CharacterLengthFilter.MIN_KEYPHRASE_LENGTH, minLength,
+                CharacterLengthFilter.MAX_KEYPHRASE_LENGTH, maxLength);
     }
 
 }
