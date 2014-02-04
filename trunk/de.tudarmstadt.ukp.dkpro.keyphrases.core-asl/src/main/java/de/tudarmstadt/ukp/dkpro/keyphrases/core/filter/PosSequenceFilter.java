@@ -2,8 +2,10 @@ package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.uima.UimaContext;
@@ -21,9 +23,7 @@ extends AbstractKeyphraseFilter
 
     public static final String PARAM_POS_PATTERNS = "posPatterns";
     @ConfigurationParameter(name = PARAM_POS_PATTERNS, mandatory = false)
-    private String[] posPatterns;
-
-    private List<String> allowedPosSequences;
+    private Set<String>  posPatterns;
 
     @Override
     public void initialize(final UimaContext context) throws ResourceInitializationException {
@@ -32,8 +32,6 @@ extends AbstractKeyphraseFilter
         if(posPatterns == null){
             posPatterns = getStandardPosPatterns();
         }
-
-        allowedPosSequences = Arrays.asList(posPatterns);
     }
 
     @Override
@@ -45,7 +43,7 @@ extends AbstractKeyphraseFilter
         for (Keyphrase keyphrase : keyphrases) {
             String posSequence = getPosSequence(JCasUtil.selectCovered(POS.class, keyphrase));
 
-            if (!allowedPosSequences.contains(posSequence)) {
+            if (!posPatterns.contains(posSequence)) {
                 //                System.out.println(keyphrase.getKeyphrase());
                 //                System.out.println(posSequence);
                 keyphrasesToBeRemoved.add(keyphrase);
@@ -74,24 +72,25 @@ extends AbstractKeyphraseFilter
         return createSequence(Arrays.asList(posTags));
     }
 
-    public static String[] getStandardPosPatterns(){
-        return new String[]{
-                "N",
-                "N_N",
-                "A_N",
-                "V_N",
-                "N_V",
-                "N_N_N",
-                "A_N_N",
-                "A_A_N",
-                "V_N_N",
-                "V_V_N",
-                "N_P_N",
-                "N_N_N_N",
-                "A_N_N_N",
-                "A_A_N_N",
-                "A_A_A_N"
-        };
+    public static Set<String> getStandardPosPatterns(){
+        Set<String> standardPosPatterns = new HashSet<String>();
+        standardPosPatterns.add("N");
+        standardPosPatterns.add("N_N");
+        standardPosPatterns.add("A_N");
+        standardPosPatterns.add("V_N");
+        standardPosPatterns.add("N_V");
+        standardPosPatterns.add("N_N_N");
+        standardPosPatterns.add("A_N_N");
+        standardPosPatterns.add("A_A_N");
+        standardPosPatterns.add("V_N_N");
+        standardPosPatterns.add("V_V_N");
+        standardPosPatterns.add("N_P_N");
+        standardPosPatterns.add("N_N_N_N");
+        standardPosPatterns.add("A_N_N_N");
+        standardPosPatterns.add("A_A_N_N");
+        standardPosPatterns.add("A_A_A_N");
+
+        return standardPosPatterns;
     }
 
 }
