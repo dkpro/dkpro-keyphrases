@@ -12,12 +12,12 @@ public class CharacterLengthFilter
     extends AbstractCandidateFilter
 {
 
-    public static final String MIN_CANDIDATE_LENGTH = "MinCandidateLenght";
-    @ConfigurationParameter(name = MIN_CANDIDATE_LENGTH)
+    public static final String MIN_KEYPHRASE_LENGTH = "MinKeyphraseLength";
+    @ConfigurationParameter(name = MIN_KEYPHRASE_LENGTH)
     private int minLength;
 
-    public static final String MAX_CANDIDATE_LENGTH = "MaxCandidateLenght";
-    @ConfigurationParameter(name = MAX_CANDIDATE_LENGTH)
+    public static final String MAX_KEYPHRASE_LENGTH = "MaxKeyphraseLength";
+    @ConfigurationParameter(name = MAX_KEYPHRASE_LENGTH)
     private int maxLength;
 
     @Override
