@@ -17,7 +17,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.factory;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -29,7 +29,7 @@ public class KeyphraseMergerFactory {
     public static AnalysisEngineDescription getKeyphraseMerger_maxLength4()
     throws ResourceInitializationException
     {
-        return createPrimitiveDescription(
+        return createEngineDescription(
                 KeyphraseMerger.class,
                 KeyphraseMerger.PARAM_MAX_LENGTH, 4);
     }
