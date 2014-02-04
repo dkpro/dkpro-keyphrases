@@ -8,11 +8,11 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.AbstractCandidateFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.AbstractKeyphraseFilter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public abstract class AbstractFrequencyFilter
-    extends AbstractCandidateFilter
+    extends AbstractKeyphraseFilter
 {
 
     public static final String MIN_FREQUENCY = "MinFrequency";

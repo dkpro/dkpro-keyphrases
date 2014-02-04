@@ -10,8 +10,8 @@ import org.apache.uima.jcas.JCas;
 
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
-public abstract class AbstractCandidateFilter
-    extends JCasAnnotator_ImplBase implements CandidateFilter
+public abstract class AbstractKeyphraseFilter
+    extends JCasAnnotator_ImplBase implements KeyphraseFilter
 {
 
     /* (non-Javadoc)

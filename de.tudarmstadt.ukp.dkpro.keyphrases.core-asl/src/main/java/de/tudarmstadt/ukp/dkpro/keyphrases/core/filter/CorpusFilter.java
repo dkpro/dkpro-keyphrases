@@ -18,7 +18,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class CorpusFilter
-    extends AbstractCandidateFilter
+    extends AbstractKeyphraseFilter
 {
 
     public static final String CORPUS_FOLDER = "corpusFolder";
