@@ -9,7 +9,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.PosSequenceFilter;
 public class PosSequenceFilterFactory
 {
 
-    public static AnalysisEngineDescription createPosSequenceFilter(String... posSequences)
+    public static AnalysisEngineDescription createPosSequenceFilter(String[] posSequences)
         throws ResourceInitializationException
     {
         return AnalysisEngineFactory.createEngineDescription(

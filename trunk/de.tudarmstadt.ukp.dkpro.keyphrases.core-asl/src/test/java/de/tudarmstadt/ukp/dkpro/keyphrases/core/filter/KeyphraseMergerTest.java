@@ -18,7 +18,6 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -34,6 +33,7 @@ import org.apache.uima.util.InvalidXMLException;
 import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.postprocessing.KeyphraseMerger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class KeyphraseMergerTest {
