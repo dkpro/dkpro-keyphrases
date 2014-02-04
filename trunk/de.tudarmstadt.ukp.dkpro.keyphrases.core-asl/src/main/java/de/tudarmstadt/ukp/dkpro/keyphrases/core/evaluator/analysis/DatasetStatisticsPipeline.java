@@ -24,9 +24,15 @@ public class DatasetStatisticsPipeline
 
         String dkproHome = System.getenv("DKPRO_HOME");
         
-        String dataset = dkproHome + "/corpora/MedForumCorpus_gold/";
+//        String dataset = dkproHome + "/corpora/pythagoras/";
+//        String text = "*.summary.txt";
+//        String gold = ".keys.intersection.lemmatized";
+//        String dataset = dkproHome + "/corpora/MedForumCorpus_gold/";
+//        String text = "*.txt";
+//        String gold = ".txt.intersection.filtered";
+        String dataset = dkproHome + "/corpora/Pedocs/train/";
         String text = "*.txt";
-        String gold = ".txt.intersection";
+        String gold = ".keys.lemmatized";
 
         System.out.println(dataset);
         
