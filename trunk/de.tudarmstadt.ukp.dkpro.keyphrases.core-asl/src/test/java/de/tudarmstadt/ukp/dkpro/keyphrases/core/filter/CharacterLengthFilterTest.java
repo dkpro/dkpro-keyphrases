@@ -30,11 +30,11 @@ public class CharacterLengthFilterTest
                 AnalysisEngineFactory.createEngineDescription(
                         AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
                         CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_token(false),
-                        CharacterLengthFilterFactory.getCharacterLengthFilter(4)));
+                        CharacterLengthFilterFactory.getCharacterLengthFilter(4, 10)));
 
         JCas jcas = engine.newJCas();
         jcas.setDocumentLanguage("en");
-        jcas.setDocumentText("Give a man a name.");
+        jcas.setDocumentText("Give a man a extraordinary name.");
         engine.process(jcas);
         List<String> expectedResults = new ArrayList<String>();
         expectedResults.add("Give");

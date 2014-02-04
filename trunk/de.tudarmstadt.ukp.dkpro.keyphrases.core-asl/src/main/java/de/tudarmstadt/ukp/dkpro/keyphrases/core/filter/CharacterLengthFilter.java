@@ -12,22 +12,23 @@ public class CharacterLengthFilter
     extends AbstractCandidateFilter
 {
 
-    public static final String CANDIDATE_LENGTH = "candidateLenght";
-    @ConfigurationParameter(name = CANDIDATE_LENGTH)
-    private int length;
+    public static final String MIN_CANDIDATE_LENGTH = "MinCandidateLenght";
+    @ConfigurationParameter(name = MIN_CANDIDATE_LENGTH)
+    private int minLength;
+
+    public static final String MAX_CANDIDATE_LENGTH = "MaxCandidateLenght";
+    @ConfigurationParameter(name = MAX_CANDIDATE_LENGTH)
+    private int maxLength;
 
     @Override
     public List<Keyphrase> filterCandidates(Collection<Keyphrase> keyphrases)
     {
-
-        List<Keyphrase> candidatesToBeRemoved = new LinkedList<Keyphrase>();
-        for (Keyphrase kc : keyphrases) {
-            if (kc.getCoveredText().length() < length) {
-                candidatesToBeRemoved.add(kc);
+        List<Keyphrase> keyphrasesToBeRemoved = new LinkedList<Keyphrase>();
+        for (Keyphrase keyphrase : keyphrases) {
+            if (keyphrase.getKeyphrase().length() < minLength || keyphrase.getKeyphrase().length() > maxLength) {
+                keyphrasesToBeRemoved.add(keyphrase);
             }
         }
-        return candidatesToBeRemoved;
-
+        return keyphrasesToBeRemoved;
     }
-
 }
