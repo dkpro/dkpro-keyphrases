@@ -1,4 +1,4 @@
-package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
+package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.frequency;
 
 import java.io.IOException;
 import org.apache.uima.fit.descriptor.ExternalResource;

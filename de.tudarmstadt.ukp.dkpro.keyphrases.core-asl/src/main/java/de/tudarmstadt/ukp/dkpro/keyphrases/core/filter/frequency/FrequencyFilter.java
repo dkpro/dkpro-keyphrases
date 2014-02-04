@@ -1,4 +1,4 @@
-package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
+package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.frequency;
 
 import java.util.Collection;
 import java.util.HashMap;
