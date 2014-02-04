@@ -1,5 +1,6 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter;
 
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -35,17 +36,14 @@ public class PosSequenceFilterTest
         throws ResourceInitializationException, AnalysisEngineProcessException
     {
 
-        String firstSequence = PosSequenceFilter.createSequence(NN.class.getSimpleName(), CONJ.class.getSimpleName(), NN.class.getSimpleName());
-        String secondSequence = PosSequenceFilter.createSequence(NP.class.getSimpleName(),NP.class.getSimpleName());
-        String thirdSequence = PosSequenceFilter.createSequence(NN.class.getSimpleName(),NN.class.getSimpleName());
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(
                 AnalysisEngineFactory.createEngineDescription(
                     AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
                     AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
                     AnalysisEngineFactory.createEngineDescription(NGramAnnotator.class,
-                            NGramAnnotator.PARAM_N, 3),
+                            NGramAnnotator.PARAM_N, 4),
                     CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_ngram(false),
-                    PosSequenceFilterFactory.createPosSequenceFilter(firstSequence, secondSequence, thirdSequence)));
+                    PosSequenceFilterFactory.createPosSequenceFilter(new String[]{"N_C_N","N_N"})));
         JCas jcas = engine.newJCas();
         jcas.setDocumentLanguage("en");
         jcas.setDocumentText(testDocument);
@@ -62,6 +60,43 @@ public class PosSequenceFilterTest
             i++;
         }
         assertEquals(3, i);
+    }
+
+    @Test
+    public void testDefaultSetting()
+        throws ResourceInitializationException, AnalysisEngineProcessException
+    {
+
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(
+                createEngineDescription(
+                    createEngineDescription(BreakIteratorSegmenter.class),
+                    createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                    createEngineDescription(NGramAnnotator.class,
+                            NGramAnnotator.PARAM_N, 4),
+                    CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_ngram(false),
+                    createEngineDescription(PosSequenceFilter.class)));
+        JCas jcas = engine.newJCas();
+        jcas.setDocumentLanguage("en");
+        jcas.setDocumentText(testDocument);
+        engine.process(jcas);
+        List<String> expectedResults = new ArrayList<String>();
+        expectedResults.add("Mr Smith");
+        expectedResults.add("Smith");
+        expectedResults.add("Smith knows");
+        expectedResults.add("knows plug");
+        expectedResults.add("Mr");
+        expectedResults.add("plug");
+        expectedResults.add("play");
+        expectedResults.add("play methodology");
+        expectedResults.add("methodology");
+
+        int i = 0;
+        for (Keyphrase kc : JCasUtil.select(jcas, Keyphrase.class)) {
+            System.out.println(kc);
+            assertTrue(expectedResults.contains(kc.getKeyphrase()));
+            i++;
+        }
+        assertEquals(9, i);
     }
 
 }
