@@ -36,8 +36,7 @@ public class CompoundPartTokenizer
 {
 
     /**
-     * This annotator is type agnostic, so it is mandatory to specify the type of the working
-     * annotation and how to obtain the string representation with the feature path.
+     * Specify the level for which tokens should be added for compounds
      */
     public static final String PARAM_COMPOUND_SPLIT_LEVEL = "CompoundingSplitLevel";
     @ConfigurationParameter(name = PARAM_COMPOUND_SPLIT_LEVEL, mandatory = true, defaultValue = { "ALL" })
@@ -47,11 +46,12 @@ public class CompoundPartTokenizer
     public void process(final JCas aJCas)
         throws AnalysisEngineProcessException
     {
+        Token token;
         for (Compound compound : JCasUtil.select(aJCas, Compound.class)) {
             final Token compoundToken = JCasUtil.selectCovered(aJCas, Token.class,
                     compound.getBegin(), compound.getEnd()).get(0);
             for (Split compoundPart : compound.getSplitsWithoutMorpheme(compoundSplitLevel)) {
-                final Token token = new Token(aJCas);
+                token = new Token(aJCas);
                 token.setBegin(compoundPart.getBegin());
                 token.setEnd(compoundPart.getEnd());
                 token.setPos(compoundToken.getPos());
