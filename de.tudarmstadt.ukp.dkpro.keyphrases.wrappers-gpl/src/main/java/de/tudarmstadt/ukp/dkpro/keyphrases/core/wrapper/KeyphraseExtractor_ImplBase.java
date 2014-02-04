@@ -32,7 +32,7 @@ import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerTT4JBase;
-import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.StopwordFilter;
+import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.factory.StopwordFilterFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.length.TokenLengthFilter;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.postprocessing.KeyphraseMerger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
@@ -172,13 +172,15 @@ public abstract class KeyphraseExtractor_ImplBase
             )
         );
 
-        list.add( createStopwordFilter(getLanguage()) );
+        list.add(StopwordFilterFactory.getStopwordFilter(
+                "[en]classpath:/stopwords/english_stopwords.txt"));
+
 
         list.add(
             createEngineDescription(
                     TokenLengthFilter.class,
                     TokenLengthFilter.MIN_KEYPHRASE_LENGTH, getMinKeyphraseLength(),
-                    TokenLengthFilter.MIN_KEYPHRASE_LENGTH, getMaxKeyphraseLength()
+                    TokenLengthFilter.MAX_KEYPHRASE_LENGTH, getMaxKeyphraseLength()
             )
         );
 
@@ -209,24 +211,6 @@ public abstract class KeyphraseExtractor_ImplBase
         }
         else {
             throw new ResourceInitializationException(new Throwable("No tagger available for language: " + language));
-        }
-    }
-
-    private AnalysisEngineDescription createStopwordFilter(String language) throws ResourceInitializationException {
-        if (language.equals("en")) {
-            return createEngineDescription(
-                    StopwordFilter.class,
-                    StopwordFilter.PARAM_STOPWORD_LIST, "classpath:/stopwords/english_stopwords.txt"
-            );
-        }
-        else if (language.equals("de")) {
-            return createEngineDescription(
-                    StopwordFilter.class,
-                    StopwordFilter.PARAM_STOPWORD_LIST, "classpath:/stopwords/german_stopwords.txt"
-            );
-        }
-        else {
-            throw new ResourceInitializationException(new Throwable("No stopwordlist for available for language: " + language));
         }
     }
 
