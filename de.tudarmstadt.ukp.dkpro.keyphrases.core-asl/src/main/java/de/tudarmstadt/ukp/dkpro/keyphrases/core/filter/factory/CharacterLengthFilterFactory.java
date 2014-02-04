@@ -9,11 +9,12 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.CharacterLengthFilter;
 public class CharacterLengthFilterFactory
 {
 
-    public static AnalysisEngineDescription getCharacterLengthFilter(int length)
+    public static AnalysisEngineDescription getCharacterLengthFilter(int minLength, int maxLength)
         throws ResourceInitializationException
     {
         return AnalysisEngineFactory.createEngineDescription(CharacterLengthFilter.class,
-                CharacterLengthFilter.CANDIDATE_LENGTH, length);
+                CharacterLengthFilter.MIN_CANDIDATE_LENGTH, minLength,
+                CharacterLengthFilter.MAX_CANDIDATE_LENGTH, maxLength);
     }
 
 }
