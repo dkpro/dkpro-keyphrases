@@ -19,6 +19,8 @@ package de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.factory;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
+import java.util.Set;
+
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
@@ -36,6 +38,14 @@ public class StopwordFilterFactory {
                 StopWordRemover.PARAM_PATHS, Keyphrase.class.getName()+"/keyphrase");
     }
     public static AnalysisEngineDescription getStopwordFilter(String... wordLists)
+    throws ResourceInitializationException
+    {
+        return createEngineDescription(
+                StopWordRemover.class,
+                StopWordRemover.PARAM_STOP_WORD_LIST_FILE_NAMES, wordLists,
+                StopWordRemover.PARAM_PATHS, Keyphrase.class.getName()+"/keyphrase");
+    }
+    public static AnalysisEngineDescription getStopwordFilter(Set<String> wordLists)
     throws ResourceInitializationException
     {
         return createEngineDescription(
