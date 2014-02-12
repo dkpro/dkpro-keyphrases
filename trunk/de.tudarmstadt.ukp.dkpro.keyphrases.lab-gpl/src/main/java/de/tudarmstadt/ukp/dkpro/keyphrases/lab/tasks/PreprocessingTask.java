@@ -11,7 +11,6 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.lab.tasks;
 
-import static de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase.INCLUDE_PREFIX;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.createExternalResourceDescription;
 
 import java.io.File;
@@ -25,7 +24,6 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.SegmenterBase;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Compound.CompoundSplitLevel;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.annotator.CompoundAnnotator;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.resource.AsvToolboxSplitterResource;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.resource.FrequencyRankerResource;
@@ -38,9 +36,7 @@ import de.tudarmstadt.ukp.dkpro.core.decompounding.web1t.LuceneIndexer;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfConsumer;
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.ngrams.NGramAnnotator;
-import de.tudarmstadt.ukp.dkpro.core.posfilter.PosFilter;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordCoreferenceResolver;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
@@ -51,7 +47,6 @@ import de.tudarmstadt.ukp.dkpro.lab.engine.TaskContext;
 import de.tudarmstadt.ukp.dkpro.lab.storage.StorageService.AccessMode;
 import de.tudarmstadt.ukp.dkpro.lab.task.Discriminator;
 import de.tudarmstadt.ukp.dkpro.lab.uima.task.impl.UimaTaskBase;
-//import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordParser;
 
 public class PreprocessingTask
 extends UimaTaskBase
@@ -65,7 +60,7 @@ extends UimaTaskBase
 	@Discriminator
 	private String tfidfFeaturePath;
 	@Discriminator
-	private boolean shouldLowercaseCandidates;
+	private boolean shouldLowercaseKeyphrases;
 	@Discriminator
 	private String dfModelFile;
 	@Discriminator
@@ -76,8 +71,6 @@ extends UimaTaskBase
 	private CompoundSplitLevel compoundSplitLevel;
 	@Discriminator
 	private Class<? extends SegmenterBase> segmenterClass;
-	@Discriminator
-	private boolean usePosFilter;
 
 
 	private static final String NE_CLASSIFIER = "/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/"
@@ -87,8 +80,8 @@ extends UimaTaskBase
 	public CollectionReaderDescription getCollectionReaderDescription(TaskContext aContext)
 			throws ResourceInitializationException, IOException
 			{
-		return createReader(TextReader.class, TextReader.PARAM_SOURCE_LOCATION, datasetPath,
-				TextReader.PARAM_PATTERNS, new String[] { INCLUDE_PREFIX + includePrefix },
+		return createReader(TextReader.class,
+		        TextReader.PARAM_SOURCE_LOCATION, datasetPath,
 				TextReader.PARAM_LANGUAGE, language);
 			}
 
@@ -121,15 +114,6 @@ extends UimaTaskBase
 					"[de]classpath:/stopwords/german_stopwords.txt",
 					"[en]classpath:/stopwords/english_stopwords.txt",
 				"[en]classpath:/stopwords/english_keyphrase_stopwords.txt"}));
-
-		if(usePosFilter){
-			engines.add(createEngine(
-					PosFilter.class,
-					PosFilter.PARAM_TYPE_TO_REMOVE, Token.class,
-					PosFilter.PARAM_ADJ, true,
-					PosFilter.PARAM_N, true));
-		}
-
 
 		//Decompounding
 		if(compoundSplitLevel != CompoundSplitLevel.NONE){
@@ -164,7 +148,6 @@ extends UimaTaskBase
 			engines.add(createEngine(
 					CompoundPartTokenizer.class,
 					CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, compoundSplitLevel));
-
 		}
 
 	    engines.add(createEngine(TreeTaggerPosLemmaTT4J.class,
@@ -174,8 +157,9 @@ extends UimaTaskBase
 				NGramAnnotator.PARAM_N, 5));
 
 		engines.add(createEngine(TfidfConsumer.class,
-				TfidfConsumer.PARAM_FEATURE_PATH, tfidfFeaturePath, TfidfConsumer.PARAM_LOWERCASE,
-				shouldLowercaseCandidates, TfidfConsumer.PARAM_TARGET_LOCATION, dfModelFile));
+				TfidfConsumer.PARAM_FEATURE_PATH, tfidfFeaturePath,
+				TfidfConsumer.PARAM_LOWERCASE, shouldLowercaseKeyphrases,
+				TfidfConsumer.PARAM_TARGET_LOCATION, dfModelFile));
 
 		File outputRoot = aContext.getStorageLocation(KEY_OUTPUT_BIN, AccessMode.ADD_ONLY);
 		engines.add(createEngine(BinaryCasWriter.class,
