@@ -17,14 +17,12 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking;
 
+import java.io.IOException;
+
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ExternalResource;
-import org.apache.uima.fit.util.JCasUtil;
-import org.apache.uima.jcas.JCas;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.provider.FrequencyCountProvider;
-import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator;
-import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.util.FreqDist;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
@@ -37,31 +35,25 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
  * @author erbs
  *
  */
-public class TfBackgroundIdfRanking extends TfidfAnnotator {
+public class TfBackgroundIdfRanking extends TfRanking {
 
 	public static final String FREQUENCY_COUNT_RESOURCE = "FrequencyProvider";
 	@ExternalResource(key = FREQUENCY_COUNT_RESOURCE)
 	private FrequencyCountProvider frequencyProvider;
 	
-	@Override
-	public void process(JCas jcas) throws AnalysisEngineProcessException {
-
-        FreqDist<String> termFrequencies = getTermFrequencies(jcas);
-
-	    
-	    for (Keyphrase k : JCasUtil.select(jcas, Keyphrase.class)) {
-            double tfScore = termFrequencies.getCount(k.getKeyphrase());
-            try {
-                final Long frequency = frequencyProvider.getFrequency(k.getKeyphrase());
-                if(frequency <= 0) {
-                    k.setScore(0.0);
-                } else {
-                    k.setScore(tfScore/Math.log(1+frequency));
-                }
-			} catch (Exception e) {
-				throw new AnalysisEngineProcessException(e);
-			}
+    protected double getScore(Keyphrase keyphrase) throws AnalysisEngineProcessException{
+        double tfScore = termFrequencies.getCount(keyphrase.getKeyphrase());
+        try {
+            final Long frequency = frequencyProvider.getFrequency(keyphrase.getKeyphrase());
+            if(frequency <= 0) {
+                return 0.0d;
+            } else {
+                return (tfScore/Math.log(1+frequency));
+            }
+        } catch (IOException e) {
+            throw new AnalysisEngineProcessException(e);
         }
 
-	}
+    }
+
 }

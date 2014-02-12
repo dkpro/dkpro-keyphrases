@@ -28,13 +28,10 @@ import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.fit.factory.JCasBuilder;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.InvalidXMLException;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
@@ -55,10 +52,8 @@ public class TfBackgroundIdfRankingTest
         String testDocument = "example sentence funny. second example. hdjdl";
 
 
-        final AnalysisEngineDescription ranker = createEngineDescription(TfBackgroundIdfRanking.class,
-                TfBackgroundIdfRanking.PARAM_FEATURE_PATH, Token.class.getName(),
-                TfRanking.PARAM_TFDF_PATH, "src/test/resources/tf-df.model"
-                );
+        final AnalysisEngineDescription ranker = createEngineDescription(
+                TfBackgroundIdfRanking.class);
         bindResource(ranker, 
                 TfBackgroundIdfRanking.FREQUENCY_COUNT_RESOURCE,
                 Web1TFrequencyCountResource.class,
@@ -91,7 +86,7 @@ public class TfBackgroundIdfRankingTest
                 hdjdlContained = true;
             }
         }
-        assertEquals(3, n);
+        assertEquals(4, n);
         assertTrue(exampleContained);
         assertTrue(secondContained);
         assertTrue(hdjdlContained);
@@ -120,6 +115,11 @@ public class TfBackgroundIdfRankingTest
         k1.setKeyphrase("example");
         k1.addToIndexes();
         assertEquals("example", k1.getCoveredText());
+
+        Keyphrase k1b = new Keyphrase(jcas, 31, 38);
+        k1b.setKeyphrase("example");
+        k1b.addToIndexes();
+        assertEquals("example", k1b.getCoveredText());
 
         Keyphrase k2 = new Keyphrase(jcas, 24, 30);
         k2.setKeyphrase("second");

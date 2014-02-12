@@ -45,9 +45,7 @@ public class TfRankingTest
         
 
         AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
-                TfRanking.class,
-                TfRanking.PARAM_FEATURE_PATH, Token.class.getName(),
-                TfRanking.PARAM_TFDF_PATH, "src/test/resources/tf-df.model"
+                TfRanking.class
                 );
 
         JCas jcas = setup(testDocument, analysisEngine);
@@ -66,7 +64,7 @@ public class TfRankingTest
             }
             i++;
         }
-        assertEquals(2,i);
+        assertEquals(3,i);
     }
 
     private JCas setup(String testDocument, AnalysisEngine analysisEngine) throws IOException, InvalidXMLException, ResourceInitializationException {
@@ -91,6 +89,11 @@ public class TfRankingTest
         k1.setKeyphrase("example");
         k1.addToIndexes();
         assertEquals("example", k1.getCoveredText());
+
+        Keyphrase k1b = new Keyphrase(jcas, 31, 38);
+        k1b.setKeyphrase("example");
+        k1b.addToIndexes();
+        assertEquals("example", k1b.getCoveredText());
 
         Keyphrase k2 = new Keyphrase(jcas, 24, 30);
         k2.setKeyphrase("second");
