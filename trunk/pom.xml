@@ -62,7 +62,7 @@
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter-gpl	</module>
 	</modules>
 	<properties>
-		<dkpro.core.version>1.5.0</dkpro.core.version>
+		<dkpro.core.version>1.6.0</dkpro.core.version>
 	</properties>
 	<dependencies>
 	<dependency>

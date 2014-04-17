@@ -11,20 +11,29 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.coreference.ranking;
 
+import static de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase.INCLUDE_PREFIX;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
-import static org.apache.uima.fit.util.JCasUtil.contains;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
+import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.collection.CollectionReaderDescription;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import de.tudarmstadt.ukp.dkpro.core.api.coref.type.CoreferenceChain;
 import de.tudarmstadt.ukp.dkpro.core.api.coref.type.CoreferenceLink;
@@ -34,11 +43,43 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.Chunk;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator;
+import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfConsumer;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingModeIdf;
 import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotator.WeightingModeTf;
-import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfAnnotatorTest;
+import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
+import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 
-public class CoreferencedTfidfAnnotatorTest extends TfidfAnnotatorTest{
+public class CoreferencedTfidfAnnotatorTest{
+    
+    protected static final double EPSILON = 0.000001;
+
+    private final static String CONSUMER_TEST_DATA_PATH = "src/test/resources/consumer/";
+    
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    protected File model;
+
+    @Before
+    public void buildModel()
+        throws Exception
+    {
+        model = folder.newFile();
+
+        // write the model
+        CollectionReaderDescription reader = createReaderDescription(TextReader.class,
+                TextReader.PARAM_SOURCE_LOCATION, CONSUMER_TEST_DATA_PATH, 
+                TextReader.PARAM_PATTERNS, INCLUDE_PREFIX + "*.txt");
+
+        AnalysisEngineDescription aggregate = createEngineDescription(
+                createEngineDescription(BreakIteratorSegmenter.class),
+                createEngineDescription(TfidfConsumer.class, 
+                        TfidfConsumer.PARAM_FEATURE_PATH, Token.class, 
+                        TfidfConsumer.PARAM_TARGET_LOCATION, model));
+
+        SimplePipeline.runPipeline(reader, aggregate);
+    }
+
 
     private JCas getJCas(AnalysisEngine engine) throws ResourceInitializationException{
 
