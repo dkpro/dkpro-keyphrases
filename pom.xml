@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>de.tudarmstadt.ukp.dkpro.misc.superpom</artifactId>
-		<groupId>de.tudarmstadt.ukp.dkpro.misc</groupId>
-		<version>1.0.23</version>
+		<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+		<artifactId>dkpro-parent-pom</artifactId>
+		<version>9</version>
 	</parent>
 	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases</artifactId>
 	<name>DKPro Keyphrases</name>
