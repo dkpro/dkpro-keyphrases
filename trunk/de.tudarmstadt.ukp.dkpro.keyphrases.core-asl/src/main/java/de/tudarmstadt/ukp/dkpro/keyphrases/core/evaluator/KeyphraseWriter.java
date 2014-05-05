@@ -17,6 +17,8 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.evaluator;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,9 +26,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -68,18 +71,31 @@ public class KeyphraseWriter extends JCasAnnotator_ImplBase {
     @ConfigurationParameter(name=PARAM_SHOULD_WRITE_DOCUMENT, mandatory=true, defaultValue="true")
     private boolean shouldWriteDocument;
 
+    public static final String PARAM_WRITE_TO_FILE = "writeToFile";
+    @ConfigurationParameter(name=PARAM_WRITE_TO_FILE, mandatory=true, defaultValue="false")
+    private boolean writeToFile;
+    
+    public static final String PARAM_FILE_NAME = "fileName";
+    @ConfigurationParameter(name=PARAM_FILE_NAME, mandatory=false)
+    private String fileName;
+    private File file;
 
     private JCas jcas;
 
     @Override
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context);
-//        n=5;
         StringBuilder sb = new StringBuilder();
         sb.append("Lowercase: "); sb.append(lowercase); sb.append(LF);
         sb.append("Remove fully contained keyphrases: "); sb.append(removeContained); sb.append(LF);
-        sb.append("N: "); sb.append(n); sb.append(LF);
         sb.append(LF);
+        if(writeToFile){
+            if(fileName == null){
+                throw new ResourceInitializationException(new Throwable("File name should be defined."
+                        + "Please assign a file name to the configuration parameter PARAM_FILE_NAME."));
+            }
+            file = new File(fileName);
+        }
         getContext().getLogger().log(Level.INFO, sb.toString());
     }
 
@@ -87,6 +103,7 @@ public class KeyphraseWriter extends JCasAnnotator_ImplBase {
     public void process(JCas jcas) throws AnalysisEngineProcessException {
 
         getContext().getLogger().log(Level.INFO, "Processing document: " + DocumentMetaData.get(jcas).getDocumentId());
+        getContext().getLogger().log(Level.INFO, "N: "+n);
 
         this.jcas = jcas;
 
@@ -104,8 +121,20 @@ public class KeyphraseWriter extends JCasAnnotator_ImplBase {
         List<Keyphrase> keyphrases = filterAndSortKeyphrases();
         int iterateTo = Math.min(keyphrases.size(), this.n);
         for (int i=0; i<iterateTo; i++) {
-            sb.append(keyphrases.get(i).getKeyphrase()); sb.append(LF);
+            Keyphrase keyphrase = keyphrases.get(i);
+            String line = keyphrase.getKeyphrase() + " " + keyphrase.getScore();
+            sb.append(line);
+            sb.append(LF);
+            if(writeToFile){
+                try {
+                    FileUtils.writeStringToFile(file, line+LF, "UTF-8");
+                }
+                catch (IOException e) {
+                    throw new AnalysisEngineProcessException(e);
+                }
+            }
         }
+        getContext().getLogger().setOutputStream(System.out);
         getContext().getLogger().log(Level.INFO, sb.toString());
     }
 
