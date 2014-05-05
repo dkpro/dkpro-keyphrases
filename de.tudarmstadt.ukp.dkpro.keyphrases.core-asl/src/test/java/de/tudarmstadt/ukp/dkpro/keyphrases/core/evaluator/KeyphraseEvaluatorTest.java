@@ -48,7 +48,7 @@ public class KeyphraseEvaluatorTest
 		File tmpFile = workdir.newFile(resultFileName);
 
 
-        AnalysisEngine ae = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine ae = AnalysisEngineFactory.createEngine(
                 KeyphraseEvaluator.class,
                 KeyphraseEvaluator.PARAM_N, 3,
                 KeyphraseEvaluator.PARAM_RESULT_FILE, tmpFile.toString(),
