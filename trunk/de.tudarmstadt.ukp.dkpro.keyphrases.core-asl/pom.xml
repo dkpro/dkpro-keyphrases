@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.frequency-asl</artifactId>
-  	</dependency>
+  		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>
@@ -75,7 +75,13 @@
 				de.tudarmstadt.ukp.dkpro.core.stopwordremover-asl
 			</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+		</dependency>
 	</dependencies>
+	
 	<profiles>
 		<profile>
 			<id>use-proprietary-resources</id>

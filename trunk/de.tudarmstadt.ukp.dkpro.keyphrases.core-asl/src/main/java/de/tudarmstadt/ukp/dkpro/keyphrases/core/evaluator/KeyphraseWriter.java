@@ -89,12 +89,9 @@ public class KeyphraseWriter extends JCasAnnotator_ImplBase {
         sb.append("Lowercase: "); sb.append(lowercase); sb.append(LF);
         sb.append("Remove fully contained keyphrases: "); sb.append(removeContained); sb.append(LF);
         sb.append(LF);
-        if(writeToFile){
-            if(fileName == null){
-                throw new ResourceInitializationException(new Throwable("File name should be defined."
-                        + "Please assign a file name to the configuration parameter PARAM_FILE_NAME."));
-            }
-            file = new File(fileName);
+        if(writeToFile && fileName == null){
+            throw new ResourceInitializationException(new Throwable("File name should be defined." + 
+                    "Please assign a file name to the configuration parameter PARAM_FILE_NAME."));
         }
         getContext().getLogger().log(Level.INFO, sb.toString());
     }
@@ -115,6 +112,10 @@ public class KeyphraseWriter extends JCasAnnotator_ImplBase {
             sb.append(metaData.getDocumentId()); sb.append(LF);
             sb.append(jcas.getDocumentText()); sb.append(LF);
         }
+        
+        if(writeToFile){
+            file = new File(fileName+"_"+DocumentMetaData.get(jcas).getDocumentTitle());
+        }
 
         // sort the keyphrases by score, filter duplicates,
         sb.append("----------Keyphrases------------"); sb.append(LF);
@@ -127,7 +128,7 @@ public class KeyphraseWriter extends JCasAnnotator_ImplBase {
             sb.append(LF);
             if(writeToFile){
                 try {
-                    FileUtils.writeStringToFile(file, line+LF, "UTF-8");
+                    FileUtils.writeStringToFile(file, line+LF, "UTF-8",true);
                 }
                 catch (IOException e) {
                     throw new AnalysisEngineProcessException(e);

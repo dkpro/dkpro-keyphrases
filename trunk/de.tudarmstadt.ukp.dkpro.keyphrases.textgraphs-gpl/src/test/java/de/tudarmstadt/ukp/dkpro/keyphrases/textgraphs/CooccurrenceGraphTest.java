@@ -11,7 +11,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitive;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -45,7 +45,7 @@ class CooccurrenceGraphTest {
         expectedValues.add("funny");
         expectedValues.add("second");
 
-    	AnalysisEngine analysisEngine = createPrimitive(
+    	AnalysisEngine analysisEngine = createEngine(
     	        CooccurrenceGraph.class,
                 CooccurrenceGraph.PARAM_FEATURE_PATH, Token.class.getName()+"/");
 
@@ -76,7 +76,7 @@ class CooccurrenceGraphTest {
         expectedValues.add("fu");
         expectedValues.add("sec");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CooccurrenceGraph.class,
                 CooccurrenceGraph.PARAM_FEATURE_PATH, Stem.class.getName()+"/value",
                 CooccurrenceGraph.PARAM_WINDOW_SIZE, 3
@@ -105,12 +105,12 @@ class CooccurrenceGraphTest {
         String testDocument = "example sentence funny. second example.";
 
         Set<String> expectedValues = new HashSet<String>();
-        expectedValues.add("exampl");
-        expectedValues.add("sentenc");
-        expectedValues.add("fu");
-        expectedValues.add("secon");
+        expectedValues.add("example");
+        expectedValues.add("sentence");
+        expectedValues.add("funny");
+        expectedValues.add("second");
 
-        AnalysisEngine analysisEngine = AnalysisEngineFactory.createPrimitive(
+        AnalysisEngine analysisEngine = AnalysisEngineFactory.createEngine(
                 CooccurrenceGraph.class,
                 CooccurrenceGraph.PARAM_FEATURE_PATH, Lemma.class.getName()+"/value"
         );
@@ -187,27 +187,27 @@ class CooccurrenceGraphTest {
         assertEquals("example", s5.getCoveredText());
 
         Lemma l1 = new Lemma(jcas, 0, 7);
-        l1.setValue("exampl");
+        l1.setValue("example");
         l1.addToIndexes();
         assertEquals("example", l1.getCoveredText());
 
         Lemma l2 = new Lemma(jcas, 8, 16);
-        l2.setValue("sentenc");
+        l2.setValue("sentence");
         l2.addToIndexes();
         assertEquals("sentence", l2.getCoveredText());
 
         Lemma l3 = new Lemma(jcas, 17, 22);
-        l3.setValue("fu");
+        l3.setValue("funny");
         l3.addToIndexes();
         assertEquals("funny", l3.getCoveredText());
 
         Lemma l4 = new Lemma(jcas, 24, 30);
-        l4.setValue("secon");
+        l4.setValue("second");
         l4.addToIndexes();
         assertEquals("second", l4.getCoveredText());
 
         Lemma l5 = new Lemma(jcas, 31, 38);
-        l5.setValue("exampl");
+        l5.setValue("example");
         l5.addToIndexes();
         assertEquals("example", l5.getCoveredText());
 
