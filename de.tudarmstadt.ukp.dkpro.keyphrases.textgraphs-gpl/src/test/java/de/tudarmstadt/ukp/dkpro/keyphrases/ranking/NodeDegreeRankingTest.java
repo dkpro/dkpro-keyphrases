@@ -11,8 +11,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.ranking;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -49,15 +48,15 @@ public class NodeDegreeRankingTest
 
         final String testDocument = "This is a not so long test sentence. This is a longer second "
                 + "test sentence. More sentences are necessary for the tests.";
-        final AnalysisEngineDescription aggregate = createAggregateDescription(
-                createPrimitiveDescription(de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter.class),
-                createPrimitiveDescription(TreeTaggerPosLemmaTT4J.class,
+        final AnalysisEngineDescription aggregate = createEngineDescription(
+                createEngineDescription(de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter.class),
+                createEngineDescription(TreeTaggerPosLemmaTT4J.class,
                         TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"),
-                createPrimitiveDescription(PosFilter.class, PosFilter.PARAM_TYPE_TO_REMOVE,
+                createEngineDescription(PosFilter.class, PosFilter.PARAM_TYPE_TO_REMOVE,
                         Lemma.class.getName(), PosFilter.PARAM_ADJ, true, PosFilter.PARAM_N, true),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_lemma(),
                 NodeDegreeRankingFactory.getNodeDegreeRanking_weighted());
-        final AnalysisEngine engine = AnalysisEngineFactory.createAggregate(aggregate);
+        final AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregate);
         final JCas aJCas = engine.newJCas();
         aJCas.setDocumentText(testDocument);
 
