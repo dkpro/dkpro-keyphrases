@@ -22,6 +22,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.SegmenterBase;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Compound.CompoundSplitLevel;
 import de.tudarmstadt.ukp.dkpro.core.decompounding.uima.annotator.CompoundAnnotator;
@@ -54,7 +55,7 @@ extends UimaTaskBase
 	public static final String KEY_OUTPUT_BIN = "BIN";
 
 	@Discriminator
-	private String includePrefix;
+	private String includeSuffix;
 	@Discriminator
 	private String language;
 	@Discriminator
@@ -82,7 +83,8 @@ extends UimaTaskBase
 			{
 		return createReader(TextReader.class,
 		        TextReader.PARAM_SOURCE_LOCATION, datasetPath,
-				TextReader.PARAM_LANGUAGE, language);
+				TextReader.PARAM_LANGUAGE, language,
+				ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]*." + includeSuffix);
 			}
 
 	@Override
