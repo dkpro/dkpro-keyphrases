@@ -45,7 +45,7 @@ import de.tudarmstadt.ukp.dkpro.lab.uima.task.impl.UimaTaskBase;
 public class KeyphraseRankingTask
 extends UimaTaskBase
 {
-    public static final String KEY_INPUT_BIN = "INPUT_BIN";
+    public static final String KEY_INPUT_BIN = "BIN";
 
     //Frequency provider
     @Discriminator
