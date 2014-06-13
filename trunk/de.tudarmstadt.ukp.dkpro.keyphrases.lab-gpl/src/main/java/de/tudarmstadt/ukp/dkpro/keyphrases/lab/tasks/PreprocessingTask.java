@@ -38,11 +38,13 @@ import de.tudarmstadt.ukp.dkpro.core.frequency.tfidf.TfidfConsumer;
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
 import de.tudarmstadt.ukp.dkpro.core.ngrams.NGramAnnotator;
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpChunker;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordCoreferenceResolver;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordParser;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerChunkerTT4J;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.keyphrases.decompounding.uima.annotator.CompoundPartTokenizer;
 import de.tudarmstadt.ukp.dkpro.lab.engine.TaskContext;
 import de.tudarmstadt.ukp.dkpro.lab.storage.StorageService.AccessMode;
@@ -81,7 +83,7 @@ extends UimaTaskBase
 	public CollectionReaderDescription getCollectionReaderDescription(TaskContext aContext)
 			throws ResourceInitializationException, IOException
 			{
-		return createReader(TextReader.class,
+	    return createReader(TextReader.class,
 		        TextReader.PARAM_SOURCE_LOCATION, datasetPath,
 				TextReader.PARAM_LANGUAGE, language,
 				ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]*." + includeSuffix);
@@ -96,10 +98,46 @@ extends UimaTaskBase
 
 		engines.add(createEngine(segmenterClass));
 
-		engines.add(createEngine(TreeTaggerPosLemmaTT4J.class,
-		        TreeTaggerPosLemmaTT4J.PARAM_WRITE_LEMMA, false));
+		engines.add(createEngine(StanfordPosTagger.class));
 
-		engines.add(createEngine(TreeTaggerChunkerTT4J.class));
+        //Decompounding
+        if(compoundSplitLevel != CompoundSplitLevel.NONE){
+            //Only prepare indexes if they are needed
+            File source = new File(nGramFolder);
+            File index = new File(
+                    "target/decompounding/index");
+            index.mkdirs();
+            LuceneIndexer indexer = new LuceneIndexer(source, index);
+            try {
+                indexer.index();
+            }
+            catch (InterruptedException e) {
+                throw new ResourceInitializationException(e);
+            }
+
+            engines.add(createEngine(
+                    CompoundAnnotator.class,
+                    CompoundAnnotator.PARAM_SPLITTING_ALGO,
+                    createExternalResourceDescription(AsvToolboxSplitterResource.class,
+                            SplitterResource.PARAM_DICT_RESOURCE,
+                            createExternalResourceDescription(SharedDictionary.class),
+                            SplitterResource.PARAM_MORPHEME_RESOURCE,
+                            createExternalResourceDescription(SharedLinkingMorphemes.class)),
+                            CompoundAnnotator.PARAM_RANKING_ALGO,
+                            createExternalResourceDescription(
+                                    FrequencyRankerResource.class,
+                                    RankerResource.PARAM_FINDER_RESOURCE,
+                                    createExternalResourceDescription(SharedFinder.class,
+                                            SharedFinder.PARAM_INDEX_PATH, index.getAbsolutePath(),
+                                            SharedFinder.PARAM_NGRAM_LOCATION, nGramFolder))));
+            engines.add(createEngine(
+                    CompoundPartTokenizer.class,
+                    CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, compoundSplitLevel));
+        }
+
+        engines.add(createEngine(StanfordLemmatizer.class));
+
+		engines.add(createEngine(OpenNlpChunker.class));
 
 		if(language.equals("en")){
 			engines.add(createEngine(
@@ -116,44 +154,6 @@ extends UimaTaskBase
 					"[de]classpath:/stopwords/german_stopwords.txt",
 					"[en]classpath:/stopwords/english_stopwords.txt",
 				"[en]classpath:/stopwords/english_keyphrase_stopwords.txt"}));
-
-		//Decompounding
-		if(compoundSplitLevel != CompoundSplitLevel.NONE){
-			//Only prepare indexes if they are needed
-			File source = new File(nGramFolder);
-			File index = new File(
-					"target/decompounding/index");
-			index.mkdirs();
-			LuceneIndexer indexer = new LuceneIndexer(source, index);
-			try {
-				indexer.index();
-			}
-			catch (InterruptedException e) {
-				throw new ResourceInitializationException(e);
-			}
-
-			engines.add(createEngine(
-					CompoundAnnotator.class,
-					CompoundAnnotator.PARAM_SPLITTING_ALGO,
-					createExternalResourceDescription(AsvToolboxSplitterResource.class,
-							SplitterResource.PARAM_DICT_RESOURCE,
-							createExternalResourceDescription(SharedDictionary.class),
-							SplitterResource.PARAM_MORPHEME_RESOURCE,
-							createExternalResourceDescription(SharedLinkingMorphemes.class)),
-							CompoundAnnotator.PARAM_RANKING_ALGO,
-							createExternalResourceDescription(
-									FrequencyRankerResource.class,
-									RankerResource.PARAM_FINDER_RESOURCE,
-									createExternalResourceDescription(SharedFinder.class,
-											SharedFinder.PARAM_INDEX_PATH, index.getAbsolutePath(),
-											SharedFinder.PARAM_NGRAM_LOCATION, nGramFolder))));
-			engines.add(createEngine(
-					CompoundPartTokenizer.class,
-					CompoundPartTokenizer.PARAM_COMPOUND_SPLIT_LEVEL, compoundSplitLevel));
-		}
-
-	    engines.add(createEngine(TreeTaggerPosLemmaTT4J.class,
-	            TreeTaggerPosLemmaTT4J.PARAM_WRITE_POS, false));
 
 		engines.add(createEngine(NGramAnnotator.class,
 				NGramAnnotator.PARAM_N, 5));
