@@ -478,6 +478,9 @@ public class KeyphrasePerformanceCounter extends AbstractKeyphraseCounter
             meanAveragePrecision = meanAveragePrecision.
                     add(filePerformance.calculateAveragePrecision());
         }
+        if(fileName2performanceMap.size() == 0){
+            return 0d;
+        }
         meanAveragePrecision = meanAveragePrecision.divide(new
                 BigDecimal(String.valueOf(fileName2performanceMap.size())), NBR_FLOATING_POINTS, RoundingMode.UP) ;
         return meanAveragePrecision.doubleValue();
