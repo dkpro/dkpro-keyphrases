@@ -32,8 +32,8 @@
 			</dependency>
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.lab</artifactId>
-				<version>0.11.0-SNAPSHOT</version>
+				<artifactId>dkpro-lab</artifactId>
+				<version>0.11.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -62,7 +62,7 @@
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter-gpl	</module>
 	</modules>
 	<properties>
-		<dkpro.core.version>1.6.0</dkpro.core.version>
+		<dkpro.core.version>1.6.1</dkpro.core.version>
 	</properties>
 	<dependencies>
 	<dependency>
@@ -72,15 +72,15 @@
 	</dependency>
 	</dependencies>
 	<url>https://code.google.com/p/dkpro-keyphrases/</url>
-	<repositories>
-		<repository>
+<!-- 	<repositories> -->
+<!-- 		<repository> -->
 			<!-- For uimaFIT 2.0.0-SNAPSHOT -->
-			<id>apache.snapshots</id>
-			<name>Apache Snapshot Repository</name>
-			<url>http://repository.apache.org/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
+<!-- 			<id>apache.snapshots</id> -->
+<!-- 			<name>Apache Snapshot Repository</name> -->
+<!-- 			<url>http://repository.apache.org/snapshots</url> -->
+<!-- 			<releases> -->
+<!-- 				<enabled>false</enabled> -->
+<!-- 			</releases> -->
+<!-- 		</repository> -->
+<!-- 	</repositories> -->
 </project>
