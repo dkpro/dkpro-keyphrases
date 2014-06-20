@@ -21,6 +21,11 @@
   		<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
   	</dependency>
   	<dependency>
+	    <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+	    <artifactId>de.tudarmstadt.ukp.dkpro.core.api.parameter-asl</artifactId>
+	    <version>1.6.1</version>
+	</dependency>
+  	<dependency>
   		<groupId>de.tudarmstadt.ukp.wikipedia</groupId>
   		<artifactId>de.tudarmstadt.ukp.wikipedia.parser</artifactId>
   		<version>0.9.2</version>
