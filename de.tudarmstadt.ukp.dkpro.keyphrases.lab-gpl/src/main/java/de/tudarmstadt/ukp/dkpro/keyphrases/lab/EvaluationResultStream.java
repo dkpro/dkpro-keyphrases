@@ -21,6 +21,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
+
 import com.google.common.io.Closeables;
 
 import de.tudarmstadt.ukp.dkpro.lab.storage.StreamReader;
@@ -321,8 +323,8 @@ public class EvaluationResultStream
         printer.println(maxMicroRecall);
         printer.println(maxMacroRecall);
 
-        Closeables.closeQuietly(printer);
-        Closeables.closeQuietly(outputStream);
+        IOUtils.closeQuietly(printer);
+        IOUtils.closeQuietly(outputStream);
     }
 
 
