@@ -61,11 +61,6 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>kea</groupId>
-			<artifactId>kea</artifactId>
-			<version>5.0</version>
-		</dependency>
-		<dependency>
 			<groupId>nz.ac.waikato.cms.weka</groupId>
 			<artifactId>weka-stable</artifactId>
 			<version>3.6.11</version>
