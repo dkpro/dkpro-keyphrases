@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.collection.CollectionReader;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -18,8 +19,9 @@ import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
 import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotator;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfRanking;
 
@@ -38,7 +40,8 @@ public class KeyphraseWriterTest
                 TextReader.PARAM_LANGUAGE, "en"));
         final AnalysisEngine analysisEngine = createEngine(createEngineDescription(
                 createEngineDescription(BreakIteratorSegmenter.class),
-                createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(CandidateAnnotator.class,
                         CandidateAnnotator.PARAM_FEATURE_PATH, N.class.getName(),
                         CandidateAnnotator.PARAM_RESOLVE_OVERLAPS, false),
