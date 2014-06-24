@@ -15,13 +15,10 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.junit.Test;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.CONJ;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.N;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.NN;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.NP;
 import de.tudarmstadt.ukp.dkpro.core.ngrams.NGramAnnotator;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate.CandidateAnnotatorFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.filter.factory.PosSequenceFilterFactory;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
@@ -39,7 +36,8 @@ public class PosSequenceFilterTest
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(
                 AnalysisEngineFactory.createEngineDescription(
                     AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
-                    AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                    AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class),
+                    AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                     AnalysisEngineFactory.createEngineDescription(NGramAnnotator.class,
                             NGramAnnotator.PARAM_N, 4),
                     CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_ngram(false),
@@ -70,7 +68,8 @@ public class PosSequenceFilterTest
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(
                 createEngineDescription(
                     createEngineDescription(BreakIteratorSegmenter.class),
-                    createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                    AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class),
+                    AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                     createEngineDescription(NGramAnnotator.class,
                             NGramAnnotator.PARAM_N, 4),
                     CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator_ngram(false),
