@@ -33,8 +33,8 @@ import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.posfilter.PosFilter;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerTT4JBase;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.CooccurrenceGraphFactory;
 
@@ -50,8 +50,9 @@ public class NodeDegreeRankingTest
                 + "test sentence. More sentences are necessary for the tests.";
         final AnalysisEngineDescription aggregate = createEngineDescription(
                 createEngineDescription(de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter.class),
-                createEngineDescription(TreeTaggerPosLemmaTT4J.class,
-                        TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class,
+                        StanfordPosTagger.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(PosFilter.class, PosFilter.PARAM_TYPE_TO_REMOVE,
                         Lemma.class.getName(), PosFilter.PARAM_ADJ, true, PosFilter.PARAM_N, true),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_lemma(),

@@ -11,8 +11,7 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.ranking;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -30,9 +29,9 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.posfilter.PosFilter;
 import de.tudarmstadt.ukp.dkpro.core.snowball.SnowballStemmer;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerTT4JBase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 import de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.CooccurrenceGraphFactory;
 
@@ -54,21 +53,22 @@ public class PageRankRankingTest
 
         String testDocument = "This is a not so long test sentence. This is a longer second test sentence. More sentences are necessary for the tests.";
 
-        AnalysisEngineDescription aggregate = createAggregateDescription(
-        		createPrimitiveDescription(de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter.class),
-                createPrimitiveDescription(TreeTaggerPosLemmaTT4J.class,
-                		TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"),
-                createPrimitiveDescription(
+        AnalysisEngineDescription aggregate = createEngineDescription(
+        		createEngineDescription(de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class,
+                        StanfordPosTagger.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
+                createEngineDescription(
                         PosFilter.class,
                         PosFilter.PARAM_TYPE_TO_REMOVE, Lemma.class.getName(),
                         PosFilter.PARAM_ADJ, true,
                         PosFilter.PARAM_N, true
                 ),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_lemma(),
-                createPrimitiveDescription(PageRankRanking.class,
+                createEngineDescription(PageRankRanking.class,
                         PageRankRanking.PARAM_WEIGHTED, false));
 
-        AnalysisEngine engine = AnalysisEngineFactory.createAggregate(aggregate);
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregate);
         JCas aJCas = engine.newJCas();
         aJCas.setDocumentText(testDocument);
 
@@ -96,21 +96,22 @@ public class PageRankRankingTest
 
         String testDocument = "This is a not so long test sentence. This is a longer second test sentence. More sentences are necessary for the tests.";
 
-        AnalysisEngineDescription aggregate = createAggregateDescription(
-        		createPrimitiveDescription(BreakIteratorSegmenter.class),
-                createPrimitiveDescription(TreeTaggerPosLemmaTT4J.class,
-                		TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"),
-                createPrimitiveDescription(
+        AnalysisEngineDescription aggregate = createEngineDescription(
+        		createEngineDescription(BreakIteratorSegmenter.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class,
+                        StanfordPosTagger.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
+                createEngineDescription(
                         PosFilter.class,
                         PosFilter.PARAM_TYPE_TO_REMOVE, Lemma.class.getName(),
                         PosFilter.PARAM_ADJ, true,
                         PosFilter.PARAM_N, true
                 ),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_lemma_windowSize5(),
-                createPrimitiveDescription(PageRankRanking.class,
+                createEngineDescription(PageRankRanking.class,
                         PageRankRanking.PARAM_WEIGHTED, false));
 
-        AnalysisEngine engine = AnalysisEngineFactory.createAggregate(aggregate);
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregate);
         JCas aJCas = engine.newJCas();
         aJCas.setDocumentText(testDocument);
 
@@ -141,21 +142,22 @@ public class PageRankRankingTest
 
         String testDocument = "This is a not so long test sentence. This is a longer second test sentence. More sentences are necessary for the tests.";
 
-        AnalysisEngineDescription aggregate = createAggregateDescription(
-        		createPrimitiveDescription(BreakIteratorSegmenter.class),
-                createPrimitiveDescription(TreeTaggerPosLemmaTT4J.class,
-                		TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"),
-                createPrimitiveDescription(
+        AnalysisEngineDescription aggregate = createEngineDescription(
+        		createEngineDescription(BreakIteratorSegmenter.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class,
+                        StanfordPosTagger.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
+                createEngineDescription(
                         PosFilter.class,
                         PosFilter.PARAM_TYPE_TO_REMOVE, Token.class.getName(),
                         PosFilter.PARAM_ADJ, true,
                         PosFilter.PARAM_N, true
                 ),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_token(),
-                createPrimitiveDescription(PageRankRanking.class,
+                createEngineDescription(PageRankRanking.class,
                         PageRankRanking.PARAM_WEIGHTED, false));
 
-        AnalysisEngine engine = AnalysisEngineFactory.createAggregate(aggregate);
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregate);
         JCas aJCas = engine.newJCas();
         aJCas.setDocumentText(testDocument);
 
@@ -176,23 +178,22 @@ public class PageRankRankingTest
 
         String testDocument = "This is a not so long test sentence. This is a longer second test sentence. More sentences are necessary for the tests.";
 
-        AnalysisEngineDescription aggregate = createAggregateDescription(
-        		createPrimitiveDescription(BreakIteratorSegmenter.class),
-                createPrimitiveDescription(
-                        TreeTaggerPosLemmaTT4J.class,
-                		TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"
-                ),
-                createPrimitiveDescription(
+        AnalysisEngineDescription aggregate = createEngineDescription(
+        		createEngineDescription(BreakIteratorSegmenter.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class,
+                        StanfordPosTagger.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
+                createEngineDescription(
                         PosFilter.class,
                         PosFilter.PARAM_TYPE_TO_REMOVE, Token.class.getName()
                 ),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_token(),
-                createPrimitiveDescription(
+                createEngineDescription(
                         PageRankRanking.class
                 )
         );
 
-        AnalysisEngine engine = AnalysisEngineFactory.createAggregate(aggregate);
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregate);
         JCas aJCas = engine.newJCas();
         aJCas.setDocumentText(testDocument);
 
@@ -231,15 +232,16 @@ public class PageRankRankingTest
 
         String testDocument = "This is a not so long test sentence. This is a longer second test sentence. More sentences are necessary for the tests.";
 
-        AnalysisEngineDescription aggregate = createAggregateDescription(
-        		createPrimitiveDescription(BreakIteratorSegmenter.class),
-                createPrimitiveDescription(TreeTaggerPosLemmaTT4J.class,
-                		TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"),
+        AnalysisEngineDescription aggregate = createEngineDescription(
+        		createEngineDescription(BreakIteratorSegmenter.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class,
+                        StanfordPosTagger.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_token(),
-                createPrimitiveDescription(PageRankRanking.class,
+                createEngineDescription(PageRankRanking.class,
                         PageRankRanking.PARAM_WEIGHTED, false));
 
-        AnalysisEngine engine = AnalysisEngineFactory.createAggregate(aggregate);
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregate);
         JCas aJCas = engine.newJCas();
         aJCas.setDocumentText(testDocument);
 
@@ -278,17 +280,18 @@ public class PageRankRankingTest
 
         String testDocument = "This is a not so long test sentence. This is a longer second test sentence. More sentences are necessary for the tests.";
 
-        AnalysisEngineDescription aggregate = createAggregateDescription(
-        		createPrimitiveDescription(BreakIteratorSegmenter.class),
-                createPrimitiveDescription(TreeTaggerPosLemmaTT4J.class,
-                		TreeTaggerTT4JBase.PARAM_LANGUAGE, "en"),
-        		createPrimitiveDescription	(SnowballStemmer.class,
+        AnalysisEngineDescription aggregate = createEngineDescription(
+        		createEngineDescription(BreakIteratorSegmenter.class),
+                AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class,
+                        StanfordPosTagger.PARAM_LANGUAGE, "en"),
+                AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
+        		createEngineDescription	(SnowballStemmer.class,
                 		SnowballStemmer.PARAM_LANGUAGE, "en"),
                 CooccurrenceGraphFactory.getCooccurrenceGraph_stem(),
-                createPrimitiveDescription(PageRankRanking.class, PageRankRanking.PARAM_WEIGHTED, false)
+                createEngineDescription(PageRankRanking.class, PageRankRanking.PARAM_WEIGHTED, false)
         );
 
-        AnalysisEngine engine = AnalysisEngineFactory.createAggregate(aggregate);
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregate);
         JCas aJCas = engine.newJCas();
         aJCas.setDocumentText(testDocument);
 
