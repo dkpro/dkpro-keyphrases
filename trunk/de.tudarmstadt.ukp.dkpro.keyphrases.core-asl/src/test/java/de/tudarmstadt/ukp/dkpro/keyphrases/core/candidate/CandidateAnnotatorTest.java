@@ -18,6 +18,7 @@
 package de.tudarmstadt.ukp.dkpro.keyphrases.core.candidate;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -38,8 +39,9 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.NGram;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.Chunk;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.chunk.NC;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import de.tudarmstadt.ukp.dkpro.core.treetagger.TreeTaggerPosLemmaTT4J;
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 public class CandidateAnnotatorTest
@@ -242,7 +244,8 @@ public class CandidateAnnotatorTest
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(AnalysisEngineFactory.
                 createEngineDescription(
                         AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
-                        AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                        AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class),
+                        AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                         CandidateAnnotatorFactory. getKeyphraseCandidateAnnotator_lemma(false)));
 
         JCas jcas = engine.newJCas();
@@ -273,7 +276,8 @@ public class CandidateAnnotatorTest
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(AnalysisEngineFactory.
                 createEngineDescription(
                         AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
-                        AnalysisEngineFactory.createEngineDescription(TreeTaggerPosLemmaTT4J.class),
+                        AnalysisEngineFactory.createEngineDescription(StanfordPosTagger.class),
+                        AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                         CandidateAnnotatorFactory.getKeyphraseCandidateAnnotator(N.class.getName(), false)));
 
         JCas jcas = engine.newJCas();
