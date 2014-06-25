@@ -38,10 +38,6 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.ngrams-asl</artifactId>
 		</dependency>
 		<dependency>
@@ -50,20 +46,11 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.frequency-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.ner-asl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimafit-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.9.6</version>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
@@ -76,42 +63,47 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl
-			</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.snowball-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.metadata-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.posfilter-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.segmentation-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.text-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.featurepath-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.syntax-asl</artifactId>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-en</artifactId>
-				<version>20111109.0</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-bin</artifactId>
-				<version>20120425.0</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<profiles>
-		<profile>
-			<id>use-proprietary-resources</id>
-			<dependencies>
-				<dependency>
-					<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-					<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-en</artifactId>
-					<scope>test</scope>
-					<optional>true</optional>
-				</dependency>
-				<dependency>
-					<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-					<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-bin</artifactId>
-					<scope>test</scope>
-					<optional>true</optional>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 </project>

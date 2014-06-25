@@ -28,16 +28,6 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
-			<artifactId>dkpro-lab-uima-engine-cpe</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>17.0</version>
-		</dependency>
-		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-gpl</artifactId>
 			<version>1.5.0-SNAPSHOT</version>
@@ -61,42 +51,72 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>nz.ac.waikato.cms.weka</groupId>
-			<artifactId>weka-stable</artifactId>
-			<version>3.6.11</version>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.posfilter-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.snowball-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.ngrams-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
+			<artifactId>dkpro-lab-uima</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.metadata-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.posfilter-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.segmentation-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimafit-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
+			<artifactId>dkpro-lab-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.text-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.syntax-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.ner-asl</artifactId>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-en</artifactId>
-				<version>20111109.0</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-bin</artifactId>
-				<version>20120425.0</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<profiles>
-		<profile>
-			<id>use-proprietary-resources</id>
-			<dependencies>
-				<dependency>
-					<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-					<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-en</artifactId>
-					<scope>test</scope>
-					<optional>true</optional>
-				</dependency>
-				<dependency>
-					<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-					<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-bin</artifactId>
-					<scope>test</scope>
-					<optional>true</optional>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 </project>
