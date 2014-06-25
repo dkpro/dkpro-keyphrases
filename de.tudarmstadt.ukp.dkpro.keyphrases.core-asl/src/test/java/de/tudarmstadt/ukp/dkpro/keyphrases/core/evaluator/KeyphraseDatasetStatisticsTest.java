@@ -6,7 +6,6 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReader;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
 
 import org.apache.uima.UIMAException;
