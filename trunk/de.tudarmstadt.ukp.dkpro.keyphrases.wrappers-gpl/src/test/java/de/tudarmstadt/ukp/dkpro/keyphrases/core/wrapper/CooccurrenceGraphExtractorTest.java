@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate;
@@ -32,6 +33,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 public class CooccurrenceGraphExtractorTest
 {
 
+    @Ignore
     @Test
     public void cooccurrenceGraphExtractorTest()
         throws Exception
