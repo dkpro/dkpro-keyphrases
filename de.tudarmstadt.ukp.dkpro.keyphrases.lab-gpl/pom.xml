@@ -35,46 +35,27 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.core.io.xmi-asl
-			</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.api.coref-asl
-  		</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.coref-asl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl
-  		</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.ngrams-asl
-  		</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.ngrams-asl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-parser-en-factored
-  		</artifactId>
-			<version>20120709.0</version>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.dictionaryannotator-asl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.dictionaryannotator-asl
-  		</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.frequency-asl
-  		</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.frequency-asl</artifactId>
   		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
@@ -86,9 +67,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.stopwordremover-asl
-  		</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stopwordremover-asl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -96,20 +75,9 @@
 			<version>17.0</version>
 		</dependency>
 	  	<dependency>
-	  		<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-	  		<artifactId>
-	  			de.tudarmstadt.ukp.dkpro.core.treetagger-asl
-	  		</artifactId>
-	  	</dependency>
-	  	<dependency>
 	  		<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
 	  		<artifactId>dkpro-lab-uima-engine-simple</artifactId>
 	  	</dependency>
-		<dependency>
-		  <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-		  <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-en-all.3class.distsim.crf</artifactId>
-		  <version>20120709.0</version>
-		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-gpl</artifactId>
@@ -135,61 +103,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.core.decompounding-model-splitter-de-asv
-			</artifactId>
-			<version>20130521.1</version>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.core.decompounding-model-spelling-de-igerman98
-			</artifactId>
-			<version>20110621.1</version>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>
-				de.tudarmstadt.ukp.dkpro.core.io.bincas-asl
-			</artifactId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.bincas-asl</artifactId>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-en</artifactId>
-				<version>20111109.0</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-bin</artifactId>
-				<version>20120425.0</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-de</artifactId>
-				<version>20121207.0</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<profiles>
-		<profile>
-			<id>use-proprietary-resources</id>
-			<dependencies>
-				<dependency>
-					<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-					<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-en</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-					<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-bin</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-					<artifactId>de.tudarmstadt.ukp.dkpro.core.treetagger-model-de</artifactId>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 </project>
