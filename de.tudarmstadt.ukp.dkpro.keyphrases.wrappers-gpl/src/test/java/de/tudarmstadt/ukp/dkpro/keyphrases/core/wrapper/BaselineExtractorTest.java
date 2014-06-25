@@ -18,6 +18,7 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate;
@@ -29,6 +30,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.wrapper.Candidate.PosType;
 public class BaselineExtractorTest
 {
 
+    @Ignore
     @Test
     public void baselineTest()
         throws Exception
