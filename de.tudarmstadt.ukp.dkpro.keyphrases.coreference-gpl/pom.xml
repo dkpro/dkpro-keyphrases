@@ -44,12 +44,5 @@
   			de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl
   		</artifactId>
   	</dependency>
-  	<dependency>
-  		<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-  		<artifactId>
-  			de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-coref-en-default
-  		</artifactId>
-  		<version>20130404.1</version>
-  	</dependency>
   </dependencies>
 </project>
