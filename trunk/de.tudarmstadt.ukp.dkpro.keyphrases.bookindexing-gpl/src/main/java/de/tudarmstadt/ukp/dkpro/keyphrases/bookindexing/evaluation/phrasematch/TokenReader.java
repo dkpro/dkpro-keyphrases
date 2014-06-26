@@ -40,10 +40,10 @@ public class TokenReader implements StringReader
 
 	/**
 	 *
-	 * @param path the path to the textfile
+	 * @param path the path to the text file
 	 * @param suffix the suffix
-	 * @param delimiter
-	 * @param lowercase
+	 * @param delimiter the delimiter
+	 * @param lowercase whether or not it should be lower case
 	 */
 	public TokenReader(String path, String suffix,String delimiter, boolean lowercase)
 	{
@@ -86,9 +86,9 @@ public class TokenReader implements StringReader
 	}
 
 	/**
-	 * @param jcas
+	 * @param jcas the jcas
 	 * @return the document basename from the parsed document-URI-path.
-	 * @throws AnalysisEngineProcessException
+	 * @throws AnalysisEngineProcessException An analysis engine processing exception
 	 */
 	private String getDocumentBaseName(JCas jcas)
 		throws AnalysisEngineProcessException

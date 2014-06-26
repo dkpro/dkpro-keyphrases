@@ -118,8 +118,8 @@ public abstract class PhraseMatchEvaluator
 	/**
 	 * Subclasses can overwrite this method to implement per-document-logging /-reporting.
 	 *
-	 * @param documentPerformanceResult
-	 * @param extractedPhrases
+	 * @param documentPerformanceResult document performance result
+	 * @param extractedPhrases the list of extracted phrases
 	 */
 	protected void handleDocumentResult(DocumentPerformanceResult documentPerformanceResult, List<String> extractedPhrases)
 	{
@@ -145,15 +145,15 @@ public abstract class PhraseMatchEvaluator
 	/**
 	 * @param jcas containing information where the set of gold phrases can be derived
 	 * @return a set of gold phrases
-	 * @throws AnalysisEngineProcessException
+	 * @throws AnalysisEngineProcessException an analysis engine processing exception
 	 */
 	protected abstract Set<String> getGoldSet(JCas jcas) throws AnalysisEngineProcessException;
 
 	/**
 	 * Consumes and processes the result of the collection evaluation.
 	 *
-	 * @param collectionPerformanceResult
-	 * @throws AnalysisEngineProcessException
+	 * @param collectionPerformanceResult a collection performance result
+	 * @throws AnalysisEngineProcessException An analysis engine processing exception
 	 */
 	protected abstract void handleCollectionResult(CollectionPerformanceResult collectionPerformanceResult)
 		throws AnalysisEngineProcessException;
@@ -164,9 +164,9 @@ public abstract class PhraseMatchEvaluator
 	}
 
 	/**
-	 * @param jcas
+	 * @param jcas The jcas itself
 	 * @return the document basename from the parsed document-URI-path.
-	 * @throws AnalysisEngineProcessException
+	 * @throws AnalysisEngineProcessException An analysis engine processing exception
 	 */
 	private static String getDocumentBaseName(JCas jcas)
 		throws AnalysisEngineProcessException

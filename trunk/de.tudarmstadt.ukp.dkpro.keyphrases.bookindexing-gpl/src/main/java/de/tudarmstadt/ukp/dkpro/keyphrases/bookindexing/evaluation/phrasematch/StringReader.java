@@ -32,7 +32,7 @@ public interface StringReader
 	 * @param jcas
 	 *          containing a annotation where the set of strings can be derived
 	 * @return a set of strings
-	 * @throws AnalysisEngineProcessException
+	 * @throws AnalysisEngineProcessException An analysis engine processing exception
 	 */
 	public abstract Set<String> getSetOfStrings(JCas jcas)
 		throws AnalysisEngineProcessException;
@@ -43,7 +43,7 @@ public interface StringReader
 	 * @param jcas
 	 *          containing a annotation where the list of strings can be derived
 	 * @return a list of strings
-	 * @throws AnalysisEngineProcessException
+	 * @throws AnalysisEngineProcessException An analysis engine processing exception
 	 */
 	public abstract List<String> getListOfStrings(JCas jcas)
 		throws AnalysisEngineProcessException;

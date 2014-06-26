@@ -32,8 +32,8 @@ public abstract class AggregationStrategy
 	 * The phrases are aggregated and extracted from the Segments and added to the
 	 * document.
 	 *
-	 * @param phrasesPerSegmentTable
-	 * @param document
+	 * @param phrasesPerSegmentTable the number of phrases per segment table
+	 * @return the aggregated phrases
 	 */
 	public abstract List<RankedPhrase> aggregatePhrases(
 			Table<String, Integer, Double> phrasesPerSegmentTable);

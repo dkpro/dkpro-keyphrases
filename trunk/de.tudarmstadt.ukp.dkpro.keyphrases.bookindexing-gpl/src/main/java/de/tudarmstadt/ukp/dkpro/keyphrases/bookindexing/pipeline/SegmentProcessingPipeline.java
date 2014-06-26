@@ -46,7 +46,7 @@ public final class SegmentProcessingPipeline
 
 	/**
 	 * This method runs a pipeline with three sequential processing steps
-	 * (aggregates) specified by {@link AnalysisEngineDescriptions}s.
+	 * (aggregates) specified by AnalysisEngineDescriptions.
 	 * {@link Segment}s contained in the CAS after the first step are processed as
 	 * individual CASes (second step), after which they are further processed in
 	 * the third step.
@@ -61,8 +61,8 @@ public final class SegmentProcessingPipeline
 	 * @param postSegmentProcessing
 	 *          Processes the CAS further after the subCASes had been
 	 *          demultiplied.
-	 * @throws UIMAException
-	 * @throws IOException
+	 * @throws UIMAException UIMA Exception
+	 * @throws IOException IO exception
 	 */
 	public static void runPipeline(CollectionReader reader,
 			AnalysisEngineDescription preSegmentProcessing,
@@ -93,8 +93,8 @@ public final class SegmentProcessingPipeline
 	 * @param postSegmentProcessing
 	 *          Processes the CAS further after the subCASes had been
 	 *          demultiplied.
-	 * @throws UIMAException
-	 * @throws IOException
+	 * @throws UIMAException UIMA Exception
+	 * @throws IOException IO Exception
 	 */
 	public static void runPipeline(CollectionReader reader,
 			AggregateBuilder preSegmentProcessing,
@@ -122,11 +122,11 @@ public final class SegmentProcessingPipeline
 	 * processed by filters, writers and evaluators in the post-segment-processing
 	 * step.
 	 *
-	 * @param preSegmentProcessing
-	 * @param segmentProcessing
-	 * @param postSegmentProcessing
-	 * @return
-	 * @throws ResourceInitializationException
+	 * @param preSegmentProcessing previous pipeline
+	 * @param segmentProcessing segment pipeline
+	 * @param postSegmentProcessing post processing pipeline
+	 * @return Resulting pipeline description
+	 * @throws ResourceInitializationException Resource initilization exception
 	 */
 	public static AnalysisEngineDescription createSegmentProcessingAggregate(
 			AnalysisEngineDescription preSegmentProcessing,

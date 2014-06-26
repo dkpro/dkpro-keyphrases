@@ -30,7 +30,8 @@ public abstract class MatchingStrategy
 	 * Returns a set containing the gold phrases that are covered by the given
 	 * phrase.
 	 *
-	 * @param phrase
+	 * @param phrase The phrase string
+	 * @param goldSet the set with the gold standard phrases
 	 * @return a set of matches. When no matches had been found, then the set is
 	 *         empty.
 	 */
