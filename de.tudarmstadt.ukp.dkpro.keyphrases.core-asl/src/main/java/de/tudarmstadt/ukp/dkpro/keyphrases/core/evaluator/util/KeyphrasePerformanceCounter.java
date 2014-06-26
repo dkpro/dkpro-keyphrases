@@ -44,7 +44,7 @@ public class KeyphrasePerformanceCounter extends AbstractKeyphraseCounter
     /**
      * @param n
      *            For which number of retrieved keyphrases the precision should be computed.
-     * @return
+     * @return the micro precision for n
      */
     public double getMicroPrecision(int n)
     {
@@ -69,6 +69,7 @@ public class KeyphrasePerformanceCounter extends AbstractKeyphraseCounter
     /**
      * @param n
      *            For which number of retrieved keyphrases the recall should be computed.
+     * @return the micro recall for n
      */
     public double getMicroRecall(int n)
     {
@@ -85,7 +86,7 @@ public class KeyphrasePerformanceCounter extends AbstractKeyphraseCounter
     /**
      * @param n
      *            For which number of retrieved keyphrases the f-measure should be computed.
-     * @return
+     * @return the f-measure for n
      */
     public double getMicroFMeasure(int n)
     {
@@ -129,7 +130,7 @@ public class KeyphrasePerformanceCounter extends AbstractKeyphraseCounter
     /**
      * R-Precision
      *
-     * @param fileName
+     * @param fileName the file name
      * @return The r-precision for that file.
      */
     public double getFileRPrecision(String fileName)

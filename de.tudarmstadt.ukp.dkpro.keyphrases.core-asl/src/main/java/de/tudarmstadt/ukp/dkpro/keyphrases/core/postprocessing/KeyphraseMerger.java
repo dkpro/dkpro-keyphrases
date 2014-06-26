@@ -97,7 +97,8 @@ public class KeyphraseMerger extends JCasAnnotator_ImplBase {
 
         /**
          * Merges keyphrases.
-         * @throws AnalysisEngineProcessException 
+         * @throws AnalysisEngineProcessException Throws an analysis engine exception if 
+         *      some exception occurs 
          *
          */
         public void merge() throws AnalysisEngineProcessException {

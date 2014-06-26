@@ -83,7 +83,7 @@ public class Keyphrase_Type extends Annotation_Type {
   
   /**
    * @param addr the memory address
-   * @retun The keyphrase set
+   * @return The keyphrase set
    * */ 
   public String getKeyphrase(int addr) {
         if (featOkTst && casFeat_keyphrase == null)
