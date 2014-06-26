@@ -332,7 +332,7 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
     /**
      * Sets the max iteration. It's either n or the maximum number of keyphrases smaller than n.
      * @param size The number of retrieved keyphrase candidates.
-     * @return The upper bound of iterations for this file. Either n or the number of keyphrases (if number of keyphrases < n).
+     * @return The upper bound of iterations for this file. Either n or the number of keyphrases.
      */
     protected int getIterateTo(int size) {
     	// n==0 means => take all keyphrases
