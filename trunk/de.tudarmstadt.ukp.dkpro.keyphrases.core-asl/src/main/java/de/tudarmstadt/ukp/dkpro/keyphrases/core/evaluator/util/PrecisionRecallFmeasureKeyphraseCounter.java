@@ -15,7 +15,7 @@ public class PrecisionRecallFmeasureKeyphraseCounter
     /**
      * @param n
      *            For which number of retrieved keyphrases the precision should be computed.
-     * @return
+     * @return The micro precision for n
      */
     public double getMicroPrecision(int n)
     {
@@ -77,6 +77,7 @@ public class PrecisionRecallFmeasureKeyphraseCounter
     /**
      * @param n
      *            For which number of retrieved keyphrases the recall should be computed.
+     * @return The micro recall for n
      */
     public double getMicroRecall(int n)
     {
@@ -112,7 +113,7 @@ public class PrecisionRecallFmeasureKeyphraseCounter
     /**
      * @param n
      *            For which number of retrieved keyphrases the f-measure should be computed.
-     * @return
+     * @return the micro f-measure for n
      */
     public double getMicroFMeasure(int n)
     {

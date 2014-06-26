@@ -92,7 +92,7 @@ public class Keyphrase extends Annotation {
   //* Feature: keyphrase
 
   /** getter for keyphrase - gets
-   * @param The keyphrase string
+   * @return The keyphrase string
    * */
   public String getKeyphrase() {
     if (Keyphrase_Type.featOkTst && ((Keyphrase_Type)jcasType).casFeat_keyphrase == null)

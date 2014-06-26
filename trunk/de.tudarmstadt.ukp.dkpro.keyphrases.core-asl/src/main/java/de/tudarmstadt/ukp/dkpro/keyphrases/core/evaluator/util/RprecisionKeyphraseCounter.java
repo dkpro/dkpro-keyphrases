@@ -28,7 +28,7 @@ public class RprecisionKeyphraseCounter
     /**
      * R-Precision
      * 
-     * @param fileName
+     * @param fileName The file name
      * @return The r-precision for that file.
      */
     public double getFileRPrecision(String fileName)

@@ -303,8 +303,9 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
 
     /**
      * Removes gold keyphrases that do not appear in the document text from the set of gold keyphrases.
-     * @param documentView
-     * @param goldKeyphrases
+     * @param documentText the content from the document 
+     * @param goldKeyphrases the set of gold keyphrases
+     * @return the new set of keyphrases
      */
     protected Set<String> removeGoldKeyphrasesNotInDocument(String documentText, Set<String> goldKeyphrases) {
 
@@ -390,8 +391,8 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
     }
 
     /**
-     * @param goldKeyphrases
-     * @param keyphrases
+     * @param goldKeyphrases the set of gold keyphrases
+     * @param keyphrase the keyphrase being evaluated
      * @return The first matching gold keyphrase or null, if no match is found.
      */
     private String getApproximateMatchingGoldKeyphrase(Set<String> goldKeyphrases, String keyphrase) {
@@ -426,8 +427,8 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
      * The comparison is made wrt to tokens.
      * E.g. "economic principles" is fully included in "basic economic principles".
      * However, "economic" is not fully included in "economics".
-     * @param s1
-     * @param s2
+     * @param s1 the first string
+     * @param s2 the second string
      * @return True if s2 is fully included in s1.
      */
     private boolean fullyIncluded(String s1, String s2) {
@@ -446,8 +447,8 @@ public class KeyphraseEvaluator extends JCasConsumer_ImplBase {
     }
 
     /**
-     * @param s1
-     * @param s2
+     * @param s1 the first string
+     * @param s2 the second string
      * @return True, if s1 has a tolerable small Levenshtein distance to s2.
      */
     private boolean smallLevenshtein(String s1, String s2) {
