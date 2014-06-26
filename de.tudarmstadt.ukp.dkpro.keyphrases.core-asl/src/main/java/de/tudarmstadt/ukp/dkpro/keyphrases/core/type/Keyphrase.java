@@ -24,43 +24,39 @@ import org.apache.uima.jcas.cas.TOP_Type;
 import org.apache.uima.jcas.tcas.Annotation;
 
 
-/** 
- * Updated by JCasGen Thu Apr 18 17:45:18 CEST 2013
- * XML source: /srv/workspace42/de.tudarmstadt.ukp.dkpro.keyphrases/de.tudarmstadt.ukp.dkpro.keyphrases.core/src/main/resources/desc/type/Keyphrase.xml
- * @generated */
 public class Keyphrase extends Annotation {
-  /** @generated
-   * @ordered 
-   */
+
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = JCasRegistry.register(Keyphrase.class);
-  /** @generated
-   * @ordered 
-   */
   @SuppressWarnings ("hiding")
   public final static int type = typeIndexID;
-  /** @generated  */
   @Override
   public              int getTypeIndexID() {return typeIndexID;}
  
-  /** Never called.  Disable default constructor
-   * @generated */
   protected Keyphrase() {/* intentionally empty block */}
     
-  /** Internal - constructor used by generator 
-   * @generated */
+  /** Internal - constructor used by generator
+   * @param addr The memory address
+   * @param type The type being annotated 
+   * */
   public Keyphrase(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
   
-  /** @generated */
+  /** 
+   * @param jcas The jcas where the type is being annotated 
+   * */
   public Keyphrase(JCas jcas) {
     super(jcas);
     readObject();   
   } 
 
-  /** @generated */  
+  /** 
+   * @param jcas The jcas where the type is being annotated
+   * @param begin The begin offset
+   * @param end The end offset
+   * */  
   public Keyphrase(JCas jcas, int begin, int end) {
     super(jcas);
     setBegin(begin);
@@ -68,10 +64,6 @@ public class Keyphrase extends Annotation {
     readObject();
   }   
 
-  /** <!-- begin-user-doc -->
-    * Write your own initialization here
-    * <!-- end-user-doc -->
-  @generated modifiable */
   private void readObject() {/*default - does nothing empty block */}
      
  
@@ -79,15 +71,17 @@ public class Keyphrase extends Annotation {
   //*--------------*
   //* Feature: score
 
-  /** getter for score - gets 
-   * @generated */
+  /** getter for score - gets
+   * @return The score from the keyphrase 
+   **/
   public double getScore() {
     if (Keyphrase_Type.featOkTst && ((Keyphrase_Type)jcasType).casFeat_score == null)
       jcasType.jcas.throwFeatMissing("score", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
     return jcasType.ll_cas.ll_getDoubleValue(addr, ((Keyphrase_Type)jcasType).casFeatCode_score);}
     
-  /** setter for score - sets  
-   * @generated */
+  /** setter for score - sets
+   * @param v the score value  
+   * */
   public void setScore(double v) {
     if (Keyphrase_Type.featOkTst && ((Keyphrase_Type)jcasType).casFeat_score == null)
       jcasType.jcas.throwFeatMissing("score", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
@@ -97,15 +91,17 @@ public class Keyphrase extends Annotation {
   //*--------------*
   //* Feature: keyphrase
 
-  /** getter for keyphrase - gets 
-   * @generated */
+  /** getter for keyphrase - gets
+   * @param The keyphrase string
+   * */
   public String getKeyphrase() {
     if (Keyphrase_Type.featOkTst && ((Keyphrase_Type)jcasType).casFeat_keyphrase == null)
       jcasType.jcas.throwFeatMissing("keyphrase", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Keyphrase_Type)jcasType).casFeatCode_keyphrase);}
     
   /** setter for keyphrase - sets  
-   * @generated */
+   * @param v The keyphrase value 
+   **/
   public void setKeyphrase(String v) {
     if (Keyphrase_Type.featOkTst && ((Keyphrase_Type)jcasType).casFeat_keyphrase == null)
       jcasType.jcas.throwFeatMissing("keyphrase", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");

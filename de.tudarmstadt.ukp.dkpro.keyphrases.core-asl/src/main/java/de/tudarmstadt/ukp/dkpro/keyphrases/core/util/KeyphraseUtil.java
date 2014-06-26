@@ -40,6 +40,7 @@ public class KeyphraseUtil
 	/**
 	 * @param jcas a JCas containing {@link Keyphrase}-annotations.
 	 * @param comparator Keyphrases are sorted by the given comparator
+	 * @param convertToLowercase If it should be converted to lower case
 	 * @return a sorted list of keyphrases as strings without filtering for duplicates
 	 */
 	public static List<String> getOrderedPhrasesWithDuplicates(JCas jcas, Comparator<Keyphrase> comparator, boolean convertToLowercase) {
@@ -60,6 +61,7 @@ public class KeyphraseUtil
 	/**
 	 * @param jcas a JCas containing {@link Keyphrase}-annotations.
 	 * @param comparator Keyphrases are sorted by the given comparator
+	 * @param convertToLowercase If parameter should be converted to lower case
 	 * @return a sorted list of keyphrases as strings without duplicates.
 	 */
 	public static List<String> getOrderedPhrasesNoDuplicates(JCas jcas, Comparator<Keyphrase> comparator, boolean convertToLowercase) {
