@@ -38,7 +38,7 @@ public class SerializationUtils
 	 * @param filePath
 	 *          the object will be written at this location, directories will be
 	 *          created according to path
-	 * @throws Exception
+	 * @throws Exception exception
 	 */
 	public static void serializeToDisk(Serializable object, String filePath)
 		throws Exception
@@ -63,9 +63,9 @@ public class SerializationUtils
 	/**
 	 * Deserializes an object from disk.
 	 *
-	 * @param filePath
+	 * @param filePath the file path
 	 * @return an object. Clients have to cast the object to the expected type.
-	 * @throws Exception
+	 * @throws Exception an exception
 	 */
 	public static Object deserializeFromDisk(String filePath)
 		throws Exception
