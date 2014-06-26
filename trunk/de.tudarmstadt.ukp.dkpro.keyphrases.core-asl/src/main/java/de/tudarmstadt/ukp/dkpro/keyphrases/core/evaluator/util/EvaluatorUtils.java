@@ -54,12 +54,7 @@ public class EvaluatorUtils {
 	 * @param toLowercase If gold keys should be lowercased or not.
 	 *
 	 * @return The set of gold keyphrases for this document.
-	 * @throws AnalysisEngineProcessException
-	 */
-
-	/**
-	 * @return
-	 * @throws AnalysisEngineProcessException
+	 * @throws AnalysisEngineProcessException an analysis engine process exception
 	 */
 	public static Set<String> getGoldKeyphrases(DocumentMetaData metaData, String goldSuffix, boolean toLowerCase) throws AnalysisEngineProcessException {
 
@@ -100,7 +95,7 @@ public class EvaluatorUtils {
 	}
 
 	/**
-	 * @param jcas
+	 * @param jcas the jcas being evaluated
 	 * @param type Whether the text should be built using tokens, stems, or lemmas.
 	 * @return A concatenated string representing the document text.<br>
 	 *         Depending on the type parameter, the text contains tokens, stems, or lemmas.
@@ -158,7 +153,7 @@ public class EvaluatorUtils {
 	 * Filters duplicate keyphrases.
 	 * The keyphrase with the higher score is kept.
 	 *
-	 * @param keyphrases A list over keyphrases.
+	 * @param keyphrasesCollection A list over keyphrases.
 	 * @param toLowercase If gold keys should be lowercased or not.
 	 *
 	 * @return A list of unique keyphrases in order of descending scores.
