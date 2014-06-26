@@ -51,7 +51,7 @@ public class EvaluatorUtils {
 	 *
 	 * @param metaData The DocumentMetaData annotation of this document.
 	 * @param goldSuffix The suffix of the gold standard file.
-	 * @param toLowercase If gold keys should be lowercased or not.
+	 * @param toLowerCase If gold keys should be lowercased or not.
 	 *
 	 * @return The set of gold keyphrases for this document.
 	 * @throws AnalysisEngineProcessException an analysis engine process exception
