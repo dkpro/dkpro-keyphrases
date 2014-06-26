@@ -25,43 +25,39 @@ import org.apache.uima.jcas.tcas.DocumentAnnotation;
 import org.apache.uima.jcas.cas.NonEmptyStringList;
 
 
-/** 
- * Updated by JCasGen Thu Apr 18 17:46:10 CEST 2013
- * XML source: /srv/workspace42/de.tudarmstadt.ukp.dkpro.keyphrases/de.tudarmstadt.ukp.dkpro.keyphrases.core/src/main/resources/desc/type/KeyphraseMetaData.xml
- * @generated */
+
 public class KeyphraseMetaData extends DocumentAnnotation {
-  /** @generated
-   * @ordered 
-   */
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = JCasRegistry.register(KeyphraseMetaData.class);
-  /** @generated
-   * @ordered 
-   */
   @SuppressWarnings ("hiding")
   public final static int type = typeIndexID;
-  /** @generated  */
   @Override
   public              int getTypeIndexID() {return typeIndexID;}
  
-  /** Never called.  Disable default constructor
-   * @generated */
   protected KeyphraseMetaData() {/* intentionally empty block */}
     
-  /** Internal - constructor used by generator 
-   * @generated */
+  /** Internal - constructor used by generator
+   * @param addr The memory address
+   * @param type The type being annotated 
+   * */
   public KeyphraseMetaData(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
   
-  /** @generated */
+  /**
+   * @param jcas The jcas which the type will be annotated
+   * */
   public KeyphraseMetaData(JCas jcas) {
     super(jcas);
     readObject();   
   } 
 
-  /** @generated */  
+  /**
+   *@param jcas Jcas
+   *@param begin begin offset
+   *@param end end offset 
+   * */  
   public KeyphraseMetaData(JCas jcas, int begin, int end) {
     super(jcas);
     setBegin(begin);
@@ -69,10 +65,6 @@ public class KeyphraseMetaData extends DocumentAnnotation {
     readObject();
   }   
 
-  /** <!-- begin-user-doc -->
-    * Write your own initialization here
-    * <!-- end-user-doc -->
-  @generated modifiable */
   private void readObject() {/*default - does nothing empty block */}
      
  
@@ -80,15 +72,17 @@ public class KeyphraseMetaData extends DocumentAnnotation {
   //*--------------*
   //* Feature: goldstandardKeyphrases
 
-  /** getter for goldstandardKeyphrases - gets 
-   * @generated */
+  /** getter for goldstandardKeyphrases - gets
+   * @return NonEmptyStringList the list of gold standard keyphrases 
+   **/
   public NonEmptyStringList getGoldstandardKeyphrases() {
     if (KeyphraseMetaData_Type.featOkTst && ((KeyphraseMetaData_Type)jcasType).casFeat_goldstandardKeyphrases == null)
       jcasType.jcas.throwFeatMissing("goldstandardKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
     return (NonEmptyStringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((KeyphraseMetaData_Type)jcasType).casFeatCode_goldstandardKeyphrases)));}
     
-  /** setter for goldstandardKeyphrases - sets  
-   * @generated */
+  /** setter for goldstandardKeyphrases - sets
+   * @param v the gold standard keyphrases  
+   **/
   public void setGoldstandardKeyphrases(NonEmptyStringList v) {
     if (KeyphraseMetaData_Type.featOkTst && ((KeyphraseMetaData_Type)jcasType).casFeat_goldstandardKeyphrases == null)
       jcasType.jcas.throwFeatMissing("goldstandardKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
@@ -98,15 +92,17 @@ public class KeyphraseMetaData extends DocumentAnnotation {
   //*--------------*
   //* Feature: nrofKeyphrases
 
-  /** getter for nrofKeyphrases - gets 
-   * @generated */
+  /** getter for nrofKeyphrases - gets
+   * @return the number of keyphrases 
+   * */
   public int getNrofKeyphrases() {
     if (KeyphraseMetaData_Type.featOkTst && ((KeyphraseMetaData_Type)jcasType).casFeat_nrofKeyphrases == null)
       jcasType.jcas.throwFeatMissing("nrofKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
     return jcasType.ll_cas.ll_getIntValue(addr, ((KeyphraseMetaData_Type)jcasType).casFeatCode_nrofKeyphrases);}
     
-  /** setter for nrofKeyphrases - sets  
-   * @generated */
+  /** setter for nrofKeyphrases - sets
+   * @param v the number of keyphrases  
+   * */
   public void setNrofKeyphrases(int v) {
     if (KeyphraseMetaData_Type.featOkTst && ((KeyphraseMetaData_Type)jcasType).casFeat_nrofKeyphrases == null)
       jcasType.jcas.throwFeatMissing("nrofKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");

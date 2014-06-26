@@ -28,14 +28,9 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.DocumentAnnotation_Type;
 
-/** 
- * Updated by JCasGen Thu Apr 18 17:46:10 CEST 2013
- * @generated */
 public class KeyphraseMetaData_Type extends DocumentAnnotation_Type {
-  /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -51,25 +46,21 @@ public class KeyphraseMetaData_Type extends DocumentAnnotation_Type {
         } else return new KeyphraseMetaData(addr, KeyphraseMetaData_Type.this);
   	  }
     };
-  /** @generated */
+
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = KeyphraseMetaData.typeIndexID;
-  /** @generated 
-     @modifiable */
+
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
  
-  /** @generated */
   final Feature casFeat_goldstandardKeyphrases;
-  /** @generated */
-  final int     casFeatCode_goldstandardKeyphrases;
-  /** @generated */ 
+  final int     casFeatCode_goldstandardKeyphrases; 
   public int getGoldstandardKeyphrases(int addr) {
         if (featOkTst && casFeat_goldstandardKeyphrases == null)
       jcas.throwFeatMissing("goldstandardKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
     return ll_cas.ll_getRefValue(addr, casFeatCode_goldstandardKeyphrases);
   }
-  /** @generated */    
+    
   public void setGoldstandardKeyphrases(int addr, int v) {
         if (featOkTst && casFeat_goldstandardKeyphrases == null)
       jcas.throwFeatMissing("goldstandardKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
@@ -77,17 +68,13 @@ public class KeyphraseMetaData_Type extends DocumentAnnotation_Type {
     
   
  
-  /** @generated */
   final Feature casFeat_nrofKeyphrases;
-  /** @generated */
-  final int     casFeatCode_nrofKeyphrases;
-  /** @generated */ 
+  final int     casFeatCode_nrofKeyphrases; 
   public int getNrofKeyphrases(int addr) {
         if (featOkTst && casFeat_nrofKeyphrases == null)
       jcas.throwFeatMissing("nrofKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
     return ll_cas.ll_getIntValue(addr, casFeatCode_nrofKeyphrases);
   }
-  /** @generated */    
   public void setNrofKeyphrases(int addr, int v) {
         if (featOkTst && casFeat_nrofKeyphrases == null)
       jcas.throwFeatMissing("nrofKeyphrases", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.KeyphraseMetaData");
@@ -98,7 +85,9 @@ public class KeyphraseMetaData_Type extends DocumentAnnotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+   * @param jcas JCas which the type will be annotated
+   * @param casType The type which will be annotated
+   * */
   public KeyphraseMetaData_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

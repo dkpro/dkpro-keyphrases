@@ -30,12 +30,10 @@ import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
  * Updated by JCasGen Thu Apr 18 17:45:18 CEST 2013
- * @generated */
+ * */
 public class Keyphrase_Type extends Annotation_Type {
-  /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -51,25 +49,28 @@ public class Keyphrase_Type extends Annotation_Type {
         } else return new Keyphrase(addr, Keyphrase_Type.this);
   	  }
     };
-  /** @generated */
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = Keyphrase.typeIndexID;
-  /** @generated 
-     @modifiable */
+
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
  
-  /** @generated */
   final Feature casFeat_score;
-  /** @generated */
+ 
   final int     casFeatCode_score;
-  /** @generated */ 
+  /**
+   * @param addr the memory address
+   * @return the keyphrase score
+   *  */ 
   public double getScore(int addr) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
     return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
   }
-  /** @generated */    
+  /** 
+   * @param addr the memory address
+   * @param v the score value
+   * */    
   public void setScore(int addr, double v) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
@@ -77,17 +78,22 @@ public class Keyphrase_Type extends Annotation_Type {
     
   
  
-  /** @generated */
   final Feature casFeat_keyphrase;
-  /** @generated */
   final int     casFeatCode_keyphrase;
-  /** @generated */ 
+  
+  /**
+   * @param addr the memory address
+   * @retun The keyphrase set
+   * */ 
   public String getKeyphrase(int addr) {
         if (featOkTst && casFeat_keyphrase == null)
       jcas.throwFeatMissing("keyphrase", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
     return ll_cas.ll_getStringValue(addr, casFeatCode_keyphrase);
   }
-  /** @generated */    
+  /** 
+   * @param addr the memory address
+   * @param v the keyphrase value to be set
+   * */    
   public void setKeyphrase(int addr, String v) {
         if (featOkTst && casFeat_keyphrase == null)
       jcas.throwFeatMissing("keyphrase", "de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase");
@@ -98,7 +104,9 @@ public class Keyphrase_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+	* @param jcas The jcas which the type will be annotated
+	* @param casType the type itself
+	* */
   public Keyphrase_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
