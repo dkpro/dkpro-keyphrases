@@ -73,9 +73,9 @@ public class TopNAggregation_Position
 	/**
 	 * Returns the top entries from the segment (modeled as column)
 	 *
-	 * @param column
-	 * @param n
-	 * @return
+	 * @param column column
+	 * @param n n
+	 * @return the top entries
 	 */
 	protected final List<Entry<String, Double>> top(Map<String, Double> column,
 			int n)

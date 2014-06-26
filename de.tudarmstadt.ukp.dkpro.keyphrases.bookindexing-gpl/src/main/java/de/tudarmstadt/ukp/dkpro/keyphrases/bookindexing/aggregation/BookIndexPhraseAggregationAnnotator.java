@@ -33,8 +33,8 @@ public class BookIndexPhraseAggregationAnnotator
 	 * Stores {@link RankedPhrase}s in CAS as {@link BookIndexPhrase}s. Note that
 	 * the BookIndexPhrases are not associated with a position in the CAS.
 	 *
-	 * @param aggregatedPhrases
-	 * @param jcas
+	 * @param aggregatedPhrases the aggregated phrases
+	 * @param jcas The jcas document itself
 	 */
 	@Override
 	protected void storePhrasesInCas(List<RankedPhrase> aggregatedPhrases,

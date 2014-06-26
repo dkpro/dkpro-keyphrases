@@ -25,8 +25,8 @@ public class MatchingSmallLevenshtein
 	 * Consumes two strings and returns true if the strings are within a tolerable
 	 * small Levenshtein-distance.
 	 *
-	 * @param s1
-	 * @param s2
+	 * @param s1 string 1
+	 * @param s2 string 2
 	 * @return True, if s1 has a tolerable small Levenshtein distance to s2.
 	 */
 	public static boolean smallLevenshtein(String s1, String s2)

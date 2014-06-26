@@ -143,8 +143,8 @@ public abstract class RankedPhraseAggregationAnnotator
 	 * Stores {@link RankedPhrase}s in CAS. Subclasses have to implement this
 	 * method to store the aggregated phrases using a specified UIMA-type.
 	 *
-	 * @param aggregatedPhrases
-	 * @param jcas
+	 * @param aggregatedPhrases The aggregated phrases
+	 * @param jcas the jcas itself
 	 */
 	protected abstract void storePhrasesInCas(
 			List<RankedPhrase> aggregatedPhrases, JCas jcas);

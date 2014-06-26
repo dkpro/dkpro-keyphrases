@@ -33,10 +33,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.type.Keyphrase;
 
 /**
  * This component adds {@link Keyphrase} annotations consisting of a term and
- * double value calculated as the Rayson and Garside log-likelihood. <br>
- * <p>
- * Based on {@link de.tudarmstadt.ukp.dkpro.semantics.annotator.TfidfAnnotator}
- * by zesch & n_erbs.
+ * double value calculated as the Rayson and Garside log-likelihood.
  *
  * @author Mateusz Parzonka
  *

@@ -46,7 +46,7 @@ public abstract class OverlappingCandidateSet_BaseImpl
 	 * We add a merged candiate (<code>xxxx yyyy zzzz</code>).
 	 *
 	 *
-	 * @param resolveOverlaps
+	 * @param resolveOverlaps whether or not the overlaps should be resolved
 	 */
 	public void setResolveOverlaps(boolean resolveOverlaps)
 	{

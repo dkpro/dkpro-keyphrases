@@ -44,7 +44,7 @@ public abstract class CandidateSet_BaseImpl
 	 * @param language
 	 *          unused in the default implementation.
 	 * @return the default implementation returns a {@link BreakIteratorSegmenter}
-	 * @throws ResourceInitializationException
+	 * @throws ResourceInitializationException A resource initialization exception
 	 */
 	protected AnalysisEngineDescription getTokenizer(String language)
 		throws ResourceInitializationException
@@ -57,7 +57,7 @@ public abstract class CandidateSet_BaseImpl
 	 *          element of {en, de, ru}
 	 * @return The default implementation returns a {@link TreeTaggerPosLemmaTT4J}
 	 *         .
-	 * @throws ResourceInitializationException
+	 * @throws ResourceInitializationException A resource initialization exception
 	 */
 	// TODO TreeTagger is now available for more languages
 	protected AnalysisEngineDescription getTagger(String language)
@@ -75,9 +75,9 @@ public abstract class CandidateSet_BaseImpl
 	}
 
 	/**
-	 * @param language
+	 * @param language The language being used
 	 * @return The default implementation returns a {@link SnowballStemmer}.
-	 * @throws ResourceInitializationException
+	 * @throws ResourceInitializationException a resource initialization exception
 	 */
 	protected AnalysisEngineDescription getStemmer(String language)
 		throws ResourceInitializationException
@@ -91,7 +91,7 @@ public abstract class CandidateSet_BaseImpl
 	 *          element of {en, de, ru}
 	 * @return The default implementation returns a {@link TreeTaggerChunkerTT4J}
 	 *         .
-	 * @throws ResourceInitializationException
+	 * @throws ResourceInitializationException a resource initialization exception
 	 */
 	protected AnalysisEngineDescription getChunker(String language)
 		throws ResourceInitializationException
@@ -109,7 +109,7 @@ public abstract class CandidateSet_BaseImpl
 	 * Default implementation adds {@link KeyphraseCandidate}-annotations.
 	 *
 	 * @return candidate annotator
-	 * @throws ResourceInitializationException
+	 * @throws ResourceInitializationException a resource initialization exception
 	 */
 	protected AnalysisEngineDescription getCandidateAnnotator()
 		throws ResourceInitializationException
@@ -121,6 +121,7 @@ public abstract class CandidateSet_BaseImpl
 
 	/**
 	 * The base implementation returns the name of the type as feature path.
+	 * @return the feature path
 	 */
 	@Override
 	public String getFeaturePath()

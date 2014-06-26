@@ -44,7 +44,7 @@ public class NGramCandidateSet
 	/**
 	 * Sets the n in the ngram.
 	 *
-	 * @param n
+	 * @param n n
 	 *
 	 * @return the candidate set with set n
 	 */

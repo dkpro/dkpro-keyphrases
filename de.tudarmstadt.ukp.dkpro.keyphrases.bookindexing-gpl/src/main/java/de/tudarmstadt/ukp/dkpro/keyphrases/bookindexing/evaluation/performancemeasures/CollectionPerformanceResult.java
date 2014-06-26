@@ -36,7 +36,6 @@ public class CollectionPerformanceResult
 	/**
 	 * @param documentEvaluationResults
 	 *          the underlying collection
-	 * @param configurationDetails
 	 */
 	public CollectionPerformanceResult(List<DocumentPerformanceResult> documentEvaluationResults)
 	{
