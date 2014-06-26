@@ -22,14 +22,9 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** 
- * Updated by JCasGen Thu Apr 18 17:31:58 CEST 2013
- * @generated */
 public class BookIndexPhrase_Type extends Annotation_Type {
-  /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -45,25 +40,26 @@ public class BookIndexPhrase_Type extends Annotation_Type {
         } else return new BookIndexPhrase(addr, BookIndexPhrase_Type.this);
   	  }
     };
-  /** @generated */
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = BookIndexPhrase.typeIndexID;
-  /** @generated 
-     @modifiable */
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.BookIndexPhrase");
  
-  /** @generated */
   final Feature casFeat_score;
-  /** @generated */
   final int     casFeatCode_score;
-  /** @generated */ 
+  /**
+   * @param addr memory address
+   * @return the score
+   *  */ 
   public double getScore(int addr) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.BookIndexPhrase");
     return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
   }
-  /** @generated */    
+  /** 
+   * @param addr the memory addr
+   * @param v the value
+   * */    
   public void setScore(int addr, double v) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.BookIndexPhrase");
@@ -71,17 +67,21 @@ public class BookIndexPhrase_Type extends Annotation_Type {
     
   
  
-  /** @generated */
   final Feature casFeat_phrase;
-  /** @generated */
   final int     casFeatCode_phrase;
-  /** @generated */ 
+  /** 
+   * @param addr the memory address
+   * @return The phrase
+   * */ 
   public String getPhrase(int addr) {
         if (featOkTst && casFeat_phrase == null)
       jcas.throwFeatMissing("phrase", "de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.BookIndexPhrase");
     return ll_cas.ll_getStringValue(addr, casFeatCode_phrase);
   }
-  /** @generated */    
+  /** 
+   * @param addr the memory address
+   * @param v the phrase
+   * */    
   public void setPhrase(int addr, String v) {
         if (featOkTst && casFeat_phrase == null)
       jcas.throwFeatMissing("phrase", "de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.BookIndexPhrase");
@@ -92,7 +92,9 @@ public class BookIndexPhrase_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+   * @param jcas jcas
+   * @param casType Cas type
+	* */
   public BookIndexPhrase_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

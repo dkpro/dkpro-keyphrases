@@ -20,14 +20,9 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** 
- * Updated by JCasGen Wed May 22 15:25:32 CEST 2013
- * @generated */
 public class Segment_Type extends Annotation_Type {
-  /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -43,18 +38,18 @@ public class Segment_Type extends Annotation_Type {
         } else return new Segment(addr, Segment_Type.this);
   	  }
     };
-  /** @generated */
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = Segment.typeIndexID;
-  /** @generated 
-     @modifiable */
+
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.type.Segment");
 
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+   * @param jcas The jcas
+   * @param casType the cas type
+	* */
   public Segment_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

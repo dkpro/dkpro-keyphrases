@@ -35,6 +35,7 @@ public class BookIndexPhraseUtil
 	/**
 	 * @param jcas a JCas containing {@link BookIndexPhrase}-annotations.
 	 * @param comparator BookIndexPhrases are sorted by the given comparator
+	 * @param convertToLowercase wheter or not it should be converted to lowercase
 	 * @return a sorted list of bookIndexPhrases as strings without filtering for duplicates
 	 */
 	public static List<String> getOrderedPhrasesWithDuplicates(JCas jcas, Comparator<BookIndexPhrase> comparator, boolean convertToLowercase) {
@@ -55,6 +56,7 @@ public class BookIndexPhraseUtil
 	/**
 	 * @param jcas a JCas containing {@link BookIndexPhrase}-annotations.
 	 * @param comparator BookIndexPhrases are sorted by the given comparator
+	 * @param convertToLowercase whether or not it should be converter to lower case 
 	 * @return a sorted list of bookIndexPhrases as strings without duplicates.
 	 */
 	public static List<String> getOrderedPhrasesNoDuplicates(JCas jcas, Comparator<BookIndexPhrase> comparator, boolean convertToLowercase) {
