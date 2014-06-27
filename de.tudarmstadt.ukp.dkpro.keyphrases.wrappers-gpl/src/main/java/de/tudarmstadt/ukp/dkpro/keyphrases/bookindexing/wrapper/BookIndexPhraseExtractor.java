@@ -23,6 +23,7 @@ public interface BookIndexPhraseExtractor
 	 *
 	 * @return The list of bookindex phrases extracted from the input text.
 	 *         Phrases are ordered by score in descending order.
+	 * @throws IOException io exception
 	 */
 	List<String> extract(File textFile)
 		throws IOException;

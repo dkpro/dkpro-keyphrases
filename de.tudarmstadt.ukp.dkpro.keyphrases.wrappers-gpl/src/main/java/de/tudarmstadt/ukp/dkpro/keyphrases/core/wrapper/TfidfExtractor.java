@@ -93,8 +93,8 @@ public class TfidfExtractor extends KeyphraseExtractor_ImplBase {
      *
      * @param inputDir The input directory with the input files.
      * @param suffix The suffix of the valid input files.
-     * @throws IOException
-     * @throws ResourceInitializationException
+     * @throws IOException io exception
+     * @throws ResourceInitializationException resource initialization exception
      */
     public void buildTfidfModel(File inputDir, String suffix) throws ResourceInitializationException {
         try {
@@ -113,7 +113,7 @@ public class TfidfExtractor extends KeyphraseExtractor_ImplBase {
      * @param inputDir The input directory with the input files.
      * @param suffix The suffix of the valid input files.
      * @param outputFile The file to which the built model should be written.
-     * @throws Exception
+     * @throws Exception exception
      */
     public void buildTfidfModel(final File inputDir, final String suffix, File outputFile) throws Exception {
 
