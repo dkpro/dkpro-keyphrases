@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+		<artifactId>dkpro-parent-pom</artifactId>
+		<version>9</version>
+	</parent>
+	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases</artifactId>
+	<name>DKPro Keyphrases</name>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.core-gpl</artifactId>
+				<version>${dkpro.core.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+				<artifactId>
+					de.tudarmstadt.ukp.dkpro.core-asl
+				</artifactId>
+				<version>${dkpro.core.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
+				<version>1.5.0</version>
+			</dependency>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
+				<artifactId>dkpro-lab</artifactId>
+				<version>0.11.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+				<artifactId>
+					de.tudarmstadt.ukp.dkpro.core.treetagger-asl
+				</artifactId>
+				<version>${dkpro.core.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
+	<packaging>pom</packaging>
+	<version>1.5.0</version>
+	<modules>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-gpl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wrappers-gpl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs-gpl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.lab-gpl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.decompounding-asl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.coreference-gpl</module>
+	<module>de.tudarmstadt.ukp.dkpro.keyphrases.wikipediafilter-gpl	</module>
+	</modules>
+	<properties>
+		<dkpro.core.version>1.6.1</dkpro.core.version>
+	</properties>
+	<dependencies>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<scope>test</scope>
+	</dependency>
+	</dependencies>
+	<url>https://code.google.com/p/dkpro-keyphrases/</url>
+<!-- 	<repositories> -->
+<!-- 		<repository> -->
+			<!-- For uimaFIT 2.0.0-SNAPSHOT -->
+<!-- 			<id>apache.snapshots</id> -->
+<!-- 			<name>Apache Snapshot Repository</name> -->
+<!-- 			<url>http://repository.apache.org/snapshots</url> -->
+<!-- 			<releases> -->
+<!-- 				<enabled>false</enabled> -->
+<!-- 			</releases> -->
+<!-- 		</repository> -->
+<!-- 	</repositories> -->
+	<scm>
+		<url>https://dkpro-keyphrases.googlecode.com/svn/tags/de.tudarmstadt.ukp.dkpro.keyphrases-1.5.0</url>
+		<connection>scm:svn:https://dkpro-keyphrases.googlecode.com/svn/tags/de.tudarmstadt.ukp.dkpro.keyphrases-1.5.0</connection>
+		<developerConnection>scm:svn:https://dkpro-keyphrases.googlecode.com/svn/tags/de.tudarmstadt.ukp.dkpro.keyphrases-1.5.0</developerConnection>
+	</scm>
+</project>

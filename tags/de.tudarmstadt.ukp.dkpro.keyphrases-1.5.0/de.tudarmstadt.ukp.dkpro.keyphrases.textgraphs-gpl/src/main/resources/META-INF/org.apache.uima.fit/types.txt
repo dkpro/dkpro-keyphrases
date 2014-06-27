@@ -1,0 +1,6 @@
+classpath*:desc/type/AnnotationPair.xml
+classpath*:desc/type/Disambiguation.xml
+classpath*:desc/type/EdgeWeight.xml
+classpath*:desc/type/FilteredToken.xml
+classpath*:desc/type/Sense.xml
+classpath*:desc/type/WordPair.xml
