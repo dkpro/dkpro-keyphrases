@@ -22,14 +22,11 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** 
- * Updated by JCasGen Wed May 22 14:36:41 CEST 2013
- * @generated */
 public class Disambiguation_Type extends Annotation_Type {
-  /** @generated */
+
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
+
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -45,49 +42,44 @@ public class Disambiguation_Type extends Annotation_Type {
         } else return new Disambiguation(addr, Disambiguation_Type.this);
   	  }
     };
-  /** @generated */
+
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = Disambiguation.typeIndexID;
-  /** @generated 
-     @modifiable */
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
  
-  /** @generated */
   final Feature casFeat_MajorSense;
-  /** @generated */
+
   final int     casFeatCode_MajorSense;
-  /** @generated */ 
+  
   public int getMajorSense(int addr) {
         if (featOkTst && casFeat_MajorSense == null)
       jcas.throwFeatMissing("MajorSense", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     return ll_cas.ll_getRefValue(addr, casFeatCode_MajorSense);
   }
-  /** @generated */    
+
   public void setMajorSense(int addr, int v) {
         if (featOkTst && casFeat_MajorSense == null)
       jcas.throwFeatMissing("MajorSense", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     ll_cas.ll_setRefValue(addr, casFeatCode_MajorSense, v);}
     
   
- 
-  /** @generated */
   final Feature casFeat_Senses;
-  /** @generated */
+
   final int     casFeatCode_Senses;
-  /** @generated */ 
+ 
   public int getSenses(int addr) {
         if (featOkTst && casFeat_Senses == null)
       jcas.throwFeatMissing("Senses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     return ll_cas.ll_getRefValue(addr, casFeatCode_Senses);
   }
-  /** @generated */    
+    
   public void setSenses(int addr, int v) {
         if (featOkTst && casFeat_Senses == null)
       jcas.throwFeatMissing("Senses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     ll_cas.ll_setRefValue(addr, casFeatCode_Senses, v);}
     
-   /** @generated */
+
   public int getSenses(int addr, int i) {
         if (featOkTst && casFeat_Senses == null)
       jcas.throwFeatMissing("Senses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
@@ -97,7 +89,7 @@ public class Disambiguation_Type extends Annotation_Type {
 	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_Senses), i);
   }
    
-  /** @generated */ 
+ 
   public void setSenses(int addr, int i, int v) {
         if (featOkTst && casFeat_Senses == null)
       jcas.throwFeatMissing("Senses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
@@ -108,17 +100,17 @@ public class Disambiguation_Type extends Annotation_Type {
   }
  
  
-  /** @generated */
+
   final Feature casFeat_SourceId;
-  /** @generated */
+
   final int     casFeatCode_SourceId;
-  /** @generated */ 
+  
   public long getSourceId(int addr) {
         if (featOkTst && casFeat_SourceId == null)
       jcas.throwFeatMissing("SourceId", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     return ll_cas.ll_getLongValue(addr, casFeatCode_SourceId);
   }
-  /** @generated */    
+    
   public void setSourceId(int addr, long v) {
         if (featOkTst && casFeat_SourceId == null)
       jcas.throwFeatMissing("SourceId", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
@@ -126,17 +118,17 @@ public class Disambiguation_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_SourceName;
-  /** @generated */
+
   final int     casFeatCode_SourceName;
-  /** @generated */ 
+ 
   public String getSourceName(int addr) {
         if (featOkTst && casFeat_SourceName == null)
       jcas.throwFeatMissing("SourceName", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     return ll_cas.ll_getStringValue(addr, casFeatCode_SourceName);
   }
-  /** @generated */    
+    
   public void setSourceName(int addr, String v) {
         if (featOkTst && casFeat_SourceName == null)
       jcas.throwFeatMissing("SourceName", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
@@ -144,17 +136,17 @@ public class Disambiguation_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_AnchorId;
-  /** @generated */
+
   final int     casFeatCode_AnchorId;
-  /** @generated */ 
+ 
   public long getAnchorId(int addr) {
         if (featOkTst && casFeat_AnchorId == null)
       jcas.throwFeatMissing("AnchorId", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     return ll_cas.ll_getLongValue(addr, casFeatCode_AnchorId);
   }
-  /** @generated */    
+    
   public void setAnchorId(int addr, long v) {
         if (featOkTst && casFeat_AnchorId == null)
       jcas.throwFeatMissing("AnchorId", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
@@ -162,17 +154,17 @@ public class Disambiguation_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_AnchorName;
-  /** @generated */
+
   final int     casFeatCode_AnchorName;
-  /** @generated */ 
+ 
   public String getAnchorName(int addr) {
         if (featOkTst && casFeat_AnchorName == null)
       jcas.throwFeatMissing("AnchorName", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
     return ll_cas.ll_getStringValue(addr, casFeatCode_AnchorName);
   }
-  /** @generated */    
+    
   public void setAnchorName(int addr, String v) {
         if (featOkTst && casFeat_AnchorName == null)
       jcas.throwFeatMissing("AnchorName", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Disambiguation");
@@ -182,8 +174,7 @@ public class Disambiguation_Type extends Annotation_Type {
 
 
 
-  /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+  
   public Disambiguation_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

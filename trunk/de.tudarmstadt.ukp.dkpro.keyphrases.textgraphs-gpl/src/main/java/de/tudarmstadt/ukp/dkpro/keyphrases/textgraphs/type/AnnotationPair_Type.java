@@ -22,14 +22,11 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** 
- * Updated by JCasGen Wed May 22 14:44:24 CEST 2013
- * @generated */
 public class AnnotationPair_Type extends Annotation_Type {
-  /** @generated */
+
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
+
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -45,25 +42,23 @@ public class AnnotationPair_Type extends Annotation_Type {
         } else return new AnnotationPair(addr, AnnotationPair_Type.this);
   	  }
     };
-  /** @generated */
+
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = AnnotationPair.typeIndexID;
-  /** @generated 
-     @modifiable */
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
  
-  /** @generated */
+
   final Feature casFeat_Annotation1;
-  /** @generated */
+
   final int     casFeatCode_Annotation1;
-  /** @generated */ 
+ 
   public int getAnnotation1(int addr) {
         if (featOkTst && casFeat_Annotation1 == null)
       jcas.throwFeatMissing("Annotation1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
     return ll_cas.ll_getRefValue(addr, casFeatCode_Annotation1);
   }
-  /** @generated */    
+    
   public void setAnnotation1(int addr, int v) {
         if (featOkTst && casFeat_Annotation1 == null)
       jcas.throwFeatMissing("Annotation1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
@@ -71,17 +66,17 @@ public class AnnotationPair_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_Annotation2;
-  /** @generated */
+
   final int     casFeatCode_Annotation2;
-  /** @generated */ 
+ 
   public int getAnnotation2(int addr) {
         if (featOkTst && casFeat_Annotation2 == null)
       jcas.throwFeatMissing("Annotation2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
     return ll_cas.ll_getRefValue(addr, casFeatCode_Annotation2);
   }
-  /** @generated */    
+    
   public void setAnnotation2(int addr, int v) {
         if (featOkTst && casFeat_Annotation2 == null)
       jcas.throwFeatMissing("Annotation2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
@@ -89,17 +84,17 @@ public class AnnotationPair_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_StringRepresentation1;
-  /** @generated */
+
   final int     casFeatCode_StringRepresentation1;
-  /** @generated */ 
+  
   public String getStringRepresentation1(int addr) {
         if (featOkTst && casFeat_StringRepresentation1 == null)
       jcas.throwFeatMissing("StringRepresentation1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
     return ll_cas.ll_getStringValue(addr, casFeatCode_StringRepresentation1);
   }
-  /** @generated */    
+    
   public void setStringRepresentation1(int addr, String v) {
         if (featOkTst && casFeat_StringRepresentation1 == null)
       jcas.throwFeatMissing("StringRepresentation1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
@@ -107,17 +102,17 @@ public class AnnotationPair_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_StringRepresentation2;
-  /** @generated */
+
   final int     casFeatCode_StringRepresentation2;
-  /** @generated */ 
+
   public String getStringRepresentation2(int addr) {
         if (featOkTst && casFeat_StringRepresentation2 == null)
       jcas.throwFeatMissing("StringRepresentation2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
     return ll_cas.ll_getStringValue(addr, casFeatCode_StringRepresentation2);
   }
-  /** @generated */    
+    
   public void setStringRepresentation2(int addr, String v) {
         if (featOkTst && casFeat_StringRepresentation2 == null)
       jcas.throwFeatMissing("StringRepresentation2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.AnnotationPair");
@@ -127,8 +122,7 @@ public class AnnotationPair_Type extends Annotation_Type {
 
 
 
-  /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+
   public AnnotationPair_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

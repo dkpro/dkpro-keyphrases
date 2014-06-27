@@ -22,14 +22,12 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** 
- * Updated by JCasGen Wed May 22 14:36:41 CEST 2013
- * @generated */
+
 public class Sense_Type extends Annotation_Type {
-  /** @generated */
+
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
+
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -45,25 +43,23 @@ public class Sense_Type extends Annotation_Type {
         } else return new Sense(addr, Sense_Type.this);
   	  }
     };
-  /** @generated */
+
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = Sense.typeIndexID;
-  /** @generated 
-     @modifiable */
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
  
-  /** @generated */
+
   final Feature casFeat_Id;
-  /** @generated */
+
   final int     casFeatCode_Id;
-  /** @generated */ 
+ 
   public long getId(int addr) {
         if (featOkTst && casFeat_Id == null)
       jcas.throwFeatMissing("Id", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
     return ll_cas.ll_getLongValue(addr, casFeatCode_Id);
   }
-  /** @generated */    
+    
   public void setId(int addr, long v) {
         if (featOkTst && casFeat_Id == null)
       jcas.throwFeatMissing("Id", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
@@ -71,17 +67,17 @@ public class Sense_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_Name;
-  /** @generated */
+
   final int     casFeatCode_Name;
-  /** @generated */ 
+ 
   public String getName(int addr) {
         if (featOkTst && casFeat_Name == null)
       jcas.throwFeatMissing("Name", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
     return ll_cas.ll_getStringValue(addr, casFeatCode_Name);
   }
-  /** @generated */    
+    
   public void setName(int addr, String v) {
         if (featOkTst && casFeat_Name == null)
       jcas.throwFeatMissing("Name", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
@@ -89,17 +85,17 @@ public class Sense_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_Counter;
-  /** @generated */
+
   final int     casFeatCode_Counter;
-  /** @generated */ 
+ 
   public int getCounter(int addr) {
         if (featOkTst && casFeat_Counter == null)
       jcas.throwFeatMissing("Counter", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
     return ll_cas.ll_getIntValue(addr, casFeatCode_Counter);
   }
-  /** @generated */    
+    
   public void setCounter(int addr, int v) {
         if (featOkTst && casFeat_Counter == null)
       jcas.throwFeatMissing("Counter", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
@@ -107,17 +103,17 @@ public class Sense_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_Score;
-  /** @generated */
+
   final int     casFeatCode_Score;
-  /** @generated */ 
+ 
   public double getScore(int addr) {
         if (featOkTst && casFeat_Score == null)
       jcas.throwFeatMissing("Score", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
     return ll_cas.ll_getDoubleValue(addr, casFeatCode_Score);
   }
-  /** @generated */    
+    
   public void setScore(int addr, double v) {
         if (featOkTst && casFeat_Score == null)
       jcas.throwFeatMissing("Score", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
@@ -125,23 +121,23 @@ public class Sense_Type extends Annotation_Type {
     
   
  
-  /** @generated */
+
   final Feature casFeat_LinkedSenses;
-  /** @generated */
+
   final int     casFeatCode_LinkedSenses;
-  /** @generated */ 
+ 
   public int getLinkedSenses(int addr) {
         if (featOkTst && casFeat_LinkedSenses == null)
       jcas.throwFeatMissing("LinkedSenses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
     return ll_cas.ll_getRefValue(addr, casFeatCode_LinkedSenses);
   }
-  /** @generated */    
+    
   public void setLinkedSenses(int addr, int v) {
         if (featOkTst && casFeat_LinkedSenses == null)
       jcas.throwFeatMissing("LinkedSenses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
     ll_cas.ll_setRefValue(addr, casFeatCode_LinkedSenses, v);}
     
-   /** @generated */
+
   public int getLinkedSenses(int addr, int i) {
         if (featOkTst && casFeat_LinkedSenses == null)
       jcas.throwFeatMissing("LinkedSenses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
@@ -151,7 +147,7 @@ public class Sense_Type extends Annotation_Type {
   return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_LinkedSenses), i);
   }
    
-  /** @generated */ 
+ 
   public void setLinkedSenses(int addr, int i, int v) {
         if (featOkTst && casFeat_LinkedSenses == null)
       jcas.throwFeatMissing("LinkedSenses", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.Sense");
@@ -164,8 +160,6 @@ public class Sense_Type extends Annotation_Type {
 
 
 
-  /** initialize variables to correspond with Cas Type and Features
-	* @generated */
   public Sense_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
