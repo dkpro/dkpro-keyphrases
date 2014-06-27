@@ -343,7 +343,6 @@ public class PageRank {
 	 * @param d d
 	 * @param biasVector bias vector
 	 * @param scoreVector score vector
-	 * @param degreeVector degree vector
 	 * @param threshold threshold
 	 */
 	protected void nodeRank(FlexCompColMatrix transitionMatrix, double d, DenseVector biasVector, Vector scoreVector, double threshold) {
