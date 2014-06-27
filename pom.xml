@@ -28,7 +28,7 @@
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
 				<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
-				<version>1.5.0</version>
+				<version>1.5.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.lab</groupId>
@@ -55,7 +55,7 @@
 	</dependencyManagement>
 	<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
 	<packaging>pom</packaging>
-	<version>1.5.0</version>
+	<version>1.5.0-SNAPSHOT</version>
 	<modules>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing-gpl</module>
 	<module>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</module>
@@ -88,10 +88,4 @@
 <!-- 			</releases> -->
 <!-- 		</repository> -->
 <!-- 	</repositories> -->
-
-  <scm>
-    <connection>scm:svn:http://dkpro-core-asl.googlecode.com/svn/dkpro-parent-pom/tags/de.tudarmstadt.ukp.dkpro.keyphrases-1.5.0</connection>
-    <developerConnection>scm:svn:https://dkpro-core-asl.googlecode.com/svn/dkpro-parent-pom/tags/de.tudarmstadt.ukp.dkpro.keyphrases-1.5.0</developerConnection>
-    <url>http://code.google.com/p/dkpro-core-asl/source/browse/dkpro-parent-pom/tags/de.tudarmstadt.ukp.dkpro.keyphrases-1.5.0</url>
-  </scm>
 </project>
