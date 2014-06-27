@@ -83,7 +83,7 @@ public class CooccurrenceGraphExtractor extends KeyphraseExtractor_ImplBase {
 
     /**
      * A convenience factory method that configures a CooccurrenceGraphExtractor to act like
-     * the TextRank method by (Mihalcea & Tarau, 2004).
+     * the TextRank method.
      *
      * @param language The language the extractor should work on.
      * @return A CooccurrenceGraphExtractor configured like the original TextRank method.
@@ -108,10 +108,10 @@ public class CooccurrenceGraphExtractor extends KeyphraseExtractor_ImplBase {
     }
 
     /**
-     * A convenience factory method that configures a {@link CooccurrenceGraphExtractor} to act like
-     * the TextRank method by (Mihalcea & Tarau, 2004) for English text.
+     * A convenience factory method that configures a CooccurrenceGraphExtractor to act like
+     * the TextRank method for English text.
      *
-     * @return A {@link CooccurrenceGraphExtractor} for English text configured like the original TextRank method.
+     * @return A CooccurrenceGraphExtractor for English text configured like the original TextRank method.
      */
     public static CooccurrenceGraphExtractor createTextRankExtractor() {
         return createTextRankExtractor("en");

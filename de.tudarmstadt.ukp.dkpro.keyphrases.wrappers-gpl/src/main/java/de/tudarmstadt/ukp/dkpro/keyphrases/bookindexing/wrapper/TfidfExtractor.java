@@ -70,7 +70,6 @@ public class TfidfExtractor
 	 *          The input directory with the input files.
 	 * @param suffix
 	 *          The suffix of the valid input files.
-	 * @throws IOException io exception
 	 * @throws ResourceInitializationException resource initialization exception
 	 */
 	public void buildTfidfModel(File inputDir, String suffix)
