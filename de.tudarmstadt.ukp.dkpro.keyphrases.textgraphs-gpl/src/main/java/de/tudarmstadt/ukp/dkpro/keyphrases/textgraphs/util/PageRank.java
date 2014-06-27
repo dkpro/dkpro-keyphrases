@@ -44,12 +44,6 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair;
 
 public class PageRank {
 
-	/*
-	 * TODO
-	 * This class includes general PageRank methods and methods explicitly for these keyphrase extraction experiments.
-	 * General methods for the PageRank algorithm should be placed in one class and those methods used for these experiments placed in another.
-	 */
-
 	private final Log log = LogFactory.getLog(getClass());
 
 
@@ -176,10 +170,10 @@ public class PageRank {
 	 * Updates the termMap and the list of termRanks. Increases termId, if a new
 	 * term is inserted into the termMap.
 	 *
-	 * @param term
-	 * @param termId
-	 * @param begin
-	 * @param end
+	 * @param term tthe term itself
+	 * @param termId term id
+	 * @param begin begin offset
+	 * @param end end offset
 	 * @return The same termId as the parameter, if no new term was inserted.
 	 *         The increased termId otherwise.
 	 */
@@ -345,12 +339,12 @@ public class PageRank {
 	/**
 	 * Updates the score vector.
 	 *
-	 * @param transitionMatrix
-	 * @param d
-	 * @param biasVector
-	 * @param scoreVector
-	 * @param degreeVector
-	 * @param threshold
+	 * @param transitionMatrix the transition matrix
+	 * @param d d
+	 * @param biasVector bias vector
+	 * @param scoreVector score vector
+	 * @param degreeVector degree vector
+	 * @param threshold threshold
 	 */
 	protected void nodeRank(FlexCompColMatrix transitionMatrix, double d, DenseVector biasVector, Vector scoreVector, double threshold) {
 		double diff;
@@ -534,8 +528,8 @@ public class PageRank {
 		/**
 		 * Add the term, if it is not already in the list.
 		 *
-		 * @param term
-		 * @param offset
+		 * @param term the term
+		 * @param offset the offsets
 		 */
 		public void addTerm(String term, int[] offset) {
 			// REC 2009-08-07 - This assertion fails with stems - possibly it
