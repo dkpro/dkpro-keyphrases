@@ -88,4 +88,9 @@
 <!-- 			</releases> -->
 <!-- 		</repository> -->
 <!-- 	</repositories> -->
+	<scm>
+		<url>https://dkpro-keyphrases.googlecode.com/svn/trunk/</url>
+		<connection>scm:svn:https://dkpro-keyphrases.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://dkpro-keyphrases.googlecode.com/svn/trunk/</developerConnection>
+	</scm>
 </project>
