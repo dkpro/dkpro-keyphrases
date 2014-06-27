@@ -106,7 +106,7 @@ public abstract class CandidateSet_BaseImpl
 	}
 
 	/**
-	 * Default implementation adds {@link KeyphraseCandidate}-annotations.
+	 * Default implementation adds KeyphraseCandidate-annotations.
 	 *
 	 * @return candidate annotator
 	 * @throws ResourceInitializationException a resource initialization exception
