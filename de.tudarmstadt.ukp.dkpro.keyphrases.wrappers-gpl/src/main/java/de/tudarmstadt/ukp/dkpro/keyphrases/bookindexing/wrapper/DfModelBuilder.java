@@ -52,11 +52,10 @@ public class DfModelBuilder
 	 *
 	 * @param language
 	 *          assumes the consumed documents are in the given language
-	 * @param inputDirectory
+	 * @param inputDir
 	 *          documents contained in this directory are consumed
 	 * @param suffix
 	 *          only documents with this suffix are consumed
-	 * @return the model builder
 	 */
 	public DfModelBuilder(String language, File inputDir, String suffix)
 	{
