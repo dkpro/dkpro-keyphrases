@@ -22,14 +22,10 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** 
- * Updated by JCasGen Wed May 22 14:44:24 CEST 2013
- * @generated */
+
 public class WordPair_Type extends Annotation_Type {
-  /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -45,25 +41,20 @@ public class WordPair_Type extends Annotation_Type {
         } else return new WordPair(addr, WordPair_Type.this);
   	  }
     };
-  /** @generated */
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = WordPair.typeIndexID;
-  /** @generated 
-     @modifiable */
+
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
  
-  /** @generated */
   final Feature casFeat_Word1;
-  /** @generated */
-  final int     casFeatCode_Word1;
-  /** @generated */ 
+
+  final int     casFeatCode_Word1; 
   public String getWord1(int addr) {
         if (featOkTst && casFeat_Word1 == null)
       jcas.throwFeatMissing("Word1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
     return ll_cas.ll_getStringValue(addr, casFeatCode_Word1);
   }
-  /** @generated */    
   public void setWord1(int addr, String v) {
         if (featOkTst && casFeat_Word1 == null)
       jcas.throwFeatMissing("Word1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
@@ -71,35 +62,26 @@ public class WordPair_Type extends Annotation_Type {
     
   
  
-  /** @generated */
   final Feature casFeat_Word2;
-  /** @generated */
   final int     casFeatCode_Word2;
-  /** @generated */ 
   public String getWord2(int addr) {
         if (featOkTst && casFeat_Word2 == null)
       jcas.throwFeatMissing("Word2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
     return ll_cas.ll_getStringValue(addr, casFeatCode_Word2);
   }
-  /** @generated */    
   public void setWord2(int addr, String v) {
         if (featOkTst && casFeat_Word2 == null)
       jcas.throwFeatMissing("Word2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
     ll_cas.ll_setStringValue(addr, casFeatCode_Word2, v);}
     
   
- 
-  /** @generated */
   final Feature casFeat_Pos1;
-  /** @generated */
   final int     casFeatCode_Pos1;
-  /** @generated */ 
   public int getPos1(int addr) {
         if (featOkTst && casFeat_Pos1 == null)
       jcas.throwFeatMissing("Pos1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
     return ll_cas.ll_getRefValue(addr, casFeatCode_Pos1);
   }
-  /** @generated */    
   public void setPos1(int addr, int v) {
         if (featOkTst && casFeat_Pos1 == null)
       jcas.throwFeatMissing("Pos1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
@@ -107,17 +89,13 @@ public class WordPair_Type extends Annotation_Type {
     
   
  
-  /** @generated */
   final Feature casFeat_Pos2;
-  /** @generated */
   final int     casFeatCode_Pos2;
-  /** @generated */ 
   public int getPos2(int addr) {
         if (featOkTst && casFeat_Pos2 == null)
       jcas.throwFeatMissing("Pos2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
     return ll_cas.ll_getRefValue(addr, casFeatCode_Pos2);
   }
-  /** @generated */    
   public void setPos2(int addr, int v) {
         if (featOkTst && casFeat_Pos2 == null)
       jcas.throwFeatMissing("Pos2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
@@ -125,17 +103,13 @@ public class WordPair_Type extends Annotation_Type {
     
   
  
-  /** @generated */
   final Feature casFeat_Token1;
-  /** @generated */
-  final int     casFeatCode_Token1;
-  /** @generated */ 
+  final int     casFeatCode_Token1; 
   public int getToken1(int addr) {
         if (featOkTst && casFeat_Token1 == null)
       jcas.throwFeatMissing("Token1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
     return ll_cas.ll_getRefValue(addr, casFeatCode_Token1);
   }
-  /** @generated */    
   public void setToken1(int addr, int v) {
         if (featOkTst && casFeat_Token1 == null)
       jcas.throwFeatMissing("Token1", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
@@ -143,17 +117,14 @@ public class WordPair_Type extends Annotation_Type {
     
   
  
-  /** @generated */
   final Feature casFeat_Token2;
-  /** @generated */
-  final int     casFeatCode_Token2;
-  /** @generated */ 
+
+  final int     casFeatCode_Token2; 
   public int getToken2(int addr) {
         if (featOkTst && casFeat_Token2 == null)
       jcas.throwFeatMissing("Token2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
     return ll_cas.ll_getRefValue(addr, casFeatCode_Token2);
   }
-  /** @generated */    
   public void setToken2(int addr, int v) {
         if (featOkTst && casFeat_Token2 == null)
       jcas.throwFeatMissing("Token2", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WordPair");
@@ -163,8 +134,7 @@ public class WordPair_Type extends Annotation_Type {
 
 
 
-  /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+
   public WordPair_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

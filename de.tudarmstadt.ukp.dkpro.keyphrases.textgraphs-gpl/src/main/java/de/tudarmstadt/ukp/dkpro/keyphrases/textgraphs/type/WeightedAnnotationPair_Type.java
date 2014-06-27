@@ -21,14 +21,12 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
-/** 
- * Updated by JCasGen Wed May 22 14:44:24 CEST 2013
- * @generated */
+
 public class WeightedAnnotationPair_Type extends AnnotationPair_Type {
-  /** @generated */
+
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
-  /** @generated */
+
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
@@ -44,25 +42,24 @@ public class WeightedAnnotationPair_Type extends AnnotationPair_Type {
         } else return new WeightedAnnotationPair(addr, WeightedAnnotationPair_Type.this);
   	  }
     };
-  /** @generated */
+
   @SuppressWarnings ("hiding")
   public final static int typeIndexID = WeightedAnnotationPair.typeIndexID;
-  /** @generated 
-     @modifiable */
+
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WeightedAnnotationPair");
  
-  /** @generated */
+
   final Feature casFeat_weight;
-  /** @generated */
+
   final int     casFeatCode_weight;
-  /** @generated */ 
+ 
   public double getWeight(int addr) {
         if (featOkTst && casFeat_weight == null)
       jcas.throwFeatMissing("weight", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WeightedAnnotationPair");
     return ll_cas.ll_getDoubleValue(addr, casFeatCode_weight);
   }
-  /** @generated */    
+    
   public void setWeight(int addr, double v) {
         if (featOkTst && casFeat_weight == null)
       jcas.throwFeatMissing("weight", "de.tudarmstadt.ukp.dkpro.keyphrases.textgraphs.type.WeightedAnnotationPair");
@@ -72,8 +69,7 @@ public class WeightedAnnotationPair_Type extends AnnotationPair_Type {
 
 
 
-  /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+
   public WeightedAnnotationPair_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
