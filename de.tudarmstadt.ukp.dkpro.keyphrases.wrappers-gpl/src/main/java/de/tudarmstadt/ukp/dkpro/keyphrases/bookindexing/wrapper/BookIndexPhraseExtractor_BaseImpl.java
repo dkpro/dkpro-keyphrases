@@ -325,7 +325,8 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	 * SENTENCES: Each segment will consist of n sentences.
 	 * SEGMENTS: The text document will be partitioned to n segments.
 	 *
-	 * @param segmentationType
+	 * @param segmentationType segmentation type
+	 * @param n number of segments
 	 */
 	public void setSegmentation(SegmentationType segmentationType, int n)
 	{

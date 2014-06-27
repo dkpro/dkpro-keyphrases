@@ -72,9 +72,8 @@ public class DfModelBuilder
 	 *
 	 * @param language
 	 *          assumes the consumed documents are in the given language
-	 * @param inputDirectory
+	 * @param inputDir
 	 *          all documents contained in this directory are consumed
-	 * @return the model builder
 	 */
 	public DfModelBuilder(String language, File inputDir)
 	{
