@@ -84,7 +84,7 @@ public class DfModelBuilder
 	/**
 	 * Creates a model based on stems and writes it as the file specified.
 	 *
-	 * @param outputFile
+	 * @param outputFile output file
 	 */
 	public void buildStemModel(File outputFile)
 	{
@@ -94,7 +94,7 @@ public class DfModelBuilder
 	/**
 	 * Creates a model based on tokens and writes it as the file specified.
 	 *
-	 * @param outputFile
+	 * @param outputFile output file
 	 */
 	public void buildTokenModel(File outputFile)
 	{
@@ -104,7 +104,7 @@ public class DfModelBuilder
 	/**
 	 * Creates a model based on lemmas and writes it as the file specified.
 	 *
-	 * @param outputFile
+	 * @param outputFile output file
 	 */
 	public void buildLemmaModel(File outputFile)
 	{
@@ -115,7 +115,8 @@ public class DfModelBuilder
 	 * Creates a model based on the given candidate set and writes it as the file
 	 * specified. The
 	 *
-	 * @param outputFile
+	 * @param candidateSet candidate set
+	 * @param outputFile outputfile
 	 */
 	public void buildKeyphraseCandidateModel(CandidateSet candidateSet,
 			File outputFile)
@@ -127,8 +128,8 @@ public class DfModelBuilder
 	 * Builds a pipeline using the feature path to the string representation
 	 * specified in the candidateFactory.
 	 *
-	 * @param candidateSet
-	 * @param outputFile
+	 * @param candidateSet candidate set
+	 * @param outputFile output file
 	 */
 	private void buildModel(final CandidateSet candidateSet, final File outputFile) {
 		buildModel(candidateSet, candidateSet.getFeaturePath(), outputFile);
@@ -139,9 +140,9 @@ public class DfModelBuilder
 	 * feature path. The model is written as a single file to the path as
 	 * specified.
 	 *
-	 * @param candidateSet
-	 * @param featurePath
-	 * @param outputFile
+	 * @param candidateSet candidate set
+	 * @param featurePath feature path
+	 * @param outputFile output file
 	 */
 	private void buildModel(CandidateSet candidateSet, String featurePath,
 			final File outputFile)

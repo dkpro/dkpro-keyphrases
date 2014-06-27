@@ -10,13 +10,11 @@
  ******************************************************************************/
 package de.tudarmstadt.ukp.dkpro.keyphrases.bookindexing.wrapper;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createAggregateDescription;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitiveDescription;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.bindResource;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,10 +24,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.CASRuntimeException;
 import org.apache.uima.fit.factory.AggregateBuilder;
-import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -84,13 +79,8 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	 * Processes an input text and returns a list of strings sorted descending by
 	 * their score.
 	 *
-	 * @param textFile
+	 * @param textFile textfile
 	 * @return a list of bookindex-phrases
-	 *
-	 * @throws ResourceInitializationException
-	 * @throws AnalysisEngineProcessException
-	 * @throws IOException
-	 * @throws CASRuntimeException
 	 */
 	@Override
 	public List<String> extract(File textFile)
@@ -98,7 +88,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 		AnalysisEngine ae;
 
 		try {
-			ae = AnalysisEngineFactory.createAggregate(createAggregate());
+			ae = createEngine(createAggregate());
 
 			JCas jcas = ae.newJCas();
 
@@ -120,10 +110,10 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	private AnalysisEngineDescription createAggregate()
 		throws ResourceInitializationException
 	{
-		AnalysisEngineDescription preSegmentProcessing = createAggregateDescription(
+		AnalysisEngineDescription preSegmentProcessing = createEngineDescription(
 				candidateSet.createPreprocessingComponents(language), createSegmenter());
 
-		AnalysisEngineDescription segmentProcessing = createAggregateDescription(
+		AnalysisEngineDescription segmentProcessing = createEngineDescription(
 				createRanker(), createMergerFilter());
 
 		AnalysisEngineDescription postSegmentProcessing = createAggregator();
@@ -137,7 +127,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	{
 		switch (segmentationType) {
 		case TOKENS:
-			return createPrimitiveDescription(
+			return createEngineDescription(
 					PseudoSentenceSegmentAnnotator.class,
 					PseudoSentenceSegmentAnnotator.PARAM_NUMBER_OF_TOKENS_PER_SEGMENT, segmentationN);
 //		case SENTENCES:
@@ -145,7 +135,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 //					SimpleSegmenter.class,
 //					SimpleSegmenter.PARAM_NUMBER_OF_SENTENCES_PER_SEGMENT, segmentationN);
 		case SEGMENTS:
-			return createPrimitiveDescription(
+			return createEngineDescription(
 					SymmetricSegmentAnnotator.class,
 					SymmetricSegmentAnnotator.PARAM_SEGMENTATION_FACTOR, segmentationN);
 		default:
@@ -162,7 +152,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 		AggregateBuilder b = new AggregateBuilder();
 
 		if (mergePhrases) {
-			b.add(createPrimitiveDescription(KeyphraseMerger.class,
+			b.add(createEngineDescription(KeyphraseMerger.class,
 					KeyphraseMerger.PARAM_MAX_LENGTH, maxPhraseLength));
 		}
 		b.add(StopwordFilterFactory.getStopwordFilter(
@@ -180,7 +170,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	protected AnalysisEngineDescription createAggregator()
 		throws ResourceInitializationException
 	{
-		AnalysisEngineDescription aed = createPrimitiveDescription(
+		AnalysisEngineDescription aed = createEngineDescription(
 				BookIndexPhraseAggregationAnnotator.class,
 				BookIndexPhraseAggregationAnnotator.PARAM_LOWERCASE, convertToLowercase
 				);
@@ -199,7 +189,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	 * @param jcas
 	 *          containing some annotation representing
 	 *          bookindex-phrase-annotations. The default implementation expects
-	 *          {@link BookIndexPhrase}-annotations.
+	 *          BookIndexPhrase annotations.
 	 * @return A list of string representing bookindex-phrases. The default
 	 *         implementation returns just the phrases without the score in
 	 *         descending order (by score).
@@ -236,7 +226,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	 * merge phrases which length would exceed the specified maximum phrase
 	 * length.
 	 *
-	 * @param mergePhrases
+	 * @param mergePhrases if phrases should be merged or not
 	 */
 	public void setMergePhrases(boolean mergePhrases)
 	{
@@ -247,8 +237,8 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	 * Phrases that are shorter then the given minimum length or longer then the
 	 * given maximum length will be removed.
 	 *
-	 * @param minPhraseLength
-	 * @param maxPhraseLength
+	 * @param minPhraseLength the minimum phrase length
+	 * @param maxPhraseLength the maximum phrase length
 	 */
 	public void setPhraseLengthRange(int minPhraseLength, int maxPhraseLength)
 	{
@@ -260,7 +250,7 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 	}
 
 	/**
-	 * Sorts {@link BookIndexPhrase}s by score (descending).
+	 * Sorts BookIndexPhrases by score (descending).
 	 */
 	public static class BookIndexPhraseComparator
 		implements Comparator<BookIndexPhrase>, Serializable
@@ -331,11 +321,9 @@ public abstract class BookIndexPhraseExtractor_BaseImpl
 
 	/**
 	 * Configures the segmentation that will be applied to the text document.
-	 * <ul>
-	 * <li>TOKENS: Each segment will consist of n tokens.</li>
-	 * <li>SENTENCES: Each segment will consist of n sentences.</li>
-	 * <li>SEGMENTS: The text document will be partitioned to n segments.</li>
-	 * </ul>
+	 * TOKENS: Each segment will consist of n tokens.
+	 * SENTENCES: Each segment will consist of n sentences.
+	 * SEGMENTS: The text document will be partitioned to n segments.
 	 *
 	 * @param segmentationType
 	 */

@@ -25,6 +25,7 @@ public interface KeyphraseExtractor {
      *   Keyphrases are ordered by score in descending order.
      *   If a keyphrase occurs multiple times in the document,
      *   it will also be duplicated in the list.
+     * @throws IOException io exception
      */
     List<Keyphrase> extract(String inputText) throws IOException;
 
