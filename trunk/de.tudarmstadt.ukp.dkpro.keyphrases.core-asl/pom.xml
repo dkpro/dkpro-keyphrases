@@ -20,7 +20,7 @@
 	<parent>
 		<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases</artifactId>
 		<groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
-		<version>1.5.0</version>
+		<version>1.5.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
