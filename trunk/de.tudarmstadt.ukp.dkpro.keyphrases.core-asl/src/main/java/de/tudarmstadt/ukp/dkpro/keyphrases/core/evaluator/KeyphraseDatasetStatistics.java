@@ -74,6 +74,9 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
     private static List<Integer> tokensPerDocument;
     private static List<Integer> keyphrsPerDoc;
 
+    private static List<Double> upperBoundP10s;
+    private static List<Double> upperBoundR10s;
+
     private static List<Integer> tokenSizeList;
     private static List<Integer> goldSizeList;
 
@@ -89,6 +92,9 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         charsPerKeyphr = new ArrayList<Integer>();
         tokensPerDocument = new ArrayList<Integer>();
         keyphrsPerDoc = new ArrayList<Integer>();
+        
+        upperBoundP10s = new ArrayList<Double>();
+        upperBoundR10s = new ArrayList<Double>();
 
         tokenSizeList = new ArrayList<Integer>();
         goldSizeList  = new ArrayList<Integer>();
@@ -120,11 +126,23 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
 
             nrofKeyphrases++;
         }
-
+        
         keyphrsPerDoc.add(goldKeyphrases.size());
 
         tokenSizeList.add(tokenIndex.size());
         goldSizeList.add(goldKeyphrases.size());
+        
+        int n=goldKeyphrases.size();
+        if(n<10){
+            upperBoundP10s.add(Double.valueOf(1-(double)(10-n)/10));
+            upperBoundR10s.add(1d);
+        }
+        else{
+            upperBoundP10s.add(1d);
+            upperBoundR10s.add((double)10/n);
+            
+        }
+
 
     }
 
@@ -139,6 +157,9 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         final double stdDevToksKeyphr = stdDev(tknsPerKeyphr);
         final double avgKeyphrPerDoc = (double) nrofKeyphrases / nrofDocuments;
         final double stdDevKeyphrDoc = stdDev(keyphrsPerDoc);
+        
+        final double upperBoundP5 = meanDouble(upperBoundP10s);
+        final double upperBoundR5 = meanDouble(upperBoundR10s);
 
 
 //        double[] tokenSizeArray = listToArray(tokenSizeList);
@@ -152,6 +173,9 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         stringBuilder.append("Keyphrases / Document:     "); stringBuilder.append(avgKeyphrPerDoc); stringBuilder.append(MORE_LESS_LITERAL); stringBuilder.append(stdDevKeyphrDoc); stringBuilder.append(')'); stringBuilder.append(LINE_SEPARATOR);
         stringBuilder.append("Characters / Keyphrase:    "); stringBuilder.append(avgLngthKeyphrs); stringBuilder.append(MORE_LESS_LITERAL); stringBuilder.append(stdDevAvgLnthKphr); stringBuilder.append(')'); stringBuilder.append(LINE_SEPARATOR);
         stringBuilder.append("Tokens / Keyphrase:        "); stringBuilder.append(avgToksKeyphrs); stringBuilder.append(MORE_LESS_LITERAL); stringBuilder.append(stdDevToksKeyphr); stringBuilder.append(')'); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("Upper bound (P@10):        "); stringBuilder.append(upperBoundP5); stringBuilder.append(LINE_SEPARATOR);
+        stringBuilder.append("Upper bound (R@10):        "); stringBuilder.append(upperBoundR5); stringBuilder.append(LINE_SEPARATOR);
         stringBuilder.append(LINE_SEPARATOR);
         stringBuilder.append("Pearson Correlation between document size and the number of gold keyphrases:"); stringBuilder.append(LINE_SEPARATOR);
 //        sb.append(new PearsonsCorrelation().correlation(
@@ -197,6 +221,19 @@ public class KeyphraseDatasetStatistics extends JCasAnnotator_ImplBase {
         if (!values.isEmpty()) {
             double sum = 0.0;
             for (final Integer value : values) {
+                sum += value;
+            }
+
+           mean = sum/values.size();
+        }
+        return mean;
+    }
+
+    public double meanDouble(final List<Double> values) {
+        double mean = 0.0;
+        if (!values.isEmpty()) {
+            double sum = 0.0;
+            for (final Double value : values) {
                 sum += value;
             }
 
