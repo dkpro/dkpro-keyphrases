@@ -9,14 +9,12 @@ The modules from DKPro Keyphrases are released under ASL and GPL licenses.
 
 ## Getting it
 
-DKPro Keyphrases is not on maven central yet, so, to use it, it is necessary to change your settings.xml file under ~/.m2 folder to add the zoidberg repository from UKP. There is a tutorial in the DKPro-Core ASL wiki which explains how to do it.
-
-After changing the settings.xml file, DKPro Keyphrases can be added to the project by adding these tags to the pom file:
+DKPro Keyphrases can be added to the project by adding these tags to the pom file:
 
 ```xml
 <dependency>
   <groupId>de.tudarmstadt.ukp.dkpro.keyphrases</groupId>
   <artifactId>de.tudarmstadt.ukp.dkpro.keyphrases.core-asl</artifactId>
-  <version>1.5.0-SNAPSHOT</version>
+  <version>1.5.0</version>
 </dependency>
 ```
