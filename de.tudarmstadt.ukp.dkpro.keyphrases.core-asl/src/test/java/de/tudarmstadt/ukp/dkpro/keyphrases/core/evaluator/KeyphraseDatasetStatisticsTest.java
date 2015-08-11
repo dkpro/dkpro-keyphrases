@@ -28,8 +28,7 @@ public class KeyphraseDatasetStatisticsTest
     public void testCollectionProcessComplete()
         throws UIMAException, IOException, InterruptedException
     {
-        final CollectionReader reader = createReader(
-                createReaderDescription(TextReader.class,
+        final CollectionReader reader = createReader(createReaderDescription(TextReader.class,
                 TextReader.PARAM_SOURCE_LOCATION, "src/test/resources/keyphrase/evaluator",
                 TextReader.PARAM_PATTERNS, TextReader.INCLUDE_PREFIX + "*.txt"));
         final AnalysisEngine analysisEngine = createEngine(createEngineDescription(
@@ -53,11 +52,12 @@ public class KeyphraseDatasetStatisticsTest
         final String expected = "# Documents:               1Tokens / Document:         "
                 + "5.0(+/- 0.0) Median: 5.0)# Keyphrases:              1Keyphrases / "
                 + "Document:     1.0(+/- 0.0)Characters / Keyphrase:    4.0(+/- 0.0)Tokens / "
-                + "Keyphrase:        1.0(+/- 0.0)Pearson Correlation between document size and "
+                + "Keyphrase:        1.0(+/- 0.0)Upper bound (P@10):        0.09999999999999998"
+                + "Upper bound (R@10):        1.0Pearson Correlation between document size and "
                 + "the number of gold keyphrases:1:1";
 
         Assert.assertThat(actual.toString(), CoreMatchers.is(expected));
 
     }
-    
+
 }
