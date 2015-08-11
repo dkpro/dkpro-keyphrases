@@ -27,7 +27,7 @@ import de.tudarmstadt.ukp.dkpro.keyphrases.core.ranking.TfRanking;
 
 public class KeyphraseWriterTest
 {
-    
+
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     @Test
@@ -48,8 +48,7 @@ public class KeyphraseWriterTest
                 createEngineDescription(TfRanking.class),
                 createEngineDescription(KeyphraseWriter.class,
                         KeyphraseWriter.PARAM_SHOULD_WRITE_DOCUMENT, false,
-                        KeyphraseWriter.PARAM_WRITE_TO_FILE, true,
-                        KeyphraseWriter.PARAM_FILE_NAME, "src/test/resources/keyphrase/evaluator/evaluation.txt")));
+                        KeyphraseWriter.PARAM_WRITE_TO_FILE, false)));
 
         final StringBuilder actual = new StringBuilder();
         final StringBuilderOutputStream fout = new StringBuilderOutputStream(actual);
