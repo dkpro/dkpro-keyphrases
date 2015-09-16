@@ -76,7 +76,7 @@
 		<scope>test</scope>
 	</dependency>
 	</dependencies>
-	<url>https://code.google.com/p/dkpro-keyphrases/</url>
+	<url>http://dkpro.github.io/dkpro-keyphrases/</url>
 <!-- 	<repositories> -->
 <!-- 		<repository> -->
 			<!-- For uimaFIT 2.0.0-SNAPSHOT -->
@@ -89,8 +89,16 @@
 <!-- 		</repository> -->
 <!-- 	</repositories> -->
 	<scm>
-		<url>https://dkpro-keyphrases.googlecode.com/svn/trunk/</url>
-		<connection>scm:svn:https://dkpro-keyphrases.googlecode.com/svn/trunk/</connection>
-		<developerConnection>scm:svn:https://dkpro-keyphrases.googlecode.com/svn/trunk/</developerConnection>
+		<url>https://github.com/dkpro/dkpro-keyphrases</url>
+		<connection>scm:git:https://github.com/dkpro/dkpro-keyphrases</connection>
+		<developerConnection>scm:git:https://github.com/dkpro/dkpro-keyphrases</developerConnection>
 	</scm>
+	<organization>
+		<name>Ubiquitous Knowledge Processing (UKP) Lab, Technische Universität Darmstadt</name>
+		<url>https://www.ukp.tu-darmstadt.de/</url>
+	</organization>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/dkpro/dkpro-keyphrases/issues</url>
+	</issueManagement>
 </project>
