@@ -59,7 +59,7 @@ public class MatchingSmallLevenshtein
 	 *
 	 * @param string
 	 *          to be normalized
-	 * @return
+	 * @return Normalized string
 	 */
 	private static String normalizeString(String string)
 	{
