@@ -14,6 +14,7 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -97,7 +98,7 @@ public class TfidfExtractor extends KeyphraseExtractor_ImplBase {
      */
     public void buildTfidfModel(File inputDir, String suffix) throws ResourceInitializationException {
         try {
-            File tmpFile = File.createTempFile("tfidf_model_ukp", "tmp");
+            File tmpFile = Files.createTempFile("tfidf_model_ukp", "tmp").toFile();
             buildTfidfModel(inputDir, suffix, tmpFile);
         }
         catch (Exception e) {
