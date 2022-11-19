@@ -14,6 +14,7 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -78,7 +79,7 @@ public class TfidfExtractor
 		try {
 			final DfModelBuilder dfModelBuilder = new DfModelBuilder(getLanguage(),
 					inputDir, suffix);
-			File tmpFile = File.createTempFile("tfidf_model_ukp", "tmp");
+			File tmpFile = Files.createTempFile("tfidf_model_ukp", "tmp").toFile();
 			dfModelBuilder.buildKeyphraseCandidateModel(getCandidateSet(), tmpFile);
 			tfidfModelFile = tmpFile;
 		}
